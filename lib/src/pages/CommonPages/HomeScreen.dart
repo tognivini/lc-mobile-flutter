@@ -21,6 +21,7 @@ class HomeScreen extends StatelessWidget {
               onPressed: () {
                 Navigator.pushNamed(
                   context,
+                  // '/login/1',
                   '/login/1',
                 );
               },

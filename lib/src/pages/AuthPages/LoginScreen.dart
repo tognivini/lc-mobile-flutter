@@ -1,15 +1,27 @@
-// ignore_for_file: file_names, avoid_print
+// ignore_for_file: file_names, avoid_print, override_on_non_overriding_member
 
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
-class LoginScreen extends StatelessWidget {
-  String id;
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
+  // String id;
 
-  LoginScreen({
-    super.key,
-    required this.id,
-  });
+  @override
+  State<LoginScreen> createState() => _LoginState();
+}
+
+class _LoginState extends State<LoginScreen> {
+  // LoginScreen({
+  //   super.key,
+  //   required this.id,
+  // });
+
+  TextEditingController nomeController = TextEditingController();
+  TextEditingController matriculaController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController senhaController = TextEditingController();
+  TextEditingController imagemController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -21,18 +33,25 @@ class LoginScreen extends StatelessWidget {
         body: SingleChildScrollView(
           child: Column(
             children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 60, bottom: 10),
-                child: Center(
-                    child: SizedBox(
-                  width: 150,
-                  height: 150,
-                  child: Image.asset('assets/images/no-image.png'),
-                )),
+              // Padding(
+              //   padding: const EdgeInsets.only(top: 40, bottom: 20),
+              //   child: Center(
+              //       child: SizedBox(
+              //     width: 120,
+              //     height: 120,
+              //     child: Image.asset('assets/images/no-image.png'),
+              //   )),
+              // ),
+              const Padding(
+                padding: EdgeInsets.only(top: 40, bottom: 20),
+                child: Text('Login',
+                    style: TextStyle(color: Colors.black, fontSize: 26)),
               ),
               Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: TextFormField(
+                    keyboardType: TextInputType.emailAddress,
+                    controller: emailController,
                     decoration: const InputDecoration(
                         border: OutlineInputBorder(),
                         labelText: 'Email',
@@ -42,13 +61,15 @@ class LoginScreen extends StatelessWidget {
                   padding: const EdgeInsets.only(
                       top: 20, right: 20, bottom: 0, left: 20),
                   child: TextFormField(
+                    obscureText: true,
+                    controller: senhaController,
                     decoration: const InputDecoration(
                         border: OutlineInputBorder(),
                         labelText: 'Password',
                         hintText: 'Pass válido plz'),
                   )),
               Padding(
-                  padding: const EdgeInsets.only(top: 10),
+                  padding: const EdgeInsets.only(top: 20),
                   child: Container(
                     height: 50,
                     width: 100,
@@ -61,19 +82,32 @@ class LoginScreen extends StatelessWidget {
                             MaterialStateProperty.all<Color>(Colors.white),
                       ),
                       onPressed: () {
-                        print('katchouwn');
+                        print(nomeController.text);
+                        print(matriculaController.text);
+                        print(emailController.text);
+                        print(senhaController.text);
+
+                        // print('katchouwn', text);
+                        // // setState(() {
+
+                        // });
                       },
                       child: const Text('Login'),
                     ),
                   )),
               // const size box here
               const SizedBox(
-                height: 90,
+                height: 220,
               ),
               TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pushNamed(
+                      context,
+                      '/register/1',
+                    );
+                  },
                   child: const Text('Crie uma conta',
-                      style: TextStyle(color: Colors.blue)))
+                      style: TextStyle(color: Colors.blue))),
             ],
           ),
         ));
