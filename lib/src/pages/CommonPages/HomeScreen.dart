@@ -1,9 +1,22 @@
-// ignore_for_file: file_names
+// ignore_for_file: file_names, avoid_print, override_on_non_overriding_member
 
 import 'package:flutter/material.dart';
 
-class HomeScreen extends StatelessWidget {
+// ignore: must_be_immutable
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+  // String id;
+
+  @override
+  State<HomeScreen> createState() => _ThisState();
+}
+
+class _ThisState extends State<HomeScreen> {
+  TextEditingController nomeController = TextEditingController();
+  // TextEditingController matriculaController = TextEditingController();
+  // TextEditingController emailController = TextEditingController();
+  // TextEditingController senhaController = TextEditingController();
+  // TextEditingController imagemController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -22,26 +35,24 @@ class HomeScreen extends StatelessWidget {
                 Navigator.pushNamed(
                   context,
                   // '/login/1',
+                  '/logged/profile/1',
+                );
+              },
+              child: const Text('Perfil'),
+            ),
+            TextButton(
+              style: ButtonStyle(
+                foregroundColor: MaterialStateProperty.all<Color>(Colors.red),
+              ),
+              onPressed: () {
+                Navigator.pushNamed(
+                  context,
+                  // '/login/1',
                   '/login/1',
                 );
               },
-              child: const Text('U Butao'),
+              child: const Text('Logout'),
             ),
-            Stack(
-              alignment: AlignmentDirectional.center,
-              children: [
-                Container(
-                  height: 300,
-                  width: 300,
-                  color: Colors.black,
-                ),
-                Container(
-                  height: 150,
-                  width: 150,
-                  color: Colors.blue,
-                )
-              ],
-            )
           ],
         )));
   }
