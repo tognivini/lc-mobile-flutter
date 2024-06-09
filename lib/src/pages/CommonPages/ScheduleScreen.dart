@@ -1,18 +1,20 @@
 // ignore_for_file: file_names, avoid_print, override_on_non_overriding_member
 
 import 'package:flutter/material.dart';
+import 'package:lc_mobile_flutter/src/components/SelectInput/SelectInput';
 
 // ignore: must_be_immutable
-class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({super.key, String? name});
+class ScheduleScreen extends StatefulWidget {
+  const ScheduleScreen({super.key, String? name});
+  static const List<String> list = <String>['One', 'Two', 'Three', 'Four'];
   // String id;
 
   @override
-  State<ProfileScreen> createState() => _ProfileState();
+  State<ScheduleScreen> createState() => _ScheduleState();
 }
 
-class _ProfileState extends State<ProfileScreen> {
-  // ProfileScreen({
+class _ScheduleState extends State<ScheduleScreen> {
+  // ScheduleScreen({
   //   super.key,
   //   required this.id,
   // });
@@ -21,6 +23,7 @@ class _ProfileState extends State<ProfileScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
   TextEditingController passController = TextEditingController();
+  String dropdownValue = list.first;
 
   // setState(
   // nomeController.text
@@ -31,26 +34,16 @@ class _ProfileState extends State<ProfileScreen> {
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
-          title: const Text('Profile'),
+          title: const Text('Schedule'),
         ),
         body: SingleChildScrollView(
           child: Column(
             children: [
               const Padding(
                 padding: EdgeInsets.only(top: 20, bottom: 20),
-                child: Text('Perfil',
+                child: Text('Agendamento',
                     style: TextStyle(color: Colors.black, fontSize: 26)),
               ),
-              Padding(
-                  padding: const EdgeInsets.only(
-                      top: 10, right: 20, bottom: 10, left: 20),
-                  child: TextFormField(
-                    controller: nameController,
-                    decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'Nome',
-                        hintText: 'Nome Completo'),
-                  )),
               Padding(
                   padding: const EdgeInsets.only(
                       top: 10, right: 20, bottom: 10, left: 20),

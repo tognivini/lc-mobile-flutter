@@ -33,15 +33,6 @@ class _LoginState extends State<LoginScreen> {
         body: SingleChildScrollView(
           child: Column(
             children: [
-              // Padding(
-              //   padding: const EdgeInsets.only(top: 40, bottom: 20),
-              //   child: Center(
-              //       child: SizedBox(
-              //     width: 120,
-              //     height: 120,
-              //     child: Image.asset('assets/images/no-image.png'),
-              //   )),
-              // ),
               const Padding(
                 padding: EdgeInsets.only(top: 40, bottom: 20),
                 child: Text('Login',
@@ -86,16 +77,10 @@ class _LoginState extends State<LoginScreen> {
                         print(matriculaController.text);
                         print(emailController.text);
                         print(senhaController.text);
-
-                        // print('katchouwn', text);
-                        // // setState(() {
-
-                        // });
                       },
                       child: const Text('Login'),
                     ),
                   )),
-              // const size box here
               const SizedBox(
                 height: 220,
               ),
