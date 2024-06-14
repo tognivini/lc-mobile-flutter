@@ -1,0 +1,29 @@
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        backgroundColor: Colors.white,
+        appBar: AppBar(
+          title: const Text('Next Schedules'),
+        ),
+        body: const SingleChildScrollView(
+            child: Column(children: [
+          Padding(
+            padding: EdgeInsets.only(top: 20, left: 20, bottom: 20),
+            child: Text('Próximos agendamentos',
+                style: TextStyle(color: Colors.black, fontSize: 26)),
+          ),
+          Text('Últimos agendamentos',
+              style: TextStyle(color: Colors.black, fontSize: 26)),
+          Padding(
+              padding: EdgeInsets.only(top: 20, left: 0, bottom: 20),
+              // child: Text('Últimos agendamentos', style: TextStyle(color: Colors.black, fontSize: 26)),
+              child: SingleChildScrollView(child: Column(children: []))),
+
+          //end array
+        ]))
+        // )
+
+        );
+  }
+}

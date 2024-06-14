@@ -8,6 +8,25 @@ const List<String> list = <String>[
   'Lavanderia 2 - CEU 1',
   'Lavanderia 1 - CEU 2'
 ];
+
+const List<String> listHour = <String>[
+  '08:00',
+  '10:00',
+  '10:00',
+  '10:00',
+  '14:00',
+  '16:00',
+  '18:00',
+  '20:00',
+  '22:00',
+];
+
+const List<String> listMachines = <String>[
+  'Maquina 1',
+  'Maquina 2',
+  'Maquina 3',
+  'Maquina 4',
+];
 // import 'package:lc_mobile_flutter/src/components/SelectInput/SelectInput';
 
 // ignore: must_be_immutable
@@ -43,6 +62,8 @@ class _ScheduleState extends State<ScheduleScreen> {
   TextEditingController phoneController = TextEditingController();
   TextEditingController passController = TextEditingController();
   String dropdownValue = list.first;
+  String dropdownHourValue = listHour.first;
+  String dropdownMachineValue = listMachines.first;
 
   // setState(
   // nomeController.text
@@ -76,26 +97,26 @@ class _ScheduleState extends State<ScheduleScreen> {
           child: Column(
             children: [
               const Padding(
-                padding: EdgeInsets.only(top: 20, bottom: 20),
+                padding: EdgeInsets.only(top: 5, bottom: 5),
                 child: Text('Agendamento',
-                    style: TextStyle(color: Colors.black, fontSize: 26)),
+                    style: TextStyle(color: Colors.black, fontSize: 18)),
               ),
               Padding(
                   padding: const EdgeInsets.only(
-                      top: 10, left: 20, right: 20, bottom: 0),
+                      top: 5, left: 20, right: 20, bottom: 0),
                   child: Container(
-                    height: 80,
+                    height: 65,
                     width: 280,
                     decoration: BoxDecoration(
                         // color: Colors.blue,
                         borderRadius: BorderRadius.circular(5)),
                     child: DropdownButton<String>(
                       value: dropdownValue,
-                      icon: const Icon(Icons.arrow_downward),
+                      icon: const Icon(Icons.launch),
                       elevation: 16,
                       style: const TextStyle(
                           color: Color.fromARGB(255, 29, 28, 31)),
-                      padding: const EdgeInsets.only(top: 0, bottom: 20),
+                      padding: const EdgeInsets.only(top: 0, bottom: 0),
                       underline: Container(
                         height: 2,
                         color: Colors.deepPurpleAccent,
@@ -115,20 +136,9 @@ class _ScheduleState extends State<ScheduleScreen> {
                     ),
                   )),
               Padding(
-                  padding: const EdgeInsets.only(
-                      top: 10, right: 20, bottom: 10, left: 20),
-                  child: TextFormField(
-                    obscureText: true,
-                    controller: passController,
-                    decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'Senha',
-                        hintText: 'Digite uma senha válida por favor'),
-                  )),
-              Padding(
-                padding: const EdgeInsets.only(top: 20, bottom: 20),
+                padding: const EdgeInsets.only(top: 5, bottom: 5),
                 child: Container(
-                    height: 50,
+                    height: 30,
                     width: 100,
                     // decoration: BoxDecoration(
                     //     color: Colors.blue,
@@ -138,33 +148,21 @@ class _ScheduleState extends State<ScheduleScreen> {
                       children: <Widget>[
                         finaldate == null
                             ? const Text(
-                                "Use",
+                                "",
                                 textScaleFactor: 1.0,
                               )
                             : Text(
                                 "$finaldate",
                                 textScaleFactor: 1.0,
                               ),
-                        const SizedBox(height: 15),
-                        // Padding(
-                        //   padding: const EdgeInsets.only(top: 20, bottom: 20),
-                        //   child: ElevatedButton(
-                        //     child: Text('Button'),
-                        //     style: ElevatedButton.styleFrom(
-                        //         backgroundColor: Colors.blue),
-                        //     onPressed: () {
-                        //       print('____ping____');
-                        //       // callDatePicker();
-                        //     },
-                        //   ),
-                        // ),
                       ],
                     )),
               ),
+              //calendar
               Padding(
                   padding: const EdgeInsets.only(top: 5),
                   child: Container(
-                    height: 50,
+                    height: 40,
                     width: 100,
                     decoration: BoxDecoration(
                         color: Colors.blue,
@@ -177,32 +175,99 @@ class _ScheduleState extends State<ScheduleScreen> {
                       onPressed: () {
                         callDatePicker();
                       },
+                      child: const Text('DatePicker'),
+                    ),
+                  )),
+              //hour
+              Padding(
+                  padding: const EdgeInsets.only(
+                      top: 5, left: 20, right: 20, bottom: 0),
+                  child: Container(
+                    height: 65,
+                    width: 280,
+                    decoration: BoxDecoration(
+                        // color: Colors.blue,
+                        borderRadius: BorderRadius.circular(5)),
+                    child: DropdownButton<String>(
+                      value: dropdownHourValue,
+                      icon: const Icon(Icons.access_time),
+                      elevation: 16,
+                      style: const TextStyle(
+                          color: Color.fromARGB(255, 29, 28, 31)),
+                      padding: const EdgeInsets.only(top: 0, bottom: 0),
+                      underline: Container(
+                        height: 2,
+                        color: Colors.deepPurpleAccent,
+                      ),
+                      onChanged: (String? value) {
+                        // This is called when the user selects an item.
+                        setState(() {
+                          dropdownHourValue = value!;
+                        });
+                      },
+                      items: listHour
+                          .map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                    ),
+                  )),
+              Padding(
+                  padding: const EdgeInsets.only(
+                      top: 5, left: 20, right: 20, bottom: 0),
+                  child: Container(
+                    height: 65,
+                    width: 280,
+                    decoration: BoxDecoration(
+                        // color: Colors.blue,
+                        borderRadius: BorderRadius.circular(5)),
+                    child: DropdownButton<String>(
+                      value: dropdownMachineValue,
+                      icon: const Icon(Icons.local_laundry_service),
+                      elevation: 16,
+                      style: const TextStyle(
+                          color: Color.fromARGB(255, 29, 28, 31)),
+                      padding: const EdgeInsets.only(top: 0, bottom: 0),
+                      underline: Container(
+                        height: 2,
+                        color: Colors.deepPurpleAccent,
+                      ),
+                      onChanged: (String? value) {
+                        // This is called when the user selects an item.
+                        setState(() {
+                          dropdownMachineValue = value!;
+                        });
+                      },
+                      items: listMachines
+                          .map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                    ),
+                  )),
+              Padding(
+                  padding: const EdgeInsets.only(top: 15),
+                  child: Container(
+                    height: 40,
+                    width: 100,
+                    decoration: BoxDecoration(
+                        color: Colors.blue,
+                        borderRadius: BorderRadius.circular(5)),
+                    child: TextButton(
+                      style: ButtonStyle(
+                        foregroundColor:
+                            MaterialStateProperty.all<Color>(Colors.white),
+                      ),
+                      onPressed: () {
+                        print(nameController.text);
+                      },
                       child: const Text('Agendar'),
                     ),
                   )),
-
-              // Padding(
-              //     padding: const EdgeInsets.only(top: 5),
-              //     child: Container(
-              //       height: 50,
-              //       width: 100,
-              //       decoration: BoxDecoration(
-              //           color: Colors.blue,
-              //           borderRadius: BorderRadius.circular(5)),
-              //       child: TextButton(
-              //         style: ButtonStyle(
-              //           foregroundColor:
-              //               MaterialStateProperty.all<Color>(Colors.white),
-              //         ),
-              //         onPressed: () {
-              //           print(nameController.text);
-              //           print(matriculaController.text);
-              //           print(emailController.text);
-              //           print(passController.text);
-              //         },
-              //         child: const Text('Agendar'),
-              //       ),
-              //     )),
             ],
           ),
         ));

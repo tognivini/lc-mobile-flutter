@@ -17,31 +17,101 @@ class _NextSchedulesState extends State<NextSchedulesScreen> {
   TextEditingController phoneController = TextEditingController();
   TextEditingController passController = TextEditingController();
 
+  criaTabelaNextSchedules() {
+    return Table(
+      defaultColumnWidth: FixedColumnWidth(80.0),
+      border: const TableBorder(
+        horizontalInside: BorderSide(
+          color: Colors.black,
+          style: BorderStyle.solid,
+          width: 1.0,
+        ),
+        verticalInside: BorderSide(
+          color: Colors.black,
+          style: BorderStyle.solid,
+          width: 1.0,
+        ),
+      ),
+      children: [
+        _criarLinhaTable("Quarta, 22/05/24, 20:00"),
+        _criarLinhaTable("Quinta, 23/05/24, 18:00"),
+      ],
+    );
+  }
+
+  criaTabelaLastSchedules() {
+    return Table(
+      defaultColumnWidth: FixedColumnWidth(80.0),
+      border: const TableBorder(
+        horizontalInside: BorderSide(
+          color: Colors.black,
+          style: BorderStyle.solid,
+          width: 1.0,
+        ),
+        verticalInside: BorderSide(
+          color: Colors.black,
+          style: BorderStyle.solid,
+          width: 1.0,
+        ),
+      ),
+      children: [
+        _criarLinhaTable("Quarta, 22/03/24, 20:00"),
+        _criarLinhaTable("Quarta, 22/03/24, 20:00"),
+        _criarLinhaTable("Quarta, 22/03/24, 20:00"),
+        _criarLinhaTable("Quarta, 22/03/24, 20:00"),
+        _criarLinhaTable("Quarta, 22/03/24, 20:00"),
+        _criarLinhaTable("Quarta, 22/03/24, 20:00"),
+        _criarLinhaTable("Quinta, 23/03/24, 18:00"),
+      ],
+    );
+  }
+
+  _criarLinhaTable(String listaNomes) {
+    return TableRow(
+      children: listaNomes.split(',').map((name) {
+        return Container(
+          alignment: Alignment.center,
+          child: Text(
+            name,
+            style: TextStyle(fontSize: 12.0),
+          ),
+          padding: EdgeInsets.all(1.0),
+        );
+      }).toList(),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.white,
         appBar: AppBar(
           title: const Text('Next Schedules'),
         ),
-        body: const SingleChildScrollView(
-            child: Column(children: [
-          Padding(
-            padding: EdgeInsets.only(top: 20, left: 20, bottom: 20),
-            child: Text('Próximos agendamentos',
-                style: TextStyle(color: Colors.black, fontSize: 26)),
-          ),
-          Text('Últimos agendamentos',
-              style: TextStyle(color: Colors.black, fontSize: 26)),
-          Padding(
-              padding: EdgeInsets.only(top: 20, left: 0, bottom: 20),
-              // child: Text('Últimos agendamentos', style: TextStyle(color: Colors.black, fontSize: 26)),
-              child: SingleChildScrollView(child: Column(children: []))),
-
-          //end array
-        ]))
-        // )
-
-        );
+        body: Center(
+            child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            const Padding(
+              padding: EdgeInsets.only(top: 40, bottom: 20),
+              child: Text('Próximo Agendamentos',
+                  style: TextStyle(color: Colors.black, fontSize: 18)),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 10, left: 0, bottom: 10),
+              child: criaTabelaNextSchedules(),
+              // SingleChildScrollView(child: WidgetTable()),
+            ),
+            const Padding(
+              padding: EdgeInsets.only(top: 40, bottom: 20),
+              child: Text('Últimos Agendamentos',
+                  style: TextStyle(color: Colors.black, fontSize: 18)),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 10, left: 0, bottom: 10),
+              child: criaTabelaLastSchedules(),
+              // SingleChildScrollView(child: WidgetTable()),
+            ),
+          ],
+        )));
   }
 }
