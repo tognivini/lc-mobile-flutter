@@ -3,7 +3,7 @@ import 'package:lc_mobile_flutter/src/pages/AuthPages/RegisterScreen.dart';
 import 'package:lc_mobile_flutter/src/pages/CommonPages/NextSchedulesScreen.dart';
 import 'navigator_keys.dart';
 
-import 'src/pages/CommonPages/Home/Home.dart';
+import 'src/pages/CommonPages/Tab/NaviBottom.dart';
 import './src/pages/AuthPages/LoginScreen.dart';
 import './src/pages/CommonPages/ProfileScreen.dart';
 import './src/pages/CommonPages/ScheduleScreen.dart';

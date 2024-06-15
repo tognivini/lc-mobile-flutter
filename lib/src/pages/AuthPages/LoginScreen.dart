@@ -74,9 +74,6 @@ class _LoginState extends State<LoginScreen> {
                       ),
                       onPressed: () {
                         // print(nomeController.text);
-                        // print(matriculaController.text);
-                        // print(emailController.text);
-                        // print(senhaController.text);
                         Navigator.pushNamed(
                           context,
                           '/',

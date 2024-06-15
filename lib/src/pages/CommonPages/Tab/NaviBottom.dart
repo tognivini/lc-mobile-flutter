@@ -1,13 +1,9 @@
 // ignore_for_file: file_names, library_private_types_in_public_api
 
 import 'package:flutter/material.dart';
-import 'package:lc_mobile_flutter/src/pages/AuthPages/LoginScreen.dart';
-import 'package:lc_mobile_flutter/src/pages/AuthPages/RegisterScreen.dart';
 import 'package:lc_mobile_flutter/src/pages/CommonPages/NextSchedulesScreen.dart';
 import 'package:lc_mobile_flutter/src/pages/CommonPages/ProfileScreen.dart';
 import 'package:lc_mobile_flutter/src/pages/CommonPages/ScheduleScreen.dart';
-
-import '../../../../routes.dart';
 
 class NaviBottom extends StatefulWidget {
   @override
@@ -25,7 +21,6 @@ class _NaviBottomState extends State<NaviBottom> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(title: Text("Open Houze")),
       body: _children[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         // backgroundColor: Colors.blue,
