@@ -77,12 +77,6 @@ class _ScheduleState extends State<ScheduleScreen> {
       initialDate: DateTime.now(),
       firstDate: DateTime(2018),
       lastDate: DateTime(2030),
-      // builder: (BuildContext context, Widget child) {
-      //   return Theme(
-      //     data: ThemeData.light(),
-      //     child: child,
-      //   );
-      // },
     );
   }
 
@@ -91,7 +85,7 @@ class _ScheduleState extends State<ScheduleScreen> {
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
-          title: const Text('Schedule'),
+          title: const Text('Agendamento'),
         ),
         body: SingleChildScrollView(
           child: Column(
@@ -175,7 +169,7 @@ class _ScheduleState extends State<ScheduleScreen> {
                       onPressed: () {
                         callDatePicker();
                       },
-                      child: const Text('DatePicker'),
+                      child: const Text('Data'),
                     ),
                   )),
               //hour

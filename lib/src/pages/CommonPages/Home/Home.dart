@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 
-// import '../../routes_config.dart';
 import '../../../../routes.dart';
 import 'home_controller.dart';
 
@@ -43,7 +42,7 @@ class _HomePageState extends State<HomePage> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.calendar_today),
-            label: 'Últimos agendamentos',
+            label: 'Próximos agendamentos',
           ),
         ],
         currentIndex: _controller.currentTab,

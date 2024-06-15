@@ -19,7 +19,7 @@ class _NextSchedulesState extends State<NextSchedulesScreen> {
 
   criaTabelaNextSchedules() {
     return Table(
-      defaultColumnWidth: FixedColumnWidth(80.0),
+      defaultColumnWidth: const FixedColumnWidth(80.0),
       border: const TableBorder(
         horizontalInside: BorderSide(
           color: Colors.black,
@@ -41,7 +41,7 @@ class _NextSchedulesState extends State<NextSchedulesScreen> {
 
   criaTabelaLastSchedules() {
     return Table(
-      defaultColumnWidth: FixedColumnWidth(80.0),
+      defaultColumnWidth: const FixedColumnWidth(80.0),
       border: const TableBorder(
         horizontalInside: BorderSide(
           color: Colors.black,
@@ -85,7 +85,7 @@ class _NextSchedulesState extends State<NextSchedulesScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Next Schedules'),
+          title: const Text('Próximos Agendamentos'),
         ),
         body: Center(
             child: Column(

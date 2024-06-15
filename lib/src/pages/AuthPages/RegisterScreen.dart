@@ -1,10 +1,11 @@
 // ignore_for_file: file_names, avoid_print, override_on_non_overriding_member
 
 import 'package:flutter/material.dart';
+// import 'navigator_keys.dart';
 
 // ignore: must_be_immutable
 class RegisterScreen extends StatefulWidget {
-  const RegisterScreen({super.key});
+  const RegisterScreen({super.key, String? name});
   // String id;
 
   @override
@@ -29,19 +30,19 @@ class _RegisterState extends State<RegisterScreen> {
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
-          title: const Text('Register'),
+          title: const Text('Registro'),
         ),
         body: SingleChildScrollView(
           child: Column(
             children: [
               const Padding(
-                padding: EdgeInsets.only(top: 20),
+                padding: EdgeInsets.only(top: 10),
                 child: Text('Crie sua conta',
                     style: TextStyle(color: Colors.black, fontSize: 26)),
               ),
               Padding(
                   padding: const EdgeInsets.only(
-                      top: 30, right: 20, bottom: 10, left: 20),
+                      top: 20, right: 20, bottom: 10, left: 20),
                   child: TextFormField(
                     controller: nameController,
                     decoration: const InputDecoration(
@@ -97,7 +98,7 @@ class _RegisterState extends State<RegisterScreen> {
                   onPressed: () {
                     Navigator.pushNamed(
                       context,
-                      '/login/1',
+                      '/auth/login',
                     );
                   },
                   child: const Text('Já possui uma conta?',
@@ -105,7 +106,7 @@ class _RegisterState extends State<RegisterScreen> {
               Padding(
                   padding: const EdgeInsets.only(top: 5),
                   child: Container(
-                    height: 50,
+                    height: 40,
                     width: 150,
                     decoration: BoxDecoration(
                         color: Colors.blue,
@@ -126,16 +127,8 @@ class _RegisterState extends State<RegisterScreen> {
                   )),
               // const size box here
               const SizedBox(
-                height: 140,
+                height: 100,
               ),
-              ElevatedButton(
-                  onPressed: () {
-                    print(nameController.text);
-                    print(matriculaController.text);
-                    print(emailController.text);
-                    print(passController.text);
-                  },
-                  child: const Text("Adicionar"))
             ],
           ),
         ));

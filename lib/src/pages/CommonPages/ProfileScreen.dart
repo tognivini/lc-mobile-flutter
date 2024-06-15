@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 
+// import 'package:lc_mobile_flutter/navigator_keys.dart';
 // ignore: must_be_immutable
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key, String? name});
@@ -31,19 +32,19 @@ class _ProfileState extends State<ProfileScreen> {
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
-          title: const Text('Profile'),
+          title: const Text('Perfil'),
         ),
         body: SingleChildScrollView(
           child: Column(
             children: [
               const Padding(
-                padding: EdgeInsets.only(top: 20, bottom: 20),
+                padding: EdgeInsets.only(top: 20, bottom: 10),
                 child: Text('Perfil',
-                    style: TextStyle(color: Colors.black, fontSize: 26)),
+                    style: TextStyle(color: Colors.black, fontSize: 18)),
               ),
               Padding(
                   padding: const EdgeInsets.only(
-                      top: 10, right: 20, bottom: 10, left: 20),
+                      top: 10, right: 20, bottom: 5, left: 20),
                   child: TextFormField(
                     controller: nameController,
                     decoration: const InputDecoration(
@@ -53,10 +54,11 @@ class _ProfileState extends State<ProfileScreen> {
                   )),
               Padding(
                   padding: const EdgeInsets.only(
-                      top: 10, right: 20, bottom: 10, left: 20),
+                      top: 5, right: 20, bottom: 5, left: 20),
                   child: TextFormField(
                     keyboardType: TextInputType.emailAddress,
                     controller: emailController,
+                    // style: const TextStyle(fontSize: 12),
                     decoration: const InputDecoration(
                         border: OutlineInputBorder(),
                         labelText: 'Email',
@@ -64,7 +66,7 @@ class _ProfileState extends State<ProfileScreen> {
                   )),
               Padding(
                   padding: const EdgeInsets.only(
-                      top: 10, right: 20, bottom: 10, left: 20),
+                      top: 5, right: 20, bottom: 5, left: 20),
                   child: TextFormField(
                     keyboardType: TextInputType.phone,
                     controller: phoneController,
@@ -75,7 +77,7 @@ class _ProfileState extends State<ProfileScreen> {
                   )),
               Padding(
                   padding: const EdgeInsets.only(
-                      top: 10, right: 20, bottom: 10, left: 20),
+                      top: 5, right: 20, bottom: 5, left: 20),
                   child: TextFormField(
                     obscureText: true,
                     controller: passController,
@@ -85,9 +87,9 @@ class _ProfileState extends State<ProfileScreen> {
                         hintText: 'Digite uma senha válida por favor'),
                   )),
               Padding(
-                  padding: const EdgeInsets.only(top: 20),
+                  padding: const EdgeInsets.only(top: 10),
                   child: Container(
-                    height: 50,
+                    height: 40,
                     width: 100,
                     decoration: BoxDecoration(
                         color: Colors.blue,
@@ -104,6 +106,29 @@ class _ProfileState extends State<ProfileScreen> {
                         print(passController.text);
                       },
                       child: const Text('Editar'),
+                    ),
+                  )),
+              Padding(
+                  padding: const EdgeInsets.only(top: 10),
+                  child: Container(
+                    height: 40,
+                    width: 100,
+                    decoration: BoxDecoration(
+                        color: Colors.red,
+                        borderRadius: BorderRadius.circular(5)),
+                    child: TextButton(
+                      style: ButtonStyle(
+                        foregroundColor:
+                            MaterialStateProperty.all<Color>(Colors.white),
+                      ),
+                      onPressed: () {
+                        // NavigatorKeys.currentState.pushNamed('/auth/login');
+                        Navigator.pushNamed(
+                          context,
+                          '/auth/login',
+                        );
+                      },
+                      child: const Text('Logout'),
                     ),
                   )),
             ],

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+  const LoginScreen({super.key, String? name});
   // String id;
 
   @override
@@ -34,7 +34,7 @@ class _LoginState extends State<LoginScreen> {
           child: Column(
             children: [
               const Padding(
-                padding: EdgeInsets.only(top: 40, bottom: 20),
+                padding: EdgeInsets.only(top: 20, bottom: 20),
                 child: Text('Login',
                     style: TextStyle(color: Colors.black, fontSize: 26)),
               ),
@@ -82,13 +82,13 @@ class _LoginState extends State<LoginScreen> {
                     ),
                   )),
               const SizedBox(
-                height: 220,
+                height: 100,
               ),
               TextButton(
                   onPressed: () {
                     Navigator.pushNamed(
                       context,
-                      '/register/1',
+                      '/auth/register',
                     );
                   },
                   child: const Text('Crie uma conta',

@@ -5,4 +5,6 @@ class NavigatorKeys {
   static final GlobalKey<NavigatorState> navigatorKeyProfile = GlobalKey();
   static final GlobalKey<NavigatorState> navigatorKeyBusiness = GlobalKey();
   static final GlobalKey<NavigatorState> navigatorKeySchedule = GlobalKey();
+  static final GlobalKey<NavigatorState> navigatorKeyAuthLogin = GlobalKey();
+  static final GlobalKey<NavigatorState> navigatorKeyAuthRegister = GlobalKey();
 }
