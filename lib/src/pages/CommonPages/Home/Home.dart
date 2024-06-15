@@ -1,40 +1,42 @@
 // ignore_for_file: file_names, library_private_types_in_public_api
 
 import 'package:flutter/material.dart';
+import 'package:lc_mobile_flutter/src/pages/AuthPages/LoginScreen.dart';
+import 'package:lc_mobile_flutter/src/pages/AuthPages/RegisterScreen.dart';
+import 'package:lc_mobile_flutter/src/pages/CommonPages/NextSchedulesScreen.dart';
+import 'package:lc_mobile_flutter/src/pages/CommonPages/ProfileScreen.dart';
+import 'package:lc_mobile_flutter/src/pages/CommonPages/ScheduleScreen.dart';
 
 import '../../../../routes.dart';
-import 'home_controller.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
-
+class NaviBottom extends StatefulWidget {
   @override
-  _HomePageState createState() => _HomePageState();
+  _NaviBottomState createState() => _NaviBottomState();
 }
 
-class _HomePageState extends State<HomePage> {
-  final _controller = HomeController();
-
-  @override
-  void initState() {
-    super.initState();
-  }
+class _NaviBottomState extends State<NaviBottom> {
+  int _currentIndex = 0;
+  final List<Widget> _children = [
+    const ProfileScreen(),
+    const ScheduleScreen(),
+    const NextSchedulesScreen(),
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: IndexedStack(
-          index: _controller.currentTab,
-          children: tabs,
-        ),
-      ),
+      // appBar: AppBar(title: Text("Open Houze")),
+      body: _children[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        items: const <BottomNavigationBarItem>[
+        // backgroundColor: Colors.blue,
+        // selectedItemColor: Colors.black,
+        // unselectedItemColor: Colors.white,
+        onTap: onTabTapped,
+        currentIndex: _currentIndex,
+        items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.people),
-            label: 'Perfil',
+            label: 'Profile',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.edit_calendar),
@@ -45,15 +47,13 @@ class _HomePageState extends State<HomePage> {
             label: 'Próximos agendamentos',
           ),
         ],
-        currentIndex: _controller.currentTab,
-        onTap: (int index) {
-          setState(
-            () {
-              _controller.onItemTapped(index: index);
-            },
-          );
-        },
       ),
     );
+  }
+
+  void onTabTapped(int index) {
+    setState(() {
+      _currentIndex = index;
+    });
   }
 }

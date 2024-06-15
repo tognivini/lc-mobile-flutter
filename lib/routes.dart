@@ -13,8 +13,8 @@ get tabs => [
       TabItemWidget(
         routes: {
           '/': (BuildContext context) => const ProfileScreen(),
-          '/auth/login': (BuildContext context) => const LoginScreen(),
-          '/auth/register': (BuildContext context) => const RegisterScreen(),
+          // '/auth/login': (BuildContext context) => const LoginScreen(),
+          // '/auth/register': (BuildContext context) => const RegisterScreen(),
         },
         navigatorKey: NavigatorKeys.navigatorKeyProfile,
       ),
@@ -31,17 +31,11 @@ get tabs => [
         },
         navigatorKey: NavigatorKeys.navigatorKeySchedule,
       ),
-      TabItemWidget(
-        routes: {
-          '/auth/login': (BuildContext context) => const LoginScreen(),
-          '/auth/register': (BuildContext context) => const RegisterScreen(),
-        },
-        navigatorKey: NavigatorKeys.navigatorKeyAuthLogin,
-      ),
     ];
 
 Map<String, WidgetBuilder> get routes => {
-      '/': (context) => const HomePage(),
+      // '/': (context) => const HomePage(),
+      '/': (context) => NaviBottom(),
       '/auth/login': (context) {
         final args = ModalRoute.of(context)!.settings.arguments;
         if (args is Map<String, String>) {
@@ -58,7 +52,7 @@ Map<String, WidgetBuilder> get routes => {
           return RegisterScreen(name: name);
         }
 
-        return const LoginScreen();
+        return const RegisterScreen();
       }
       // '/profile': (context) {
       //   final args = ModalRoute.of(context)!.settings.arguments;

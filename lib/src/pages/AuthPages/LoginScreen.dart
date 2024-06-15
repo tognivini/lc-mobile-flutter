@@ -73,10 +73,14 @@ class _LoginState extends State<LoginScreen> {
                             MaterialStateProperty.all<Color>(Colors.white),
                       ),
                       onPressed: () {
-                        print(nomeController.text);
-                        print(matriculaController.text);
-                        print(emailController.text);
-                        print(senhaController.text);
+                        // print(nomeController.text);
+                        // print(matriculaController.text);
+                        // print(emailController.text);
+                        // print(senhaController.text);
+                        Navigator.pushNamed(
+                          context,
+                          '/',
+                        );
                       },
                       child: const Text('Login'),
                     ),
