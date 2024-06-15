@@ -38,62 +38,125 @@ class _RegisterState extends State<RegisterScreen> {
               const Padding(
                 padding: EdgeInsets.only(top: 10),
                 child: Text('Crie sua conta',
-                    style: TextStyle(color: Colors.black, fontSize: 26)),
+                    style: TextStyle(color: Colors.black, fontSize: 18)),
               ),
               Padding(
-                  padding: const EdgeInsets.only(
-                      top: 20, right: 20, bottom: 10, left: 20),
-                  child: TextFormField(
-                    controller: nameController,
-                    decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'Nome',
-                        hintText: 'Nome Completo'),
-                  )),
+                padding: const EdgeInsets.only(
+                    top: 5, right: 20, bottom: 5, left: 20),
+                child: TextFormField(
+                  autofocus: true,
+                  keyboardType: TextInputType.name,
+                  controller: matriculaController,
+                  // initialValue: 'sathyabaman@gmail.com',
+                  style: const TextStyle(
+                      fontWeight: FontWeight.normal, color: Colors.black),
+                  decoration: InputDecoration(
+                    labelText: 'Matrícula',
+                    hintText: 'Matrícula',
+                    contentPadding:
+                        const EdgeInsets.only(top: 5, bottom: 5, left: 10),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8.0)),
+                  ),
+                ),
+              ),
               Padding(
-                  padding: const EdgeInsets.only(
-                      top: 10, right: 20, bottom: 10, left: 20),
-                  child: TextFormField(
-                    keyboardType: TextInputType.emailAddress,
-                    controller: emailController,
-                    decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'Email',
-                        hintText: 'Digite um e-mail válido por favor'),
-                  )),
+                padding: const EdgeInsets.only(
+                    top: 5, right: 20, bottom: 5, left: 20),
+                child: TextFormField(
+                  autofocus: true,
+                  keyboardType: TextInputType.name,
+                  controller: nameController,
+                  // initialValue: 'sathyabaman@gmail.com',
+                  style: const TextStyle(
+                      fontWeight: FontWeight.normal, color: Colors.black),
+                  decoration: InputDecoration(
+                    labelText: 'Nome',
+                    // hintText: 'Nome Completo',
+                    hintText: 'Nome Completo',
+                    contentPadding:
+                        const EdgeInsets.only(top: 5, bottom: 5, left: 10),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8.0)),
+                  ),
+                ),
+              ),
               Padding(
-                  padding: const EdgeInsets.only(
-                      top: 10, right: 20, bottom: 10, left: 20),
-                  child: TextFormField(
-                    keyboardType: TextInputType.phone,
-                    controller: phoneController,
-                    decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'Telefone',
-                        hintText: '(88) 8 xxxx-xxxx'),
-                  )),
+                padding: const EdgeInsets.only(
+                    top: 5, right: 20, bottom: 5, left: 20),
+                child: TextFormField(
+                  keyboardType: TextInputType.emailAddress,
+                  controller: emailController,
+                  // initialValue: 'sathyabaman@gmail.com',
+                  style: const TextStyle(
+                      fontWeight: FontWeight.normal, color: Colors.black),
+                  decoration: InputDecoration(
+                    labelText: 'Email',
+                    hintText: 'Digite um e-mail válido por favor',
+                    contentPadding:
+                        const EdgeInsets.only(top: 5, bottom: 5, left: 10),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8.0)),
+                  ),
+                ),
+              ),
               Padding(
-                  padding: const EdgeInsets.only(
-                      top: 10, right: 20, bottom: 10, left: 20),
-                  child: TextFormField(
-                    obscureText: true,
-                    controller: passController,
-                    decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'Senha',
-                        hintText: 'Digite uma senha válida por favor'),
-                  )),
+                padding: const EdgeInsets.only(
+                    top: 5, right: 20, bottom: 5, left: 20),
+                child: TextFormField(
+                  keyboardType: TextInputType.phone,
+                  controller: phoneController,
+                  // initialValue: 'sathyabaman@gmail.com',
+                  style: const TextStyle(
+                      fontWeight: FontWeight.normal, color: Colors.black),
+                  decoration: InputDecoration(
+                    labelText: 'Telefone',
+                    hintText: '(88) 8 xxxx-xxxx',
+                    contentPadding:
+                        const EdgeInsets.only(top: 5, bottom: 5, left: 10),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8.0)),
+                  ),
+                ),
+              ),
               Padding(
-                  padding: const EdgeInsets.only(
-                      top: 10, right: 20, bottom: 5, left: 20),
-                  child: TextFormField(
-                    obscureText: true,
-                    controller: rePassController,
-                    decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'Confirmar senha',
-                        hintText: 'Repita a senha por favor'),
-                  )),
+                padding: const EdgeInsets.only(
+                    top: 5, right: 20, bottom: 5, left: 20),
+                child: TextFormField(
+                  keyboardType: TextInputType.visiblePassword,
+                  controller: passController,
+                  // initialValue: 'sathyabaman@gmail.com',
+                  style: const TextStyle(
+                      fontWeight: FontWeight.normal, color: Colors.black),
+                  decoration: InputDecoration(
+                    labelText: 'Senha',
+                    hintText: 'Digite uma senha válida por favor',
+                    contentPadding:
+                        const EdgeInsets.only(top: 5, bottom: 5, left: 10),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8.0)),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(
+                    top: 5, right: 20, bottom: 5, left: 20),
+                child: TextFormField(
+                  keyboardType: TextInputType.visiblePassword,
+                  controller: passController,
+                  // initialValue: 'sathyabaman@gmail.com',
+                  style: const TextStyle(
+                      fontWeight: FontWeight.normal, color: Colors.black),
+                  decoration: InputDecoration(
+                    labelText: 'Confirmar senha',
+                    hintText: 'Repita a senha por favor',
+                    contentPadding:
+                        const EdgeInsets.only(top: 5, bottom: 5, left: 10),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8.0)),
+                  ),
+                ),
+              ),
               TextButton(
                   onPressed: () {
                     Navigator.pushNamed(
@@ -106,7 +169,7 @@ class _RegisterState extends State<RegisterScreen> {
               Padding(
                   padding: const EdgeInsets.only(top: 5),
                   child: Container(
-                    height: 40,
+                    height: 35,
                     width: 150,
                     decoration: BoxDecoration(
                         color: Colors.blue,
@@ -117,6 +180,10 @@ class _RegisterState extends State<RegisterScreen> {
                             MaterialStateProperty.all<Color>(Colors.white),
                       ),
                       onPressed: () {
+                        Navigator.pushNamed(
+                          context,
+                          '/auth/login',
+                        );
                         // print('katchouwn', text);
                         // // setState(() {
 

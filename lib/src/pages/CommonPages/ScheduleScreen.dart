@@ -132,7 +132,7 @@ class _ScheduleState extends State<ScheduleScreen> {
               Padding(
                 padding: const EdgeInsets.only(top: 5, bottom: 5),
                 child: Container(
-                    height: 30,
+                    height: 50,
                     width: 100,
                     // decoration: BoxDecoration(
                     //     color: Colors.blue,

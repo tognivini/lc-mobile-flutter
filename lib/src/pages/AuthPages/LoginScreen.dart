@@ -12,16 +12,9 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginState extends State<LoginScreen> {
-  // LoginScreen({
-  //   super.key,
-  //   required this.id,
-  // });
-
-  TextEditingController nomeController = TextEditingController();
   TextEditingController matriculaController = TextEditingController();
   TextEditingController emailController = TextEditingController();
-  TextEditingController senhaController = TextEditingController();
-  TextEditingController imagemController = TextEditingController();
+  TextEditingController passController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -36,33 +29,51 @@ class _LoginState extends State<LoginScreen> {
               const Padding(
                 padding: EdgeInsets.only(top: 20, bottom: 20),
                 child: Text('Login',
-                    style: TextStyle(color: Colors.black, fontSize: 26)),
+                    style: TextStyle(color: Colors.black, fontSize: 18)),
               ),
               Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: TextFormField(
-                    keyboardType: TextInputType.emailAddress,
-                    controller: emailController,
-                    decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'Email',
-                        hintText: 'Email válido plz'),
-                  )),
+                padding: const EdgeInsets.only(
+                    top: 5, right: 20, bottom: 5, left: 20),
+                child: TextFormField(
+                  autofocus: true,
+                  keyboardType: TextInputType.name,
+                  controller: emailController,
+                  // initialValue: 'sathyabaman@gmail.com',
+                  style: const TextStyle(
+                      fontWeight: FontWeight.normal, color: Colors.black),
+                  decoration: InputDecoration(
+                    labelText: 'Email',
+                    hintText: 'Email válido plz',
+                    contentPadding:
+                        const EdgeInsets.only(top: 5, bottom: 5, left: 10),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8.0)),
+                  ),
+                ),
+              ),
               Padding(
-                  padding: const EdgeInsets.only(
-                      top: 20, right: 20, bottom: 0, left: 20),
-                  child: TextFormField(
-                    obscureText: true,
-                    controller: senhaController,
-                    decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'Password',
-                        hintText: 'Pass válido plz'),
-                  )),
+                padding: const EdgeInsets.only(
+                    top: 5, right: 20, bottom: 5, left: 20),
+                child: TextFormField(
+                  keyboardType: TextInputType.visiblePassword,
+                  controller: passController,
+                  // initialValue: 'sathyabaman@gmail.com',
+                  style: const TextStyle(
+                      fontWeight: FontWeight.normal, color: Colors.black),
+                  decoration: InputDecoration(
+                    labelText: 'Password',
+                    hintText: 'Pass válido plz',
+                    contentPadding:
+                        const EdgeInsets.only(top: 5, bottom: 5, left: 10),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8.0)),
+                  ),
+                ),
+              ),
               Padding(
                   padding: const EdgeInsets.only(top: 20),
                   child: Container(
-                    height: 50,
+                    height: 35,
                     width: 100,
                     decoration: BoxDecoration(
                         color: Colors.blue,

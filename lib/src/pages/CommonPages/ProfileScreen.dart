@@ -37,59 +37,133 @@ class _ProfileState extends State<ProfileScreen> {
         body: SingleChildScrollView(
           child: Column(
             children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 0, left: 200),
+                child: TextButton(
+                  style: TextButton.styleFrom(
+                    textStyle: const TextStyle(
+                      height: 3,
+                      fontSize: 13,
+                      color: Colors.red,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  onPressed: () {
+                    Navigator.pushNamed(
+                      context,
+                      '/auth/login',
+                    );
+                  },
+                  child: const Text('Logout'),
+                ),
+              ),
               const Padding(
-                padding: EdgeInsets.only(top: 20, bottom: 10),
+                padding: EdgeInsets.only(top: 5, bottom: 10),
                 child: Text('Perfil',
                     style: TextStyle(color: Colors.black, fontSize: 18)),
               ),
               Padding(
-                  padding: const EdgeInsets.only(
-                      top: 10, right: 20, bottom: 5, left: 20),
-                  child: TextFormField(
-                    controller: nameController,
-                    decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'Nome',
-                        hintText: 'Nome Completo'),
-                  )),
+                padding: const EdgeInsets.only(
+                    top: 5, right: 20, bottom: 5, left: 20),
+                child: TextFormField(
+                  autofocus: true,
+                  keyboardType: TextInputType.name,
+                  controller: matriculaController,
+                  // initialValue: 'sathyabaman@gmail.com',
+                  style: const TextStyle(
+                      fontWeight: FontWeight.normal, color: Colors.black),
+                  decoration: InputDecoration(
+                    labelText: 'Matrícula',
+                    hintText: 'Matrícula',
+                    contentPadding:
+                        const EdgeInsets.only(top: 5, bottom: 5, left: 10),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8.0)),
+                  ),
+                ),
+              ),
               Padding(
-                  padding: const EdgeInsets.only(
-                      top: 5, right: 20, bottom: 5, left: 20),
-                  child: TextFormField(
-                    keyboardType: TextInputType.emailAddress,
-                    controller: emailController,
-                    // style: const TextStyle(fontSize: 12),
-                    decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'Email',
-                        hintText: 'Digite um e-mail válido por favor'),
-                  )),
+                padding: const EdgeInsets.only(
+                    top: 5, right: 20, bottom: 5, left: 20),
+                child: TextFormField(
+                  autofocus: true,
+                  keyboardType: TextInputType.name,
+                  controller: nameController,
+                  // initialValue: 'sathyabaman@gmail.com',
+                  style: const TextStyle(
+                      fontWeight: FontWeight.normal, color: Colors.black),
+                  decoration: InputDecoration(
+                    labelText: 'Nome',
+                    // hintText: 'Nome Completo',
+                    hintText: 'Nome Completo',
+                    contentPadding:
+                        const EdgeInsets.only(top: 5, bottom: 5, left: 10),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8.0)),
+                  ),
+                ),
+              ),
               Padding(
-                  padding: const EdgeInsets.only(
-                      top: 5, right: 20, bottom: 5, left: 20),
-                  child: TextFormField(
-                    keyboardType: TextInputType.phone,
-                    controller: phoneController,
-                    decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'Telefone',
-                        hintText: '(88) 8 xxxx-xxxx'),
-                  )),
+                padding: const EdgeInsets.only(
+                    top: 5, right: 20, bottom: 5, left: 20),
+                child: TextFormField(
+                  keyboardType: TextInputType.emailAddress,
+                  controller: emailController,
+                  // initialValue: 'sathyabaman@gmail.com',
+                  style: const TextStyle(
+                      fontWeight: FontWeight.normal, color: Colors.black),
+                  decoration: InputDecoration(
+                    labelText: 'Email',
+                    hintText: 'Digite um e-mail válido por favor',
+                    contentPadding:
+                        const EdgeInsets.only(top: 5, bottom: 5, left: 10),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8.0)),
+                  ),
+                ),
+              ),
               Padding(
-                  padding: const EdgeInsets.only(
-                      top: 5, right: 20, bottom: 5, left: 20),
-                  child: TextFormField(
-                    obscureText: true,
-                    controller: passController,
-                    decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'Senha',
-                        hintText: 'Digite uma senha válida por favor'),
-                  )),
+                padding: const EdgeInsets.only(
+                    top: 5, right: 20, bottom: 5, left: 20),
+                child: TextFormField(
+                  keyboardType: TextInputType.phone,
+                  controller: phoneController,
+                  // initialValue: 'sathyabaman@gmail.com',
+                  style: const TextStyle(
+                      fontWeight: FontWeight.normal, color: Colors.black),
+                  decoration: InputDecoration(
+                    labelText: 'Telefone',
+                    hintText: '(88) 8 xxxx-xxxx',
+                    contentPadding:
+                        const EdgeInsets.only(top: 5, bottom: 5, left: 10),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8.0)),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(
+                    top: 5, right: 20, bottom: 5, left: 20),
+                child: TextFormField(
+                  keyboardType: TextInputType.visiblePassword,
+                  controller: passController,
+                  // initialValue: 'sathyabaman@gmail.com',
+                  style: const TextStyle(
+                      fontWeight: FontWeight.normal, color: Colors.black),
+                  decoration: InputDecoration(
+                    labelText: 'Senha',
+                    hintText: 'Digite uma senha válida por favor',
+                    contentPadding:
+                        const EdgeInsets.only(top: 5, bottom: 5, left: 10),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8.0)),
+                  ),
+                ),
+              ),
               Padding(
                   padding: const EdgeInsets.only(top: 10),
                   child: Container(
-                    height: 40,
+                    height: 35,
                     width: 100,
                     decoration: BoxDecoration(
                         color: Colors.blue,
@@ -106,29 +180,6 @@ class _ProfileState extends State<ProfileScreen> {
                         print(passController.text);
                       },
                       child: const Text('Editar'),
-                    ),
-                  )),
-              Padding(
-                  padding: const EdgeInsets.only(top: 10),
-                  child: Container(
-                    height: 40,
-                    width: 100,
-                    decoration: BoxDecoration(
-                        color: Colors.red,
-                        borderRadius: BorderRadius.circular(5)),
-                    child: TextButton(
-                      style: ButtonStyle(
-                        foregroundColor:
-                            MaterialStateProperty.all<Color>(Colors.white),
-                      ),
-                      onPressed: () {
-                        // NavigatorKeys.currentState.pushNamed('/auth/login');
-                        Navigator.pushNamed(
-                          context,
-                          '/auth/login',
-                        );
-                      },
-                      child: const Text('Logout'),
                     ),
                   )),
             ],

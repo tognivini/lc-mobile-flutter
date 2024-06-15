@@ -31,7 +31,7 @@ class _NaviBottomState extends State<NaviBottom> {
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.people),
-            label: 'Profile',
+            label: 'Perfil',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.edit_calendar),
