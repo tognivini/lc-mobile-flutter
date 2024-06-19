@@ -61,6 +61,7 @@ class _ScheduleState extends State<ScheduleScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
   TextEditingController passController = TextEditingController();
+  TextEditingController dataController = TextEditingController();
   String dropdownValue = list.first;
   String dropdownHourValue = listHour.first;
   String dropdownMachineValue = listMachines.first;
@@ -101,9 +102,8 @@ class _ScheduleState extends State<ScheduleScreen> {
                   child: Container(
                     height: 65,
                     width: 280,
-                    decoration: BoxDecoration(
-                        // color: Colors.blue,
-                        borderRadius: BorderRadius.circular(5)),
+                    decoration:
+                        BoxDecoration(borderRadius: BorderRadius.circular(5)),
                     child: DropdownButton<String>(
                       value: dropdownValue,
                       icon: const Icon(Icons.launch),
@@ -129,49 +129,56 @@ class _ScheduleState extends State<ScheduleScreen> {
                       }).toList(),
                     ),
                   )),
-              Padding(
-                padding: const EdgeInsets.only(top: 5, bottom: 5),
-                child: Container(
-                    height: 50,
-                    width: 100,
-                    // decoration: BoxDecoration(
-                    //     color: Colors.blue,
-                    //     borderRadius: BorderRadius.circular(20)),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        finaldate == null
-                            ? const Text(
-                                "",
-                                textScaleFactor: 1.0,
-                              )
-                            : Text(
-                                "$finaldate",
-                                textScaleFactor: 1.0,
-                              ),
-                      ],
-                    )),
-              ),
               //calendar
               Padding(
-                  padding: const EdgeInsets.only(top: 5),
-                  child: Container(
-                    height: 40,
-                    width: 100,
-                    decoration: BoxDecoration(
-                        color: Colors.blue,
-                        borderRadius: BorderRadius.circular(5)),
-                    child: TextButton(
-                      style: ButtonStyle(
-                        foregroundColor:
-                            MaterialStateProperty.all<Color>(Colors.white),
-                      ),
-                      onPressed: () {
-                        callDatePicker();
-                      },
-                      child: const Text('Data'),
+                padding:
+                    EdgeInsets.only(top: 5, right: 20, bottom: 0, left: 20),
+                child: Container(
+                  padding:
+                      EdgeInsets.only(top: 5, right: 0, bottom: 5, left: 0),
+                  decoration: const BoxDecoration(
+                    border: Border(
+                      bottom: BorderSide(
+                          color: Colors.deepPurpleAccent, width: 2.4),
                     ),
-                  )),
+                  ),
+                  child: Row(
+                    children: <Widget>[
+                      Expanded(
+                        child: SizedBox(
+                            height: 30,
+                            width: 60,
+                            // decoration: BoxDecoration(
+                            //     color: Colors.blue,
+                            //     borderRadius: BorderRadius.circular(20)),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                finaldate == null
+                                    ? const Text(
+                                        "",
+                                        textScaleFactor: 1.0,
+                                      )
+                                    : Text(
+                                        "$finaldate",
+                                        textScaleFactor: 0.8,
+                                      ),
+                              ],
+                            )),
+                      ),
+                      Expanded(
+                        child: IconButton(
+                          icon: const Icon(Icons.calendar_month, size: 26),
+                          onPressed: () {
+                            callDatePicker();
+                          },
+                        ),
+                        // icon: const Icon(Icons.local_laundry_service),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
               //hour
               Padding(
                   padding: const EdgeInsets.only(
