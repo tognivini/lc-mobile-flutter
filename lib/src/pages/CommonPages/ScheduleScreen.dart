@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 
-const List<String> list = <String>[
+const List<String> listLaundry = <String>[
   'Lavanderia 1 - CEU 1',
   'Lavanderia 2 - CEU 1',
   'Lavanderia 1 - CEU 2'
@@ -11,8 +11,6 @@ const List<String> list = <String>[
 
 const List<String> listHour = <String>[
   '08:00',
-  '10:00',
-  '10:00',
   '10:00',
   '14:00',
   '16:00',
@@ -68,7 +66,7 @@ class _ScheduleState extends State<ScheduleScreen> {
   TextEditingController phoneController = TextEditingController();
   TextEditingController passController = TextEditingController();
   TextEditingController dataController = TextEditingController();
-  String dropdownValue = list.first;
+  String dropdownLaundry = listLaundry.first;
   String dropdownHourValue = listHour.first;
   String dropdownMachineValue = listMachines.first;
 
@@ -109,7 +107,7 @@ class _ScheduleState extends State<ScheduleScreen> {
                     decoration:
                         BoxDecoration(borderRadius: BorderRadius.circular(5)),
                     child: DropdownButton<String>(
-                      value: dropdownValue,
+                      value: dropdownLaundry,
                       icon: const Icon(Icons.launch),
                       elevation: 16,
                       style: const TextStyle(
@@ -124,10 +122,11 @@ class _ScheduleState extends State<ScheduleScreen> {
                       onChanged: (String? value) {
                         // This is called when the user selects an item.
                         setState(() {
-                          dropdownValue = value!;
+                          dropdownLaundry = value!;
                         });
                       },
-                      items: list.map<DropdownMenuItem<String>>((String value) {
+                      items: listLaundry
+                          .map<DropdownMenuItem<String>>((String value) {
                         return DropdownMenuItem<String>(
                           value: value,
                           child: Text(value),
