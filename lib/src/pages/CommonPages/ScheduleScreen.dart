@@ -92,14 +92,18 @@ class _ScheduleState extends State<ScheduleScreen> {
           child: Column(
             children: [
               const Padding(
-                padding: EdgeInsets.only(top: 5, bottom: 5),
+                padding:
+                    EdgeInsets.only(top: 5, right: 10, bottom: 5, left: 10),
                 child: Text('Agendamento',
                     style: TextStyle(color: Colors.black, fontSize: 18)),
               ),
               Padding(
                   padding: const EdgeInsets.only(
-                      top: 5, left: 20, right: 20, bottom: 0),
+                      top: 5, right: 10, bottom: 0, left: 10),
                   child: Container(
+                    padding:
+                        // EdgeInsets.only(top: 0, right: 20, bottom: 0, left: 20),
+                        EdgeInsets.only(top: 0, right: 10, bottom: 0, left: 10),
                     height: 65,
                     width: 280,
                     decoration:
@@ -110,8 +114,10 @@ class _ScheduleState extends State<ScheduleScreen> {
                       elevation: 16,
                       style: const TextStyle(
                           color: Color.fromARGB(255, 29, 28, 31)),
-                      padding: const EdgeInsets.only(top: 0, bottom: 0),
+                      padding: const EdgeInsets.only(
+                          top: 0, right: 0, bottom: 0, left: 0),
                       underline: Container(
+                        // padding: EdgeInsets.only(left: 40),
                         height: 2,
                         color: Colors.deepPurpleAccent,
                       ),
@@ -132,10 +138,9 @@ class _ScheduleState extends State<ScheduleScreen> {
               //calendar
               Padding(
                 padding:
-                    EdgeInsets.only(top: 0, right: 20, bottom: 0, left: 20),
+                    // EdgeInsets.only(top: 0, right: 30, bottom: 0, left: 30),
+                    EdgeInsets.only(top: 0, right: 30, bottom: 0, left: 30),
                 child: Container(
-                  // padding:
-                  //     EdgeInsets.only(top: 0, right: 0, bottom: 5, left: 0),
                   decoration: const BoxDecoration(
                     border: Border(
                       bottom: BorderSide(
@@ -146,27 +151,20 @@ class _ScheduleState extends State<ScheduleScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       Expanded(
-                        child: SizedBox(
-                            height: 30,
-                            width: 60,
-                            // decoration: BoxDecoration(
-                            //     color: Colors.blue,
-                            //     borderRadius: BorderRadius.circular(20)),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                finaldate == null
-                                    ? const Text(
-                                        "Selecione a data",
-                                        textScaleFactor: 1.0,
-                                      )
-                                    : Text(
-                                        "$finaldate",
-                                        textScaleFactor: 1.0,
-                                      ),
-                              ],
-                            )),
-                      ),
+                          child: Container(
+                        // child: Container(
+                        child: finaldate == null
+                            ? const Text(
+                                "Selecione a data",
+                                textScaleFactor: 1.0,
+                              )
+                            : Text(
+                                "$finaldate",
+                                textScaleFactor: 1.0,
+                              ),
+                      )
+                          // ),
+                          ),
                       Expanded(
                         child: IconButton(
                           icon: const Icon(Icons.calendar_month, size: 26),
@@ -174,7 +172,6 @@ class _ScheduleState extends State<ScheduleScreen> {
                             callDatePicker();
                           },
                         ),
-                        // icon: const Icon(Icons.local_laundry_service),
                       ),
                     ],
                   ),
@@ -183,8 +180,13 @@ class _ScheduleState extends State<ScheduleScreen> {
               //hour
               Padding(
                   padding: const EdgeInsets.only(
-                      top: 5, left: 20, right: 20, bottom: 0),
+                    top: 5,
+                    left: 10,
+                    bottom: 0,
+                    right: 10,
+                  ),
                   child: Container(
+                    padding: EdgeInsets.only(left: 10, right: 10),
                     height: 65,
                     width: 280,
                     decoration: BoxDecoration(
@@ -218,8 +220,9 @@ class _ScheduleState extends State<ScheduleScreen> {
                   )),
               Padding(
                   padding: const EdgeInsets.only(
-                      top: 5, left: 20, right: 20, bottom: 0),
+                      top: 5, right: 10, bottom: 0, left: 10),
                   child: Container(
+                    padding: const EdgeInsets.only(right: 10, left: 10),
                     height: 65,
                     width: 280,
                     decoration: BoxDecoration(
