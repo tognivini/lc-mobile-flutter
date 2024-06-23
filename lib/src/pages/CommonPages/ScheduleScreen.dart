@@ -45,17 +45,23 @@ class _ScheduleState extends State<ScheduleScreen> {
   final ButtonStyle style =
       ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 10));
 
+  bool isAlphanumeric(String input) {
+    RegExp regExp = RegExp(r'^[a-zA-Z0-9]+$');
+    return regExp.hasMatch(input);
+  }
+
   void callDatePicker() async {
-    var order = await getDate();
+    var date = await getDate();
+
+    String stringDate = date.toString();
+    List<String> splitted = stringDate.split(" ");
+    List<String> smaller = splitted.sublist(0, 1);
+    String onlyDate = smaller.join(" ");
     setState(() {
-      finaldate = order;
+      finaldate = onlyDate;
     });
   }
 
-  // ScheduleScreen({
-  //   super.key,
-  //   required this.id,
-  // });
   TextEditingController nameController = TextEditingController();
   TextEditingController matriculaController = TextEditingController();
   TextEditingController emailController = TextEditingController();
@@ -66,13 +72,7 @@ class _ScheduleState extends State<ScheduleScreen> {
   String dropdownHourValue = listHour.first;
   String dropdownMachineValue = listMachines.first;
 
-  // setState(
-  // nomeController.text
-  // )
-
   Future<DateTime?> getDate() {
-    // Imagine that this function is
-    // more complex and slow.
     return showDatePicker(
       context: context,
       initialDate: DateTime.now(),
@@ -132,10 +132,10 @@ class _ScheduleState extends State<ScheduleScreen> {
               //calendar
               Padding(
                 padding:
-                    EdgeInsets.only(top: 5, right: 20, bottom: 0, left: 20),
+                    EdgeInsets.only(top: 0, right: 20, bottom: 0, left: 20),
                 child: Container(
-                  padding:
-                      EdgeInsets.only(top: 5, right: 0, bottom: 5, left: 0),
+                  // padding:
+                  //     EdgeInsets.only(top: 0, right: 0, bottom: 5, left: 0),
                   decoration: const BoxDecoration(
                     border: Border(
                       bottom: BorderSide(
@@ -143,6 +143,7 @@ class _ScheduleState extends State<ScheduleScreen> {
                     ),
                   ),
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       Expanded(
                         child: SizedBox(
@@ -156,12 +157,12 @@ class _ScheduleState extends State<ScheduleScreen> {
                               children: <Widget>[
                                 finaldate == null
                                     ? const Text(
-                                        "",
+                                        "Selecione a data",
                                         textScaleFactor: 1.0,
                                       )
                                     : Text(
                                         "$finaldate",
-                                        textScaleFactor: 0.8,
+                                        textScaleFactor: 1.0,
                                       ),
                               ],
                             )),
