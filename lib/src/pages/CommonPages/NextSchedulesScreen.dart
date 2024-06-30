@@ -1,6 +1,7 @@
 // ignore_for_file: file_names, avoid_print, override_on_non_overriding_member
 
 import 'package:flutter/material.dart';
+import 'package:lc_mobile_flutter/src/repositories/repository.dart';
 
 // ignore: must_be_immutable
 class NextSchedulesScreen extends StatefulWidget {
@@ -16,6 +17,13 @@ class _NextSchedulesState extends State<NextSchedulesScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
   TextEditingController passController = TextEditingController();
+
+  // final Future<String> _calculation = Future<String>.delayed(
+  //   const Duration(seconds: 2),
+  //   () => 'Data',
+  // );
+
+  final Future _calculation = (getFilmes()) as Future;
 
   criaTabelaNextSchedules() {
     return Table(
@@ -71,11 +79,11 @@ class _NextSchedulesState extends State<NextSchedulesScreen> {
       children: listaNomes.split(',').map((name) {
         return Container(
           alignment: Alignment.center,
+          padding: const EdgeInsets.all(1.0),
           child: Text(
             name,
-            style: TextStyle(fontSize: 12.0),
+            style: const TextStyle(fontSize: 12.0),
           ),
-          padding: EdgeInsets.all(1.0),
         );
       }).toList(),
     );
@@ -87,31 +95,57 @@ class _NextSchedulesState extends State<NextSchedulesScreen> {
         appBar: AppBar(
           title: const Text('Próximos Agendamentos'),
         ),
-        body: Center(
-            child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            const Padding(
-              padding: EdgeInsets.only(top: 40, bottom: 20),
-              child: Text('Próximo Agendamentos',
-                  style: TextStyle(color: Colors.black, fontSize: 18)),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 10, left: 0, bottom: 10),
-              child: criaTabelaNextSchedules(),
-              // SingleChildScrollView(child: WidgetTable()),
-            ),
-            const Padding(
-              padding: EdgeInsets.only(top: 40, bottom: 20),
-              child: Text('Últimos Agendamentos',
-                  style: TextStyle(color: Colors.black, fontSize: 18)),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 10, left: 0, bottom: 10),
-              child: criaTabelaLastSchedules(),
-              // SingleChildScrollView(child: WidgetTable()),
-            ),
-          ],
-        )));
+        // body: Center(
+        //     child: Column(
+        //   mainAxisAlignment: MainAxisAlignment.start,
+        //   children: [
+        //     const Padding(
+        //       padding: EdgeInsets.only(top: 40, bottom: 20),
+        //       child: Text('Próximo Agendamentos',
+        //           style: TextStyle(color: Colors.black, fontSize: 18)),
+        //     ),
+        //     Padding(
+        //       padding: const EdgeInsets.only(top: 10, left: 0, bottom: 10),
+        //       child: criaTabelaNextSchedules(),
+        //       // SingleChildScrollView(child: WidgetTable()),
+        //     ),
+        //     const Padding(
+        //       padding: EdgeInsets.only(top: 40, bottom: 20),
+        //       child: Text('Últimos Agendamentos',
+        //           style: TextStyle(color: Colors.black, fontSize: 18)),
+        //     ),
+        //     Padding(
+        //       padding: const EdgeInsets.only(top: 10, left: 0, bottom: 10),
+        //       child: criaTabelaLastSchedules(),
+        //       // SingleChildScrollView(child: WidgetTable()),
+        //     ),
+        //   ],
+        // ))
+        body: FutureBuilder(
+            builder: (context, AsyncSnapshot dados) {
+              if (dados.connectionState == ConnectionState.none &&
+                  dados.hasData == null) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              } else {
+                return ListView.builder(
+                  itemCount: dados.data?.length ?? 0,
+                  itemBuilder: (context, index) {
+                    // UsuarioModel
+                    var us = dados.data[index];
+                    print('data aqui:');
+                    print(us.nome);
+                    return Column(
+                      children: <Widget>[Text(us.nome)],
+                    );
+                  },
+                );
+              }
+            },
+            future: _calculation
+            // future: null,
+            // future: new UsuarioPersistence().listar(),
+            ));
   }
 }

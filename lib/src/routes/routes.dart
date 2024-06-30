@@ -3,11 +3,11 @@ import 'package:lc_mobile_flutter/src/pages/AuthPages/RegisterScreen.dart';
 import 'package:lc_mobile_flutter/src/pages/CommonPages/NextSchedulesScreen.dart';
 import 'navigator_keys.dart';
 
-import 'src/pages/CommonPages/Tab/NaviBottom.dart';
-import './src/pages/AuthPages/LoginScreen.dart';
-import './src/pages/CommonPages/ProfileScreen.dart';
-import './src/pages/CommonPages/ScheduleScreen.dart';
-import 'shared/tab_item_widget.dart';
+import '../pages/CommonPages/Tab/NaviBottom.dart';
+import '../pages/AuthPages/LoginScreen.dart';
+import '../pages/CommonPages/ProfileScreen.dart';
+import '../pages/CommonPages/ScheduleScreen.dart';
+import '../../shared/tab_item_widget.dart';
 
 get tabs => [
       TabItemWidget(

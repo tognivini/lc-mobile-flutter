@@ -1,6 +1,7 @@
 // ignore_for_file: file_names, avoid_print, override_on_non_overriding_member, deprecated_member_use
 
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'dart:async';
 
 const List<String> listLaundry = <String>[
@@ -39,6 +40,13 @@ class ScheduleScreen extends StatefulWidget {
 
 class _ScheduleState extends State<ScheduleScreen> {
   var finaldate;
+
+  // Future<void> getFilmes() async {
+  //   final response = await http.get(Uri.parse(
+  //       'https://raw.githubusercontent.com/alura-cursos/obtendo_dados_com_flutter_http/main/filmes.json'));
+
+  //   print(response.body);
+  // }
 
   final ButtonStyle style =
       ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 10));

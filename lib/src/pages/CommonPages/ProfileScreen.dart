@@ -1,31 +1,46 @@
-// ignore_for_file: file_names, avoid_print, override_on_non_overriding_member
-
 import 'package:flutter/material.dart';
+import 'package:lc_mobile_flutter/src/model/filme.dart';
+import 'package:lc_mobile_flutter/src/repositories/repository.dart';
 
-// import 'package:lc_mobile_flutter/navigator_keys.dart';
-// ignore: must_be_immutable
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key, String? name});
-  // String id;
 
   @override
   State<ProfileScreen> createState() => _ProfileState();
 }
 
 class _ProfileState extends State<ProfileScreen> {
-  // ProfileScreen({
-  //   super.key,
-  //   required this.id,
-  // });
+  Future<List<Filme>>? futureFilmes;
+  // Future? futureFilmes;
+
   TextEditingController nameController = TextEditingController();
   TextEditingController matriculaController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
   TextEditingController passController = TextEditingController();
 
-  // setState(
-  // nomeController.text
-  // )
+  // @override
+  // void initState() {
+  //   futureFilmes = getFilmes();
+  //   super.initState();
+  // }
+
+  // ignore: non_constant_identifier_names
+  Future Papa() async {
+    var pp = await getFilmes();
+    print('pp?');
+    print(pp);
+    // futureFilmes = (await getFilmes()) as Future<List<Filme>>?;
+
+    // setState(() {
+    //   // futureFilmes=
+    // });
+  }
+
+  // void Papa() {
+  //   futureFilmes = getFilmes();
+  //   print(futureFilmes);
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -173,11 +188,10 @@ class _ProfileState extends State<ProfileScreen> {
                         foregroundColor:
                             MaterialStateProperty.all<Color>(Colors.white),
                       ),
-                      onPressed: () {
-                        print(nameController.text);
-                        print(matriculaController.text);
-                        print(emailController.text);
-                        print(passController.text);
+                      onPressed: () async {
+                        // print(nameController.text);
+                        // print(futureFilmes);
+                        await Papa();
                       },
                       child: const Text('Editar'),
                     ),

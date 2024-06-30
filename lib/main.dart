@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:lc_mobile_flutter/routes.dart';
+import 'package:lc_mobile_flutter/src/routes/routes.dart';
 
-import 'navigator_keys.dart';
+import 'src/routes/navigator_keys.dart';
 
 void main() {
   runApp(const MyApp());
