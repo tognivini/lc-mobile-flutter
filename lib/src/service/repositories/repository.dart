@@ -1,6 +1,6 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import '../model/filme.dart';
+import '../../model/filme.dart';
 
 Future<List<Filme>> getFilmes() async {
 // Future List<String> getFilmes() async {
@@ -10,8 +10,6 @@ Future<List<Filme>> getFilmes() async {
   if (response.statusCode == 200) {
     final json = jsonDecode(response.body);
 
-    print(response?.body);
-    print(json?.length);
     // print(response.body.runtimeType);
 
     return List<Filme>.from(json.map((elemento) {

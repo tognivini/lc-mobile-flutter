@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lc_mobile_flutter/src/model/filme.dart';
-import 'package:lc_mobile_flutter/src/repositories/repository.dart';
+import 'package:lc_mobile_flutter/src/service/repositories/repository.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key, String? name});
@@ -23,23 +23,6 @@ class _ProfileState extends State<ProfileScreen> {
   // void initState() {
   //   futureFilmes = getFilmes();
   //   super.initState();
-  // }
-
-  // ignore: non_constant_identifier_names
-  Future Papa() async {
-    var pp = await getFilmes();
-    print('pp?');
-    print(pp);
-    // futureFilmes = (await getFilmes()) as Future<List<Filme>>?;
-
-    // setState(() {
-    //   // futureFilmes=
-    // });
-  }
-
-  // void Papa() {
-  //   futureFilmes = getFilmes();
-  //   print(futureFilmes);
   // }
 
   @override
@@ -191,7 +174,6 @@ class _ProfileState extends State<ProfileScreen> {
                       onPressed: () async {
                         // print(nameController.text);
                         // print(futureFilmes);
-                        await Papa();
                       },
                       child: const Text('Editar'),
                     ),

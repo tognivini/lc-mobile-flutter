@@ -1,11 +1,15 @@
 // ignore_for_file: file_names, avoid_print, override_on_non_overriding_member
 
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:lc_mobile_flutter/src/service/repositories/AuthRepository.dart';
+
+import '../../model/Interface.dart';
 
 // ignore: must_be_immutable
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key, String? name});
-  // String id;
 
   @override
   State<LoginScreen> createState() => _LoginState();
@@ -13,8 +17,8 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginState extends State<LoginScreen> {
   TextEditingController matriculaController = TextEditingController();
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passController = TextEditingController();
+  TextEditingController email = TextEditingController();
+  TextEditingController password = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -36,8 +40,8 @@ class _LoginState extends State<LoginScreen> {
                     top: 5, right: 20, bottom: 5, left: 20),
                 child: TextFormField(
                   autofocus: true,
-                  keyboardType: TextInputType.name,
-                  controller: emailController,
+                  keyboardType: TextInputType.emailAddress,
+                  controller: email,
                   // initialValue: 'sathyabaman@gmail.com',
                   style: const TextStyle(
                       fontWeight: FontWeight.normal, color: Colors.black),
@@ -56,7 +60,7 @@ class _LoginState extends State<LoginScreen> {
                     top: 5, right: 20, bottom: 5, left: 20),
                 child: TextFormField(
                   keyboardType: TextInputType.visiblePassword,
-                  controller: passController,
+                  controller: password,
                   // initialValue: 'sathyabaman@gmail.com',
                   style: const TextStyle(
                       fontWeight: FontWeight.normal, color: Colors.black),
@@ -83,12 +87,16 @@ class _LoginState extends State<LoginScreen> {
                         foregroundColor:
                             MaterialStateProperty.all<Color>(Colors.white),
                       ),
-                      onPressed: () {
-                        // print(nomeController.text);
-                        Navigator.pushNamed(
-                          context,
-                          '/',
-                        );
+                      onPressed: () async {
+                        var payload = {};
+                        payload["email"] = email.text;
+                        payload["password"] = password.text;
+
+                        await AuthRepository().login(payload);
+                        // Navigator.pushNamed(
+                        //   context,
+                        //   '/',
+                        // )
                       },
                       child: const Text('Login'),
                     ),

@@ -1,7 +1,7 @@
 // ignore_for_file: file_names, avoid_print, override_on_non_overriding_member
 
 import 'package:flutter/material.dart';
-import 'package:lc_mobile_flutter/src/repositories/repository.dart';
+import 'package:lc_mobile_flutter/src/service/repositories/repository.dart';
 
 // ignore: must_be_immutable
 class NextSchedulesScreen extends StatefulWidget {

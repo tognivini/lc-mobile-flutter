@@ -5,13 +5,13 @@ import 'package:http/http.dart' as http;
 
 class ClienteService extends AbstractService {
   Future<http.Response> getCliente() async {
-    Map<String, String> headers_cliente = <String, String>{
+    Map<String, String> headersCliente = <String, String>{
       'Content-type': 'application/json',
       'Authorization':
-          'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwaWV0cmFAdGVzdGUiLCJwZXJtaXNzb2VzOiAiOm51bGwsImV4cCI6MTY1NDIwMTIzNn0.04I4vzNvBB7E8hj2IKxD3M6WvGtns5RcTQ_SYT0jWLo'
+          'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI3NWI3ZmFiNy00ZjJlLTRmZjMtYWI2Ny0xZjQ4Yjk5NDBmNTAiLCJwZXJtaXNzaW9uVHlwZSI6IkNMSUVOVEUiLCJpYXQiOjE3MTk3OTIyMzgsImV4cCI6MTcyMDA1MTQzOH0.CJdgyEqdrz33odjIctu7ReGTw6R-IEWoxJu5b9hM1cY'
     };
 
-    return http.get(Uri.parse(API_REST + '/cliente/cliente'),
-        headers: headers_cliente);
+    return http.get(Uri.parse('$API_REST/cliente/cliente'),
+        headers: headersCliente);
   }
 }
