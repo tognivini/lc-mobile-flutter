@@ -89,14 +89,25 @@ class _LoginState extends State<LoginScreen> {
                       ),
                       onPressed: () async {
                         var payload = {};
-                        payload["email"] = email.text;
-                        payload["password"] = password.text;
+                        // payload["email"] = email.text;
+                        // payload["password"] = password.text;
 
-                        await AuthRepository().login(payload);
-                        // Navigator.pushNamed(
-                        //   context,
-                        //   '/',
-                        // )
+                        payload["email"] = 'email';
+                        payload["password"] = '12345';
+
+                        await AuthRepository().login(payload).then(
+                              (value) => {
+                                if (value)
+                                  {
+                                    Navigator.pushNamed(
+                                      context,
+                                      '/',
+                                    )
+                                  }
+                                else
+                                  {print('error')}
+                              },
+                            );
                       },
                       child: const Text('Login'),
                     ),

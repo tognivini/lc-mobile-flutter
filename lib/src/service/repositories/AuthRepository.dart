@@ -1,4 +1,4 @@
-// ignore_for_file: non_constant_identifier_names
+// ignore_for_file: non_constant_identifier_names, prefer_function_declarations_over_variables
 
 import 'package:flutter/src/widgets/editable_text.dart';
 import 'package:http/http.dart' as http;
@@ -25,18 +25,23 @@ class AuthRepository extends AbstractService {
       }),
     );
 
-    print(response.body);
-
     if (response.statusCode == 200) {
-      UserModel u = UserModel.fromJson(jsonDecode(response.body));
-      print(u);
-      // print(u.token);
-      // new UsuarioPersistence().salvar(u);
-      // return true;
+      // UserModel user = UserModel.fromJson(jsonDecode(response.body));
+      final body = json.decode(response.body);
+      final data = body['data'];
+
+      if (data != null) {
+        final token = data['token'];
+        final userId = data['userId'];
+        // new UsuarioPersistence().salvar(u);
+        return true;
+      } else {
+        return false;
+      }
     } else {
       // print('problemas ' + resposta.statusCode.toString());
       // print('erro: ' + resposta.body.toString());
-      // return false;
+      return false;
     }
   }
 }

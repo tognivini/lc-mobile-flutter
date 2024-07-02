@@ -15,8 +15,6 @@ Future<List<Filme>> getFilmes() async {
     return List<Filme>.from(json.map((elemento) {
       return Filme.fromJson(elemento);
     }));
-    // var colors = [];
-    // return List<String> colors = ['red', 'green', 'blue'];
   } else {
     return Future.error("Ops! Um erro ocorreu.");
   }
