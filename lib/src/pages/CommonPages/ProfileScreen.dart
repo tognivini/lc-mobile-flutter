@@ -26,15 +26,19 @@ class _ProfileState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     var userLogged = ModalRoute.of(context)?.settings.arguments;
     var decodedUser = json.decode(userLogged.toString());
-    // if (userLogged != null && decodedUser != '') {
-    //   setState(() {
-    //     nameController.text = decodedUser['name'];
-    //     emailController.text = decodedUser['email'];
-    //     phoneController.text = '(55)99999-9999';
-    //     passController.text = '****';
-    //     matriculaController.text = '20195200';
-    //   });
-    // }
+    if (userLogged != null && decodedUser != '') {
+      // Navigator.pushNamed(
+      //   context,
+      //   '/',
+      // );
+      setState(() {
+        nameController.text = decodedUser['name'];
+        emailController.text = decodedUser['email'];
+        phoneController.text = '(55)99999-9999';
+        passController.text = '****';
+        matriculaController.text = '20195200';
+      });
+    }
 
     return Scaffold(
         backgroundColor: Colors.white,
@@ -56,16 +60,16 @@ class _ProfileState extends State<ProfileScreen> {
                     ),
                   ),
                   onPressed: () {
-                    // Navigator.pushNamed(
-                    //   context,
-                    //   '/auth/login',
-                    // );
-                    Navigator.push(
+                    Navigator.pushNamed(
                       context,
-                      MaterialPageRoute(
-                        builder: (context) => const LoginScreen(),
-                      ),
+                      '/auth/login',
                     );
+                    // Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(
+                    //     builder: (context) => const LoginScreen(),
+                    //   ),
+                    // );
                   },
                   child: const Text('Logout'),
                 ),

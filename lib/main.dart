@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
       navigatorKey: NavigatorKeys.navigatorKeyMain,
       routes: routes,
       title: _title,
-      initialRoute: '/',
+      initialRoute: '/auth/login',
     );
   }
 }

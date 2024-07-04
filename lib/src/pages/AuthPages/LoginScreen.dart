@@ -98,18 +98,18 @@ class _LoginState extends State<LoginScreen> {
                               (value) => {
                                 if (value != false)
                                   {
-                                    Navigator.pushNamed(
-                                      context,
-                                      '/',
-                                    )
-                                    // Navigator.push(
+                                    // Navigator.pushNamed(
                                     //   context,
-                                    //   MaterialPageRoute(
-                                    //       builder: (context) =>
-                                    //           const ProfileScreen(),
-                                    //       settings: RouteSettings(
-                                    //           arguments: json.encode(value))),
+                                    //   '/',
                                     // )
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const ProfileScreen(),
+                                          settings: RouteSettings(
+                                              arguments: json.encode(value))),
+                                    )
                                   }
                                 else
                                   {print('error')}
