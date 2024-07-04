@@ -24,13 +24,12 @@ class _ProfileState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var userLogged = ModalRoute.of(context)?.settings.arguments;
+    final arguments = (ModalRoute.of(context)?.settings.arguments ??
+        <String, dynamic>{}) as Map;
+
+    var userLogged = arguments['userArgument'];
     var decodedUser = json.decode(userLogged.toString());
     if (userLogged != null && decodedUser != '') {
-      // Navigator.pushNamed(
-      //   context,
-      //   '/',
-      // );
       setState(() {
         nameController.text = decodedUser['name'];
         emailController.text = decodedUser['email'];
@@ -64,12 +63,6 @@ class _ProfileState extends State<ProfileScreen> {
                       context,
                       '/auth/login',
                     );
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(
-                    //     builder: (context) => const LoginScreen(),
-                    //   ),
-                    // );
                   },
                   child: const Text('Logout'),
                 ),
