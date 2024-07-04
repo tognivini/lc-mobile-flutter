@@ -96,16 +96,20 @@ class _LoginState extends State<LoginScreen> {
                         String obj = 'stringTest';
                         await AuthRepository().login(payload).then(
                               (value) => {
-                                if (value)
+                                if (value != false)
                                   {
-                                    Navigator.push(
+                                    Navigator.pushNamed(
                                       context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              const ProfileScreen(),
-                                          settings:
-                                              RouteSettings(arguments: obj)),
+                                      '/',
                                     )
+                                    // Navigator.push(
+                                    //   context,
+                                    //   MaterialPageRoute(
+                                    //       builder: (context) =>
+                                    //           const ProfileScreen(),
+                                    //       settings: RouteSettings(
+                                    //           arguments: json.encode(value))),
+                                    // )
                                   }
                                 else
                                   {print('error')}

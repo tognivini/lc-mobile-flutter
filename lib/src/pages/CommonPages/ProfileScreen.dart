@@ -1,10 +1,13 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:lc_mobile_flutter/src/model/filme.dart';
+import 'package:lc_mobile_flutter/src/pages/AuthPages/LoginScreen.dart';
 
 class ProfileScreen extends StatefulWidget {
-  final String? obj;
+  final userLogged;
 
-  const ProfileScreen({super.key, String? name, this.obj});
+  const ProfileScreen({super.key, String? name, this.userLogged});
 
   @override
   State<ProfileScreen> createState() => _ProfileState();
@@ -21,7 +24,17 @@ class _ProfileState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var obj = ModalRoute.of(context)?.settings.arguments as String?;
+    var userLogged = ModalRoute.of(context)?.settings.arguments;
+    var decodedUser = json.decode(userLogged.toString());
+    // if (userLogged != null && decodedUser != '') {
+    //   setState(() {
+    //     nameController.text = decodedUser['name'];
+    //     emailController.text = decodedUser['email'];
+    //     phoneController.text = '(55)99999-9999';
+    //     passController.text = '****';
+    //     matriculaController.text = '20195200';
+    //   });
+    // }
 
     return Scaffold(
         backgroundColor: Colors.white,
@@ -43,9 +56,15 @@ class _ProfileState extends State<ProfileScreen> {
                     ),
                   ),
                   onPressed: () {
-                    Navigator.pushNamed(
+                    // Navigator.pushNamed(
+                    //   context,
+                    //   '/auth/login',
+                    // );
+                    Navigator.push(
                       context,
-                      '/auth/login',
+                      MaterialPageRoute(
+                        builder: (context) => const LoginScreen(),
+                      ),
                     );
                   },
                   child: const Text('Logout'),
@@ -54,23 +73,24 @@ class _ProfileState extends State<ProfileScreen> {
               const Padding(
                 padding: EdgeInsets.only(top: 5, bottom: 10),
                 child: Text('Perfil',
-                    style: TextStyle(color: Colors.black, fontSize: 18)),
+                    style: TextStyle(color: Colors.grey, fontSize: 18)),
               ),
               Padding(
                 padding: const EdgeInsets.only(
                     top: 5, right: 20, bottom: 5, left: 20),
                 child: TextFormField(
-                  autofocus: true,
+                  readOnly: true,
                   keyboardType: TextInputType.name,
                   controller: matriculaController,
                   style: const TextStyle(
-                      fontWeight: FontWeight.normal, color: Colors.black),
+                      fontWeight: FontWeight.normal, color: Colors.grey),
                   decoration: InputDecoration(
                     labelText: 'Matrícula',
                     hintText: 'Matrícula',
                     contentPadding:
                         const EdgeInsets.only(top: 5, bottom: 5, left: 10),
                     border: OutlineInputBorder(
+                        borderSide: const BorderSide(color: Colors.grey),
                         borderRadius: BorderRadius.circular(8.0)),
                   ),
                 ),
@@ -79,12 +99,13 @@ class _ProfileState extends State<ProfileScreen> {
                 padding: const EdgeInsets.only(
                     top: 5, right: 20, bottom: 5, left: 20),
                 child: TextFormField(
-                  autofocus: true,
+                  readOnly: true,
                   keyboardType: TextInputType.name,
                   controller: nameController,
-                  // initialValue: 'sathyabaman@gmail.com',
+                  // initialValue: nameController.text,
+                  // initialValue: decodedUser['name'] ?? '',
                   style: const TextStyle(
-                      fontWeight: FontWeight.normal, color: Colors.black),
+                      fontWeight: FontWeight.normal, color: Colors.grey),
                   decoration: InputDecoration(
                     labelText: 'Nome',
                     // hintText: 'Nome Completo',
@@ -102,9 +123,9 @@ class _ProfileState extends State<ProfileScreen> {
                 child: TextFormField(
                   keyboardType: TextInputType.emailAddress,
                   controller: emailController,
-                  // initialValue: 'sathyabaman@gmail.com',
+                  readOnly: true,
                   style: const TextStyle(
-                      fontWeight: FontWeight.normal, color: Colors.black),
+                      fontWeight: FontWeight.normal, color: Colors.grey),
                   decoration: InputDecoration(
                     labelText: 'Email',
                     hintText: 'Digite um e-mail válido por favor',
@@ -121,9 +142,9 @@ class _ProfileState extends State<ProfileScreen> {
                 child: TextFormField(
                   keyboardType: TextInputType.phone,
                   controller: phoneController,
-                  // initialValue: 'sathyabaman@gmail.com',
+                  readOnly: true,
                   style: const TextStyle(
-                      fontWeight: FontWeight.normal, color: Colors.black),
+                      fontWeight: FontWeight.normal, color: Colors.grey),
                   decoration: InputDecoration(
                     labelText: 'Telefone',
                     hintText: '(88) 8 xxxx-xxxx',
@@ -140,9 +161,9 @@ class _ProfileState extends State<ProfileScreen> {
                 child: TextFormField(
                   keyboardType: TextInputType.visiblePassword,
                   controller: passController,
-                  // initialValue: 'sathyabaman@gmail.com',
+                  readOnly: true,
                   style: const TextStyle(
-                      fontWeight: FontWeight.normal, color: Colors.black),
+                      fontWeight: FontWeight.normal, color: Colors.grey),
                   decoration: InputDecoration(
                     labelText: 'Senha',
                     hintText: 'Digite uma senha válida por favor',
@@ -167,7 +188,13 @@ class _ProfileState extends State<ProfileScreen> {
                             MaterialStateProperty.all<Color>(Colors.white),
                       ),
                       onPressed: () async {
-                        print(obj);
+                        // print('userLogged');
+                        // print(userLogged);
+                        // var decodedUser = json.decode(userLogged.toString());
+                        // // resBody["email"] = pp['token'];
+                        // print('decodedUser');
+                        print(decodedUser);
+                        // print(nameController.text);
                         // Navigator.of(context).pop();
                       },
                       child: const Text('Editar'),

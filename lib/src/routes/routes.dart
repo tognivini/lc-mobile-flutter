@@ -13,6 +13,7 @@ get tabs => [
       TabItemWidget(
         routes: {
           '/': (BuildContext context) => const ProfileScreen(),
+          // '/auth/login': (BuildContext context) => const LoginScreen(),
         },
         navigatorKey: NavigatorKeys.navigatorKeyProfile,
       ),
