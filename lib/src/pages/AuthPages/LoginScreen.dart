@@ -3,11 +3,9 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:lc_mobile_flutter/src/pages/CommonPages/ProfileScreen.dart';
 import 'package:lc_mobile_flutter/src/service/repositories/AuthRepository.dart';
 
-import '../../model/Interface.dart';
-
-// ignore: must_be_immutable
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key, String? name});
 
@@ -95,13 +93,18 @@ class _LoginState extends State<LoginScreen> {
                         payload["email"] = 'email';
                         payload["password"] = '12345';
 
+                        String obj = 'stringTest';
                         await AuthRepository().login(payload).then(
                               (value) => {
                                 if (value)
                                   {
-                                    Navigator.pushNamed(
+                                    Navigator.push(
                                       context,
-                                      '/',
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const ProfileScreen(),
+                                          settings:
+                                              RouteSettings(arguments: obj)),
                                     )
                                   }
                                 else

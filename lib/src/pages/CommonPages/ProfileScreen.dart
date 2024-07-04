@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:lc_mobile_flutter/src/model/filme.dart';
-import 'package:lc_mobile_flutter/src/service/repositories/repository.dart';
 
 class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({super.key, String? name});
+  final String? obj;
+
+  const ProfileScreen({super.key, String? name, this.obj});
 
   @override
   State<ProfileScreen> createState() => _ProfileState();
 }
 
 class _ProfileState extends State<ProfileScreen> {
-  Future<List<Filme>>? futureFilmes;
-  // Future? futureFilmes;
+  // Future<List<Filme>>? futureFilmes;
 
   TextEditingController nameController = TextEditingController();
   TextEditingController matriculaController = TextEditingController();
@@ -19,14 +19,10 @@ class _ProfileState extends State<ProfileScreen> {
   TextEditingController phoneController = TextEditingController();
   TextEditingController passController = TextEditingController();
 
-  // @override
-  // void initState() {
-  //   futureFilmes = getFilmes();
-  //   super.initState();
-  // }
-
   @override
   Widget build(BuildContext context) {
+    var obj = ModalRoute.of(context)?.settings.arguments as String?;
+
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
@@ -67,7 +63,6 @@ class _ProfileState extends State<ProfileScreen> {
                   autofocus: true,
                   keyboardType: TextInputType.name,
                   controller: matriculaController,
-                  // initialValue: 'sathyabaman@gmail.com',
                   style: const TextStyle(
                       fontWeight: FontWeight.normal, color: Colors.black),
                   decoration: InputDecoration(
@@ -172,8 +167,8 @@ class _ProfileState extends State<ProfileScreen> {
                             MaterialStateProperty.all<Color>(Colors.white),
                       ),
                       onPressed: () async {
-                        // print(nameController.text);
-                        // print(futureFilmes);
+                        print(obj);
+                        // Navigator.of(context).pop();
                       },
                       child: const Text('Editar'),
                     ),
