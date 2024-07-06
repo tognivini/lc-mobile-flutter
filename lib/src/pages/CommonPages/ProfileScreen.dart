@@ -7,8 +7,6 @@ import 'package:lc_mobile_flutter/src/pages/AuthPages/LoginScreen.dart';
 import 'package:lc_mobile_flutter/src/service/repositories/UserRepository.dart';
 
 class ProfileScreen extends StatefulWidget {
-  // final userLogged;
-
   const ProfileScreen({super.key, String? name});
 
   @override
@@ -16,8 +14,6 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileState extends State<ProfileScreen> {
-  // Future<List<Filme>>? futureFilmes;
-
   TextEditingController nameController = TextEditingController();
   TextEditingController matriculaController = TextEditingController();
   TextEditingController emailController = TextEditingController();
@@ -29,24 +25,15 @@ class _ProfileState extends State<ProfileScreen> {
     var payload = {};
     payload["userId"] = decodedUser['userId'];
     payload["token"] = decodedUser['token'];
-    // return await UserRepository().getUserById(payload);
-    await UserRepository().getUserById(payload).then(
-          (value) => {
-            if (value != false)
-              {
-                setState(() {
-                  print(value);
-                  // nameController.text = value['name'];
-                  // emailController.text = value['email'];
-                  // phoneController.text = value['phoneNumber'];
-                  // passController.text = value['password'];
-                  // matriculaController.text = '20195200';
-                })
-              }
-            else
-              print('error.')
-          },
-        );
+
+    final userInfo = await UserRepository().getUserById(payload);
+    if (userInfo != null) {
+      nameController.text = userInfo['name'];
+      emailController.text = userInfo['email'];
+      phoneController.text = userInfo['phoneNumber'];
+      passController.text = userInfo['password'];
+      matriculaController.text = '20195200';
+    }
   }
 
   @override
@@ -57,40 +44,20 @@ class _ProfileState extends State<ProfileScreen> {
     var userLogged = arguments['userArgument'];
     var decodedUser = json.decode(userLogged.toString());
 
-    // useEffect(() {
-    print('----call----');
-    // Future.microtask(() => onLoadUser(decodedUser));
     onLoadUser(decodedUser);
-    // }, []);
 
-    // onLoadUser(decodedUser);
-    // if (userLogged != null && decodedUser != '') {
-    //   onLoadUser(decodedUser);
-    //   // .then(
-    //   //   (value) => {
-    //   //     if (value != false)
-    //   //       {
-    //   //         setState(() {
-    //   //           print(value);
-    //   //           nameController.text = value['name'];
-    //   //           emailController.text = value['email'];
-    //   //           phoneController.text = value['phoneNumber'];
-    //   //           passController.text = value['password'];
-    //   //           matriculaController.text = '20195200';
-    //   //         })
-    //   //       }
-    //   //     else
-    //   //       print('error.')
-    //   //   },
-    //   // );
+    //   @override
+    // void initState() {
+    //   var _passwordVisible = false;
+    // }
 
     //   // {id: 75b7fab7-4f2e-4ff3-ab67-1f48b9940f50, status: 1, createdAt: 2024-04-19T00:30:22.401Z,
     //   // updatedAt: 2024-04-19T00:30:22.401Z, email: email, phoneNumber: (99) 99999-99999, name: user123, password: 12345,
 
     //   // userPermission: {id: f1b7f939-7587-40eb-ba8c-a49db0d69963, status: 1, createdAt: 2024-04-19T00:30:22.449Z,
     //   // updatedAt: 2024-04-19T00:30:22.449Z, userType: CLIENTE}}
-    // }
 
+    bool _passwordVisible = false;
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
@@ -204,6 +171,34 @@ class _ProfileState extends State<ProfileScreen> {
                   ),
                 ),
               ),
+              // Padding(
+              //     padding: const EdgeInsets.only(top: 0),
+              //     child: TextFormField(
+              //       keyboardType: TextInputType.text,
+              //       controller: passController,
+              //       obscureText:
+              //           !_passwordVisible, //This will obscure text dynamically
+              //       decoration: InputDecoration(
+              //         labelText: 'Password',
+              //         hintText: 'Enter your password',
+              //         // Here is key idea
+              //         suffixIcon: IconButton(
+              //           icon: Icon(
+              //             // Based on passwordVisible state choose the icon
+              //             _passwordVisible
+              //                 ? Icons.visibility
+              //                 : Icons.visibility_off,
+              //             color: Theme.of(context).primaryColorDark,
+              //           ),
+              //           onPressed: () {
+              //             // Update the state i.e. toogle the state of passwordVisible variable
+              //             setState(() {
+              //               _passwordVisible = !_passwordVisible;
+              //             });
+              //           },
+              //         ),
+              //       ),
+              //     )),
               Padding(
                 padding: const EdgeInsets.only(
                     top: 5, right: 20, bottom: 5, left: 20),
