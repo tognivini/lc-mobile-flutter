@@ -114,7 +114,7 @@ class _ScheduleState extends State<ScheduleScreen> {
                     width: 280,
                     decoration:
                         BoxDecoration(borderRadius: BorderRadius.circular(5)),
-                    child: DropdownButton<String>(
+                    child: DropdownButtonFormField<String>(
                       value: dropdownLaundry,
                       icon: const Icon(Icons.launch),
                       elevation: 16,
@@ -122,11 +122,18 @@ class _ScheduleState extends State<ScheduleScreen> {
                           color: Color.fromARGB(255, 29, 28, 31)),
                       padding: const EdgeInsets.only(
                           top: 0, right: 0, bottom: 0, left: 0),
-                      underline: Container(
-                        // padding: EdgeInsets.only(left: 40),
-                        height: 2,
-                        color: Colors.deepPurpleAccent,
+                      decoration: const InputDecoration(
+                        border: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                              color: Colors.deepPurpleAccent, width: 2.4),
+                        ),
+                        // color: Colors.black
                       ),
+                      // underline: Container(
+                      //   // padding: EdgeInsets.only(left: 40),
+                      //   height: 2,
+                      //   color: Colors.deepPurpleAccent,
+                      // ),
                       onChanged: (String? value) {
                         // This is called when the user selects an item.
                         setState(() {
@@ -144,9 +151,8 @@ class _ScheduleState extends State<ScheduleScreen> {
                   )),
               //calendar
               Padding(
-                padding:
-                    // EdgeInsets.only(top: 0, right: 30, bottom: 0, left: 30),
-                    EdgeInsets.only(top: 0, right: 30, bottom: 0, left: 30),
+                padding: const EdgeInsets.only(
+                    top: 0, right: 30, bottom: 0, left: 30),
                 child: Container(
                   decoration: const BoxDecoration(
                     border: Border(
@@ -187,28 +193,29 @@ class _ScheduleState extends State<ScheduleScreen> {
               //hour
               Padding(
                   padding: const EdgeInsets.only(
-                    top: 5,
-                    left: 10,
-                    bottom: 0,
-                    right: 10,
-                  ),
+                      top: 5, right: 10, bottom: 0, left: 10),
                   child: Container(
-                    padding: EdgeInsets.only(left: 10, right: 10),
+                    padding:
+                        // EdgeInsets.only(top: 0, right: 20, bottom: 0, left: 20),
+                        EdgeInsets.only(top: 0, right: 10, bottom: 0, left: 10),
                     height: 65,
                     width: 280,
-                    decoration: BoxDecoration(
-                        // color: Colors.blue,
-                        borderRadius: BorderRadius.circular(5)),
-                    child: DropdownButton<String>(
+                    decoration:
+                        BoxDecoration(borderRadius: BorderRadius.circular(5)),
+                    child: DropdownButtonFormField<String>(
                       value: dropdownHourValue,
                       icon: const Icon(Icons.access_time),
                       elevation: 16,
                       style: const TextStyle(
                           color: Color.fromARGB(255, 29, 28, 31)),
-                      padding: const EdgeInsets.only(top: 0, bottom: 0),
-                      underline: Container(
-                        height: 2,
-                        color: Colors.deepPurpleAccent,
+                      padding: const EdgeInsets.only(
+                          top: 0, right: 0, bottom: 0, left: 0),
+                      decoration: const InputDecoration(
+                        border: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                              color: Colors.deepPurpleAccent, width: 2.4),
+                        ),
+                        // color: Colors.black
                       ),
                       onChanged: (String? value) {
                         // This is called when the user selects an item.
@@ -225,26 +232,30 @@ class _ScheduleState extends State<ScheduleScreen> {
                       }).toList(),
                     ),
                   )),
+
               Padding(
                   padding: const EdgeInsets.only(
                       top: 5, right: 10, bottom: 0, left: 10),
                   child: Container(
-                    padding: const EdgeInsets.only(right: 10, left: 10),
+                    padding: const EdgeInsets.only(
+                        top: 0, right: 10, bottom: 0, left: 10),
                     height: 65,
                     width: 280,
-                    decoration: BoxDecoration(
-                        // color: Colors.blue,
-                        borderRadius: BorderRadius.circular(5)),
-                    child: DropdownButton<String>(
+                    decoration:
+                        BoxDecoration(borderRadius: BorderRadius.circular(5)),
+                    child: DropdownButtonFormField<String>(
                       value: dropdownMachineValue,
                       icon: const Icon(Icons.local_laundry_service),
                       elevation: 16,
                       style: const TextStyle(
                           color: Color.fromARGB(255, 29, 28, 31)),
-                      padding: const EdgeInsets.only(top: 0, bottom: 0),
-                      underline: Container(
-                        height: 2,
-                        color: Colors.deepPurpleAccent,
+                      padding: const EdgeInsets.only(
+                          top: 0, right: 0, bottom: 0, left: 0),
+                      decoration: const InputDecoration(
+                        border: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                              color: Colors.deepPurpleAccent, width: 2.4),
+                        ),
                       ),
                       onChanged: (String? value) {
                         // This is called when the user selects an item.
@@ -267,7 +278,8 @@ class _ScheduleState extends State<ScheduleScreen> {
                     height: 40,
                     width: 100,
                     decoration: BoxDecoration(
-                        color: Colors.blue,
+                        // color: Colors.blue,
+                        color: Colors.grey,
                         borderRadius: BorderRadius.circular(5)),
                     child: TextButton(
                       style: ButtonStyle(

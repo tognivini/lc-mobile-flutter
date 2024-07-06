@@ -28,7 +28,6 @@ class _ProfileState extends State<ProfileScreen> {
   var _passwordVisible = false;
 
   onLoadUser(decodedUser) async {
-    print(decodedUser);
     var payload = {};
     payload["userId"] = decodedUser['userId'];
     payload["token"] = decodedUser['token'];
