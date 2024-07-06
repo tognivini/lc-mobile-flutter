@@ -11,6 +11,11 @@ class ProfileScreen extends StatefulWidget {
 
   @override
   State<ProfileScreen> createState() => _ProfileState();
+
+  @override
+  void initState() {
+    var _passwordVisible = false;
+  }
 }
 
 class _ProfileState extends State<ProfileScreen> {
@@ -19,6 +24,8 @@ class _ProfileState extends State<ProfileScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
   TextEditingController passController = TextEditingController();
+
+  var _passwordVisible = false;
 
   onLoadUser(decodedUser) async {
     print(decodedUser);
@@ -46,18 +53,13 @@ class _ProfileState extends State<ProfileScreen> {
 
     onLoadUser(decodedUser);
 
-    //   @override
-    // void initState() {
-    //   var _passwordVisible = false;
-    // }
-
     //   // {id: 75b7fab7-4f2e-4ff3-ab67-1f48b9940f50, status: 1, createdAt: 2024-04-19T00:30:22.401Z,
     //   // updatedAt: 2024-04-19T00:30:22.401Z, email: email, phoneNumber: (99) 99999-99999, name: user123, password: 12345,
 
     //   // userPermission: {id: f1b7f939-7587-40eb-ba8c-a49db0d69963, status: 1, createdAt: 2024-04-19T00:30:22.449Z,
     //   // updatedAt: 2024-04-19T00:30:22.449Z, userType: CLIENTE}}
 
-    bool _passwordVisible = false;
+    // bool _passwordVisible = false;
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
@@ -91,26 +93,26 @@ class _ProfileState extends State<ProfileScreen> {
                 child: Text('Perfil',
                     style: TextStyle(color: Colors.grey, fontSize: 18)),
               ),
-              Padding(
-                padding: const EdgeInsets.only(
-                    top: 5, right: 20, bottom: 5, left: 20),
-                child: TextFormField(
-                  readOnly: true,
-                  keyboardType: TextInputType.name,
-                  controller: matriculaController,
-                  style: const TextStyle(
-                      fontWeight: FontWeight.normal, color: Colors.grey),
-                  decoration: InputDecoration(
-                    labelText: 'Matrícula',
-                    hintText: 'Matrícula',
-                    contentPadding:
-                        const EdgeInsets.only(top: 5, bottom: 5, left: 10),
-                    border: OutlineInputBorder(
-                        borderSide: const BorderSide(color: Colors.grey),
-                        borderRadius: BorderRadius.circular(8.0)),
-                  ),
-                ),
-              ),
+              // Padding(
+              //   padding: const EdgeInsets.only(
+              //       top: 5, right: 20, bottom: 5, left: 20),
+              //   child: TextFormField(
+              //     readOnly: true,
+              //     keyboardType: TextInputType.name,
+              //     controller: matriculaController,
+              //     style: const TextStyle(
+              //         fontWeight: FontWeight.normal, color: Colors.grey),
+              //     decoration: InputDecoration(
+              //       labelText: 'Matrícula',
+              //       hintText: 'Matrícula',
+              //       contentPadding:
+              //           const EdgeInsets.only(top: 5, bottom: 5, left: 10),
+              //       border: OutlineInputBorder(
+              //           borderSide: const BorderSide(color: Colors.grey),
+              //           borderRadius: BorderRadius.circular(8.0)),
+              //     ),
+              //   ),
+              // ),
               Padding(
                 padding: const EdgeInsets.only(
                     top: 5, right: 20, bottom: 5, left: 20),
@@ -171,39 +173,12 @@ class _ProfileState extends State<ProfileScreen> {
                   ),
                 ),
               ),
-              // Padding(
-              //     padding: const EdgeInsets.only(top: 0),
-              //     child: TextFormField(
-              //       keyboardType: TextInputType.text,
-              //       controller: passController,
-              //       obscureText:
-              //           !_passwordVisible, //This will obscure text dynamically
-              //       decoration: InputDecoration(
-              //         labelText: 'Password',
-              //         hintText: 'Enter your password',
-              //         // Here is key idea
-              //         suffixIcon: IconButton(
-              //           icon: Icon(
-              //             // Based on passwordVisible state choose the icon
-              //             _passwordVisible
-              //                 ? Icons.visibility
-              //                 : Icons.visibility_off,
-              //             color: Theme.of(context).primaryColorDark,
-              //           ),
-              //           onPressed: () {
-              //             // Update the state i.e. toogle the state of passwordVisible variable
-              //             setState(() {
-              //               _passwordVisible = !_passwordVisible;
-              //             });
-              //           },
-              //         ),
-              //       ),
-              //     )),
               Padding(
                 padding: const EdgeInsets.only(
                     top: 5, right: 20, bottom: 5, left: 20),
                 child: TextFormField(
                   keyboardType: TextInputType.visiblePassword,
+                  obscureText: !_passwordVisible, //This will obscu
                   controller: passController,
                   readOnly: true,
                   style: const TextStyle(
@@ -211,6 +186,21 @@ class _ProfileState extends State<ProfileScreen> {
                   decoration: InputDecoration(
                     labelText: 'Senha',
                     hintText: 'Digite uma senha válida por favor',
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        // Based on passwordVisible state choose the icon
+                        _passwordVisible
+                            ? Icons.visibility
+                            : Icons.visibility_off,
+                        color: Colors.black,
+                      ),
+                      onPressed: () {
+                        // Update the state i.e. toogle the state of passwordVisible variable
+                        setState(() {
+                          _passwordVisible = !_passwordVisible;
+                        });
+                      },
+                    ),
                     contentPadding:
                         const EdgeInsets.only(top: 5, bottom: 5, left: 10),
                     border: OutlineInputBorder(
@@ -232,13 +222,6 @@ class _ProfileState extends State<ProfileScreen> {
                             MaterialStateProperty.all<Color>(Colors.white),
                       ),
                       onPressed: () async {
-                        // print('userLogged');
-                        // print(userLogged);
-                        // var decodedUser = json.decode(userLogged.toString());
-                        // // resBody["email"] = pp['token'];
-                        // print('decodedUser');
-                        // print(decodedUser);
-                        // print(nameController.text);
                         // Navigator.of(context).pop();
                       },
                       child: const Text('Editar'),
