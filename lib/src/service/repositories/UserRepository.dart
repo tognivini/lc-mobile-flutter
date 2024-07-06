@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:http/http.dart' as http;
 import 'package:lc_mobile_flutter/src/model/Interface.dart';
 import 'package:lc_mobile_flutter/src/model/UserModel.dart';
@@ -6,31 +8,36 @@ import 'dart:convert';
 
 import 'package:lc_mobile_flutter/src/service/types/endpoints.dart';
 
+// final response = await http.get(
+//   Uri.parse(API_REST + Endpoints().LIST_USERS),
+//   headers: <String, String>{
+//     'Content-Type': 'application/json',
+//     'Authorization': token,
+//   },
+// );
 class UserRepository extends AbstractService {
-  Future<bool> login({required ILogin payload}) async {
-    // required String email, required String senha}
-    //print('fazer requisição para o back');
-    //print('pegar resposta do back');
-    // var email = payload.email;
+  Future getUserById(payload) async {
+    var userId = payload["userId"];
+    var token = payload["token"];
 
-    // final conteudo = json.encode(
-    //     <String, String>{'email': email, 'senha': payload.senha});
-
-    final response = await http.post(Uri.parse(API_REST + Endpoints().LOGIN),
-        headers: headers, body: payload, encoding: null);
-
-    print('response');
-    print(response);
+    final response = await http.get(
+      Uri.parse(API_REST + Endpoints().LIST_USERS).replace(queryParameters: {
+        'userId': userId,
+      }),
+      headers: <String, String>{
+        'Content-Type': 'application/json',
+        'Authorization': token,
+      },
+    );
 
     if (response.statusCode == 200) {
-      // UsuarioModel u = UsuarioModel.fromJson(jsonDecode(resposta.body));
-      // print(u.email);
-      // print(u.token);
-      // new UsuarioPersistence().salvar(u);
-      return true;
+      final body = json.decode(response.body);
+      if (body != null && body[0] != null) {
+        return body[0];
+      } else {
+        return false;
+      }
     } else {
-      // print('problemas ' + resposta.statusCode.toString());
-      // print('erro: ' + resposta.body.toString());
       return false;
     }
   }

@@ -1,13 +1,15 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:lc_mobile_flutter/src/model/filme.dart';
 import 'package:lc_mobile_flutter/src/pages/AuthPages/LoginScreen.dart';
+import 'package:lc_mobile_flutter/src/service/repositories/UserRepository.dart';
 
 class ProfileScreen extends StatefulWidget {
-  final userLogged;
+  // final userLogged;
 
-  const ProfileScreen({super.key, String? name, this.userLogged});
+  const ProfileScreen({super.key, String? name});
 
   @override
   State<ProfileScreen> createState() => _ProfileState();
@@ -22,6 +24,31 @@ class _ProfileState extends State<ProfileScreen> {
   TextEditingController phoneController = TextEditingController();
   TextEditingController passController = TextEditingController();
 
+  onLoadUser(decodedUser) async {
+    print(decodedUser);
+    var payload = {};
+    payload["userId"] = decodedUser['userId'];
+    payload["token"] = decodedUser['token'];
+    // return await UserRepository().getUserById(payload);
+    await UserRepository().getUserById(payload).then(
+          (value) => {
+            if (value != false)
+              {
+                setState(() {
+                  print(value);
+                  // nameController.text = value['name'];
+                  // emailController.text = value['email'];
+                  // phoneController.text = value['phoneNumber'];
+                  // passController.text = value['password'];
+                  // matriculaController.text = '20195200';
+                })
+              }
+            else
+              print('error.')
+          },
+        );
+  }
+
   @override
   Widget build(BuildContext context) {
     final arguments = (ModalRoute.of(context)?.settings.arguments ??
@@ -29,15 +56,40 @@ class _ProfileState extends State<ProfileScreen> {
 
     var userLogged = arguments['userArgument'];
     var decodedUser = json.decode(userLogged.toString());
-    if (userLogged != null && decodedUser != '') {
-      setState(() {
-        nameController.text = decodedUser['name'];
-        emailController.text = decodedUser['email'];
-        phoneController.text = '(55)99999-9999';
-        passController.text = '****';
-        matriculaController.text = '20195200';
-      });
-    }
+
+    // useEffect(() {
+    print('----call----');
+    // Future.microtask(() => onLoadUser(decodedUser));
+    onLoadUser(decodedUser);
+    // }, []);
+
+    // onLoadUser(decodedUser);
+    // if (userLogged != null && decodedUser != '') {
+    //   onLoadUser(decodedUser);
+    //   // .then(
+    //   //   (value) => {
+    //   //     if (value != false)
+    //   //       {
+    //   //         setState(() {
+    //   //           print(value);
+    //   //           nameController.text = value['name'];
+    //   //           emailController.text = value['email'];
+    //   //           phoneController.text = value['phoneNumber'];
+    //   //           passController.text = value['password'];
+    //   //           matriculaController.text = '20195200';
+    //   //         })
+    //   //       }
+    //   //     else
+    //   //       print('error.')
+    //   //   },
+    //   // );
+
+    //   // {id: 75b7fab7-4f2e-4ff3-ab67-1f48b9940f50, status: 1, createdAt: 2024-04-19T00:30:22.401Z,
+    //   // updatedAt: 2024-04-19T00:30:22.401Z, email: email, phoneNumber: (99) 99999-99999, name: user123, password: 12345,
+
+    //   // userPermission: {id: f1b7f939-7587-40eb-ba8c-a49db0d69963, status: 1, createdAt: 2024-04-19T00:30:22.449Z,
+    //   // updatedAt: 2024-04-19T00:30:22.449Z, userType: CLIENTE}}
+    // }
 
     return Scaffold(
         backgroundColor: Colors.white,
@@ -190,7 +242,7 @@ class _ProfileState extends State<ProfileScreen> {
                         // var decodedUser = json.decode(userLogged.toString());
                         // // resBody["email"] = pp['token'];
                         // print('decodedUser');
-                        print(decodedUser);
+                        // print(decodedUser);
                         // print(nameController.text);
                         // Navigator.of(context).pop();
                       },
