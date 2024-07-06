@@ -41,12 +41,20 @@ class ScheduleScreen extends StatefulWidget {
 class _ScheduleState extends State<ScheduleScreen> {
   var finaldate;
 
-  // Future<void> getFilmes() async {
-  //   final response = await http.get(Uri.parse(
-  //       'https://raw.githubusercontent.com/alura-cursos/obtendo_dados_com_flutter_http/main/filmes.json'));
+  onLoadLaundry(decodedUser) async {
+    var payload = {};
+    payload["userId"] = decodedUser['userId'];
+    payload["token"] = decodedUser['token'];
 
-  //   print(response.body);
-  // }
+    // final userInfo = await UserRepository().getUserById(payload);
+    // if (userInfo != null) {
+    //   nameController.text = userInfo['name'];
+    //   emailController.text = userInfo['email'];
+    //   phoneController.text = userInfo['phoneNumber'];
+    //   passController.text = userInfo['password'];
+    //   matriculaController.text = '20195200';
+    // }
+  }
 
   final ButtonStyle style =
       ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 10));
@@ -286,9 +294,10 @@ class _ScheduleState extends State<ScheduleScreen> {
                         foregroundColor:
                             MaterialStateProperty.all<Color>(Colors.white),
                       ),
-                      onPressed: () {
-                        print(nameController.text);
-                      },
+                      onPressed: null,
+                      // onPressed: () {
+                      //   print(nameController.text);
+                      // },
                       child: const Text('Agendar'),
                     ),
                   )),

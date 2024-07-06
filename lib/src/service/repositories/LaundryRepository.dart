@@ -1,29 +1,17 @@
-import 'dart:io';
+// ignore_for_file: file_names
 
 import 'package:http/http.dart' as http;
-import 'package:lc_mobile_flutter/src/model/Interface.dart';
-import 'package:lc_mobile_flutter/src/model/UserModel.dart';
 import 'package:lc_mobile_flutter/src/service/AbstractService.dart';
 import 'dart:convert';
 
 import 'package:lc_mobile_flutter/src/service/types/endpoints.dart';
 
-// final response = await http.get(
-//   Uri.parse(API_REST + Endpoints().LIST_USERS),
-//   headers: <String, String>{
-//     'Content-Type': 'application/json',
-//     'Authorization': token,
-//   },
-// );
-class UserRepository extends AbstractService {
-  Future getUserById(payload) async {
-    var userId = payload["userId"];
+class LaundryRepository extends AbstractService {
+  Future getAllLaundry(payload) async {
     var token = payload["token"];
 
     final response = await http.get(
-      Uri.parse(API_REST + Endpoints().LIST_USERS).replace(queryParameters: {
-        'userId': userId,
-      }),
+      Uri.parse(API_REST + Endpoints().LIST_ALL_LAUNDRY),
       headers: <String, String>{
         'Content-Type': 'application/json',
         'Authorization': token,

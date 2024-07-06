@@ -1,9 +1,7 @@
+// ignore: file_names
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:lc_mobile_flutter/src/model/filme.dart';
-import 'package:lc_mobile_flutter/src/pages/AuthPages/LoginScreen.dart';
 import 'package:lc_mobile_flutter/src/service/repositories/UserRepository.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -11,11 +9,6 @@ class ProfileScreen extends StatefulWidget {
 
   @override
   State<ProfileScreen> createState() => _ProfileState();
-
-  @override
-  void initState() {
-    var _passwordVisible = false;
-  }
 }
 
 class _ProfileState extends State<ProfileScreen> {
