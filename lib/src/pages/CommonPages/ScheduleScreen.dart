@@ -13,7 +13,7 @@ List<String> listLaundry = <String>[
   // 'Lavanderia 1 - CEU 2'
 ];
 
-List<String> listLaundryUpdated = <String>['Selecione uma lavaderia'];
+// List<String> listLaundryUpdated = <String>['Selecione uma lavaderia'];
 
 const List<String> listHour = <String>[
   '08:00',
@@ -46,7 +46,27 @@ class ScheduleScreen extends StatefulWidget {
 class _ScheduleState extends State<ScheduleScreen> {
   var finaldate;
 
-  late List<DropdownMenuItem<String>> dropdownMenuLaundryUpdatedOptions;
+  late List<DropdownMenuItem<String>> dropdownMenuLaundryOptions;
+
+  // late List<DropdownMenuItem<String>> dropdownMenuLaundryUpdatedOptions;
+
+//   @observable
+// Observable<List<ItemSpec>?> obsItemSpec = Observable<List<ItemSpec>?>(null);
+
+// @action
+// Future getItemList() async {
+//       final itemList = await _useCase.getItemList();
+//   obsItemSpec = Observable(
+//       itemList.map((list) => DropdownMenuItem(list.name, list.id, child: null,)).toList());
+// }
+
+  //   @override
+  // void initState() {
+  //   super.initState();
+  //   getItemList().then((value) {
+  //     setState(() {});
+  //   });
+  // }
 
   onLoadUserInfo() async {
     final db = Localstore.instance;
@@ -70,17 +90,22 @@ class _ScheduleState extends State<ScheduleScreen> {
     if (allLaundry != null) {
       listLaundry.length = 0;
 
+      listLaundry.add('Selecione uma lavaderia');
+
       for (var i = 0; i < allLaundry.length; i++) {
         var laundryName = allLaundry[i]['name'];
-        print(laundryName);
+        // var laundryId = allLaundry[i]['id'];
+        // print(laundryName);
         listLaundry.add('$laundryName');
       }
-      dropdownLaundry = listLaundry.first;
+      // dropdownLaundry = listLaundry.first;
 
-      dropdownMenuLaundryUpdatedOptions = listLaundry
-          .map((String item) =>
-              DropdownMenuItem<String>(value: item, child: Text(item)))
-          .toList();
+      // print(listLaundry);
+
+      // dropdownMenuLaundryOptions = listLaundry
+      //     .map((String item) =>
+      //         DropdownMenuItem<String>(value: item, child: Text(item)))
+      //     .toList();
     }
   }
 
@@ -161,10 +186,10 @@ class _ScheduleState extends State<ScheduleScreen> {
   Widget build(BuildContext context) {
     onLoadUserInfo().then((localStorageData) => {loadLists(localStorageData)});
 
-    // final dropdownMenuLaundryOptions = listLaundry
-    //     .map((String item) =>
-    //         DropdownMenuItem<String>(value: item, child: Text(item)))
-    //     .toList();
+    dropdownMenuLaundryOptions = listLaundry
+        .map((String item) =>
+            DropdownMenuItem<String>(value: item, child: Text(item)))
+        .toList();
 
     return Scaffold(
         backgroundColor: Colors.white,
@@ -209,7 +234,7 @@ class _ScheduleState extends State<ScheduleScreen> {
                               dropdownLaundry = value!;
                             });
                           },
-                          items: dropdownMenuLaundryUpdatedOptions))),
+                          items: dropdownMenuLaundryOptions))),
               //calendar
               Padding(
                 padding: const EdgeInsets.only(
