@@ -2,20 +2,18 @@
 
 import 'package:flutter/material.dart';
 import 'package:lc_mobile_flutter/src/service/repositories/LaundryRepository.dart';
+import 'package:lc_mobile_flutter/src/service/repositories/WashMachineRepository.dart';
 import 'dart:async';
 
 import 'package:localstore/localstore.dart';
 
-List<String> listLaundry = <String>[
-  'Selecione uma lavaderia'
-  // 'Lavanderia 1 - CEU 1',
-  // 'Lavanderia 2 - CEU 1',
-  // 'Lavanderia 1 - CEU 2'
+// List<String> listLaundry = <String>['Selecione uma lavaderia'];
+List listLaundry = [
+  {'label': 'Selecione uma lavaderia', 'value': '0'}
 ];
+List<String> listMachines = <String>['Selecione uma Máquina de lavar'];
 
-// List<String> listLaundryUpdated = <String>['Selecione uma lavaderia'];
-
-const List<String> listHour = <String>[
+List<String> listHour = <String>[
   '08:00',
   '10:00',
   '14:00',
@@ -25,15 +23,6 @@ const List<String> listHour = <String>[
   '22:00',
 ];
 
-const List<String> listMachines = <String>[
-  'Maquina 1',
-  'Maquina 2',
-  'Maquina 3',
-  'Maquina 4',
-];
-// import 'package:lc_mobile_flutter/src/components/SelectInput/SelectInput';
-
-// ignore: must_be_immutable
 class ScheduleScreen extends StatefulWidget {
   const ScheduleScreen({super.key, String? name});
 
@@ -47,26 +36,8 @@ class _ScheduleState extends State<ScheduleScreen> {
   var finaldate;
 
   late List<DropdownMenuItem<String>> dropdownMenuLaundryOptions;
-
-  // late List<DropdownMenuItem<String>> dropdownMenuLaundryUpdatedOptions;
-
-//   @observable
-// Observable<List<ItemSpec>?> obsItemSpec = Observable<List<ItemSpec>?>(null);
-
-// @action
-// Future getItemList() async {
-//       final itemList = await _useCase.getItemList();
-//   obsItemSpec = Observable(
-//       itemList.map((list) => DropdownMenuItem(list.name, list.id, child: null,)).toList());
-// }
-
-  //   @override
-  // void initState() {
-  //   super.initState();
-  //   getItemList().then((value) {
-  //     setState(() {});
-  //   });
-  // }
+  late List<DropdownMenuItem<String>> dropdownMenuMachineOptions;
+  late List<DropdownMenuItem<String>> dropdownMenuHoursOptions;
 
   onLoadUserInfo() async {
     final db = Localstore.instance;
@@ -79,10 +50,11 @@ class _ScheduleState extends State<ScheduleScreen> {
   loadLists(localStorageData) async {
     onLoadLaundry(localStorageData);
     onLoadMachines(localStorageData);
-    onLoadHours(localStorageData);
+    // onLoadHours(localStorageData);
   }
 
   onLoadLaundry(localStorageData) async {
+    print('---LoadLaundry---');
     var payload = {};
     payload["token"] = localStorageData['token'];
 
@@ -90,40 +62,15 @@ class _ScheduleState extends State<ScheduleScreen> {
     if (allLaundry != null) {
       listLaundry.length = 0;
 
-      listLaundry.add('Selecione uma lavaderia');
+      listLaundry.add({'label': 'Selecione uma lavaderia', 'value': '0'});
 
       for (var i = 0; i < allLaundry.length; i++) {
-        var laundryName = allLaundry[i]['name'];
-        // var laundryId = allLaundry[i]['id'];
-        // print(laundryName);
-        listLaundry.add('$laundryName');
+        var arrLaundry = {};
+        arrLaundry["label"] = allLaundry[i]['name'];
+        arrLaundry["value"] = allLaundry[i]['id'];
+        listLaundry.add(arrLaundry);
       }
-      // dropdownLaundry = listLaundry.first;
-
-      // print(listLaundry);
-
-      // dropdownMenuLaundryOptions = listLaundry
-      //     .map((String item) =>
-      //         DropdownMenuItem<String>(value: item, child: Text(item)))
-      //     .toList();
     }
-  }
-
-  onLoadHours(localStorageData) async {
-    print('---LoadHours---');
-    // var payload = {};
-    // payload["token"] = localStorageData['token'];
-
-    // final allLaundry = await LaundryRepository().getAllLaundry(payload);
-    // if (allLaundry != null) {
-    //   listLaundry.length = 0;
-
-    //   for (var i = 0; i < allLaundry.length; i++) {
-    //     var laundryName = allLaundry[i]['name'];
-    //     print(laundryName);
-    //     listLaundry.add('$laundryName');
-    //   }
-    // }
   }
 
   onLoadMachines(localStorageData) async {
@@ -132,12 +79,41 @@ class _ScheduleState extends State<ScheduleScreen> {
     // payload["token"] = localStorageData['token'];
 
     // final allLaundry = await LaundryRepository().getAllLaundry(payload);
+
+    // print(allLaundry);
+
+    // final allWashMashines =
+    //     await WashMachineRepository().getAllWashMashines(payload);
+    // print(allWashMashines);
+    // if (allWashMashines != null) {
+    //   listMachines.length = 0;
+
+    //   listMachines.add('Selecione uma Máquina de lavar');
+
+    //   // for (var i = 0; i < allWashMashines.length; i++) {
+    //   //   var machineName = allWashMashines[i]['name'];
+    //   //   // var laundryId = allLaundry[i]['id'];
+    //   //   print(machineName);
+    //   //   listMachines.add('$machineName');
+    //   // }
+    // }
+  }
+
+  onLoadHours(localStorageData) async {
+    print('---LoadHours---');
+    //  var payload = {};
+    // payload["token"] = localStorageData['token'];
+
+    // final allLaundry = await LaundryRepository().getAllLaundry(payload);
     // if (allLaundry != null) {
     //   listLaundry.length = 0;
 
+    //   listLaundry.add('Selecione uma lavaderia');
+
     //   for (var i = 0; i < allLaundry.length; i++) {
     //     var laundryName = allLaundry[i]['name'];
-    //     print(laundryName);
+    //     // var laundryId = allLaundry[i]['id'];
+    //     // print(laundryId);
     //     listLaundry.add('$laundryName');
     //   }
     // }
@@ -169,7 +145,8 @@ class _ScheduleState extends State<ScheduleScreen> {
   TextEditingController phoneController = TextEditingController();
   TextEditingController passController = TextEditingController();
   TextEditingController dataController = TextEditingController();
-  String dropdownLaundry = listLaundry.first;
+  // String dropdownLaundry = listLaundry.first;
+  var dropdownLaundry = listLaundry[0]['value'];
   String dropdownHourValue = listHour.first;
   String dropdownMachineValue = listMachines.first;
 
@@ -186,7 +163,17 @@ class _ScheduleState extends State<ScheduleScreen> {
   Widget build(BuildContext context) {
     onLoadUserInfo().then((localStorageData) => {loadLists(localStorageData)});
 
+    // dropdownMenuLaundryOptions = listLaundry
+    //     .map((String item) =>
+    //         DropdownMenuItem<String>(value: item, child: Text(item)))
+    //     .toList();
+
     dropdownMenuLaundryOptions = listLaundry
+        .map((item) => DropdownMenuItem<String>(
+            value: item['value'], child: Text(item['label'])))
+        .toList();
+
+    dropdownMenuMachineOptions = listMachines
         .map((String item) =>
             DropdownMenuItem<String>(value: item, child: Text(item)))
         .toList();
@@ -229,9 +216,14 @@ class _ScheduleState extends State<ScheduleScreen> {
                                   color: Colors.deepPurpleAccent, width: 2.4),
                             ),
                           ),
-                          onChanged: (String? value) {
+                          onChanged: (value) {
+                            if (value == '0') {
+                              print('limpa os outros');
+                              //https://medium.com/@bigface00/flutter-tips-dynamically-changing-dropdownbutton-contents-with-another-dropdown-button-475dfae1fd58
+                            }
+                            print(value);
                             setState(() {
-                              dropdownLaundry = value!;
+                              dropdownLaundry = value;
                             });
                           },
                           items: dropdownMenuLaundryOptions))),
@@ -276,14 +268,47 @@ class _ScheduleState extends State<ScheduleScreen> {
                   ),
                 ),
               ),
+
+              Padding(
+                  padding: const EdgeInsets.only(
+                      top: 5, right: 10, bottom: 0, left: 10),
+                  child: Container(
+                    padding: const EdgeInsets.only(
+                        top: 0, right: 10, bottom: 0, left: 10),
+                    height: 65,
+                    width: 280,
+                    decoration:
+                        BoxDecoration(borderRadius: BorderRadius.circular(5)),
+                    child: DropdownButtonFormField<String>(
+                        value: dropdownMachineValue,
+                        icon: const Icon(Icons.local_laundry_service),
+                        elevation: 16,
+                        style: const TextStyle(
+                            color: Color.fromARGB(255, 29, 28, 31)),
+                        padding: const EdgeInsets.only(
+                            top: 0, right: 0, bottom: 0, left: 0),
+                        decoration: const InputDecoration(
+                          border: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                                color: Colors.deepPurpleAccent, width: 2.4),
+                          ),
+                        ),
+                        onChanged: (String? value) {
+                          // This is called when the user selects an item.
+                          setState(() {
+                            dropdownMachineValue = value!;
+                          });
+                        },
+                        items: dropdownMenuMachineOptions),
+                  )),
+
               //hour
               Padding(
                   padding: const EdgeInsets.only(
                       top: 5, right: 10, bottom: 0, left: 10),
                   child: Container(
-                    padding:
-                        // EdgeInsets.only(top: 0, right: 20, bottom: 0, left: 20),
-                        EdgeInsets.only(top: 0, right: 10, bottom: 0, left: 10),
+                    padding: const EdgeInsets.only(
+                        top: 0, right: 10, bottom: 0, left: 10),
                     height: 65,
                     width: 280,
                     decoration:
@@ -319,45 +344,6 @@ class _ScheduleState extends State<ScheduleScreen> {
                     ),
                   )),
 
-              Padding(
-                  padding: const EdgeInsets.only(
-                      top: 5, right: 10, bottom: 0, left: 10),
-                  child: Container(
-                    padding: const EdgeInsets.only(
-                        top: 0, right: 10, bottom: 0, left: 10),
-                    height: 65,
-                    width: 280,
-                    decoration:
-                        BoxDecoration(borderRadius: BorderRadius.circular(5)),
-                    child: DropdownButtonFormField<String>(
-                      value: dropdownMachineValue,
-                      icon: const Icon(Icons.local_laundry_service),
-                      elevation: 16,
-                      style: const TextStyle(
-                          color: Color.fromARGB(255, 29, 28, 31)),
-                      padding: const EdgeInsets.only(
-                          top: 0, right: 0, bottom: 0, left: 0),
-                      decoration: const InputDecoration(
-                        border: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                              color: Colors.deepPurpleAccent, width: 2.4),
-                        ),
-                      ),
-                      onChanged: (String? value) {
-                        // This is called when the user selects an item.
-                        setState(() {
-                          dropdownMachineValue = value!;
-                        });
-                      },
-                      items: listMachines
-                          .map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
-                    ),
-                  )),
               Padding(
                   padding: const EdgeInsets.only(top: 15),
                   child: Container(
