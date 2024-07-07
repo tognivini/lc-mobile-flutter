@@ -11,7 +11,10 @@ import 'package:localstore/localstore.dart';
 List listLaundry = [
   {'label': 'Selecione uma lavaderia', 'value': '0'}
 ];
-List<String> listMachines = <String>['Selecione uma Máquina de lavar'];
+// List<String> listMachines = <String>['Selecione uma Máquina de lavar'];
+List listMachines = [
+  {'label': 'Selecione uma Máquina de lavar', 'value': '0'}
+];
 
 List<String> listHour = <String>[
   '08:00',
@@ -146,9 +149,10 @@ class _ScheduleState extends State<ScheduleScreen> {
   TextEditingController passController = TextEditingController();
   TextEditingController dataController = TextEditingController();
   // String dropdownLaundry = listLaundry.first;
+  // String dropdownMachineValue = listMachines.first;
   var dropdownLaundry = listLaundry[0]['value'];
+  var dropdownMachineValue = listMachines[0]['value'];
   String dropdownHourValue = listHour.first;
-  String dropdownMachineValue = listMachines.first;
 
   Future<DateTime?> getDate() {
     return showDatePicker(
@@ -163,19 +167,19 @@ class _ScheduleState extends State<ScheduleScreen> {
   Widget build(BuildContext context) {
     onLoadUserInfo().then((localStorageData) => {loadLists(localStorageData)});
 
-    // dropdownMenuLaundryOptions = listLaundry
-    //     .map((String item) =>
-    //         DropdownMenuItem<String>(value: item, child: Text(item)))
-    //     .toList();
-
     dropdownMenuLaundryOptions = listLaundry
         .map((item) => DropdownMenuItem<String>(
             value: item['value'], child: Text(item['label'])))
         .toList();
 
+    // dropdownMenuMachineOptions = listMachines
+    //     .map((String item) =>
+    //         DropdownMenuItem<String>(value: item, child: Text(item)))
+    //     .toList();
+
     dropdownMenuMachineOptions = listMachines
-        .map((String item) =>
-            DropdownMenuItem<String>(value: item, child: Text(item)))
+        .map((item) => DropdownMenuItem<String>(
+            value: item['value'], child: Text(item['label'])))
         .toList();
 
     return Scaffold(
@@ -293,10 +297,12 @@ class _ScheduleState extends State<ScheduleScreen> {
                                 color: Colors.deepPurpleAccent, width: 2.4),
                           ),
                         ),
-                        onChanged: (String? value) {
-                          // This is called when the user selects an item.
+                        onChanged: (value) {
+                          if (value == '0') {
+                            print('limpa hour');
+                          }
                           setState(() {
-                            dropdownMachineValue = value!;
+                            dropdownMachineValue = value;
                           });
                         },
                         items: dropdownMenuMachineOptions),
@@ -326,7 +332,6 @@ class _ScheduleState extends State<ScheduleScreen> {
                           borderSide: BorderSide(
                               color: Colors.deepPurpleAccent, width: 2.4),
                         ),
-                        // color: Colors.black
                       ),
                       onChanged: (String? value) {
                         // This is called when the user selects an item.
