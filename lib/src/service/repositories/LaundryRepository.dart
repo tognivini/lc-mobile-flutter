@@ -20,8 +20,10 @@ class LaundryRepository extends AbstractService {
 
     if (response.statusCode == 200) {
       final body = json.decode(response.body);
-      if (body != null && body[0] != null) {
-        return body[0];
+      final data = body['data'];
+
+      if (data != null) {
+        return data;
       } else {
         return false;
       }

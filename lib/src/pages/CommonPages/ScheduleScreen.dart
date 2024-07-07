@@ -1,16 +1,19 @@
 // ignore_for_file: file_names, avoid_print, override_on_non_overriding_member, deprecated_member_use
 
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+import 'package:lc_mobile_flutter/src/service/repositories/LaundryRepository.dart';
 import 'dart:async';
 
 import 'package:localstore/localstore.dart';
 
-const List<String> listLaundry = <String>[
-  'Lavanderia 1 - CEU 1',
-  'Lavanderia 2 - CEU 1',
-  'Lavanderia 1 - CEU 2'
+List<String> listLaundry = <String>[
+  'Selecione uma lavaderia'
+  // 'Lavanderia 1 - CEU 1',
+  // 'Lavanderia 2 - CEU 1',
+  // 'Lavanderia 1 - CEU 2'
 ];
+
+List<String> listLaundryUpdated = <String>['Selecione uma lavaderia'];
 
 const List<String> listHour = <String>[
   '08:00',
@@ -43,27 +46,75 @@ class ScheduleScreen extends StatefulWidget {
 class _ScheduleState extends State<ScheduleScreen> {
   var finaldate;
 
+  late List<DropdownMenuItem<String>> dropdownMenuLaundryUpdatedOptions;
+
   onLoadUserInfo() async {
     final db = Localstore.instance;
+    final localStorageData =
+        await db.collection('storageUser').doc('storageUser').get();
 
-    final data = await db.collection('storageUser').doc('storageUser').get();
-
-    print('local storage says:');
-    print(data);
+    return localStorageData;
   }
 
-  onLoadLaundry(decodedUser) async {
-    var payload = {};
-    payload["userId"] = decodedUser['userId'];
-    payload["token"] = decodedUser['token'];
+  loadLists(localStorageData) async {
+    onLoadLaundry(localStorageData);
+    onLoadMachines(localStorageData);
+    onLoadHours(localStorageData);
+  }
 
-    // final userInfo = await UserRepository().getUserById(payload);
-    // if (userInfo != null) {
-    //   nameController.text = userInfo['name'];
-    //   emailController.text = userInfo['email'];
-    //   phoneController.text = userInfo['phoneNumber'];
-    //   passController.text = userInfo['password'];
-    //   matriculaController.text = '20195200';
+  onLoadLaundry(localStorageData) async {
+    var payload = {};
+    payload["token"] = localStorageData['token'];
+
+    final allLaundry = await LaundryRepository().getAllLaundry(payload);
+    if (allLaundry != null) {
+      listLaundry.length = 0;
+
+      for (var i = 0; i < allLaundry.length; i++) {
+        var laundryName = allLaundry[i]['name'];
+        print(laundryName);
+        listLaundry.add('$laundryName');
+      }
+      dropdownLaundry = listLaundry.first;
+
+      dropdownMenuLaundryUpdatedOptions = listLaundry
+          .map((String item) =>
+              DropdownMenuItem<String>(value: item, child: Text(item)))
+          .toList();
+    }
+  }
+
+  onLoadHours(localStorageData) async {
+    print('---LoadHours---');
+    // var payload = {};
+    // payload["token"] = localStorageData['token'];
+
+    // final allLaundry = await LaundryRepository().getAllLaundry(payload);
+    // if (allLaundry != null) {
+    //   listLaundry.length = 0;
+
+    //   for (var i = 0; i < allLaundry.length; i++) {
+    //     var laundryName = allLaundry[i]['name'];
+    //     print(laundryName);
+    //     listLaundry.add('$laundryName');
+    //   }
+    // }
+  }
+
+  onLoadMachines(localStorageData) async {
+    print('---LoadMachines---');
+    // var payload = {};
+    // payload["token"] = localStorageData['token'];
+
+    // final allLaundry = await LaundryRepository().getAllLaundry(payload);
+    // if (allLaundry != null) {
+    //   listLaundry.length = 0;
+
+    //   for (var i = 0; i < allLaundry.length; i++) {
+    //     var laundryName = allLaundry[i]['name'];
+    //     print(laundryName);
+    //     listLaundry.add('$laundryName');
+    //   }
     // }
   }
 
@@ -101,14 +152,19 @@ class _ScheduleState extends State<ScheduleScreen> {
     return showDatePicker(
       context: context,
       initialDate: DateTime.now(),
-      firstDate: DateTime(2018),
+      firstDate: DateTime(2024),
       lastDate: DateTime(2030),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    onLoadUserInfo();
+    onLoadUserInfo().then((localStorageData) => {loadLists(localStorageData)});
+
+    // final dropdownMenuLaundryOptions = listLaundry
+    //     .map((String item) =>
+    //         DropdownMenuItem<String>(value: item, child: Text(item)))
+    //     .toList();
 
     return Scaffold(
         backgroundColor: Colors.white,
@@ -128,48 +184,32 @@ class _ScheduleState extends State<ScheduleScreen> {
                   padding: const EdgeInsets.only(
                       top: 5, right: 10, bottom: 0, left: 10),
                   child: Container(
-                    padding:
-                        // EdgeInsets.only(top: 0, right: 20, bottom: 0, left: 20),
-                        EdgeInsets.only(top: 0, right: 10, bottom: 0, left: 10),
-                    height: 65,
-                    width: 280,
-                    decoration:
-                        BoxDecoration(borderRadius: BorderRadius.circular(5)),
-                    child: DropdownButtonFormField<String>(
-                      value: dropdownLaundry,
-                      icon: const Icon(Icons.launch),
-                      elevation: 16,
-                      style: const TextStyle(
-                          color: Color.fromARGB(255, 29, 28, 31)),
                       padding: const EdgeInsets.only(
-                          top: 0, right: 0, bottom: 0, left: 0),
-                      decoration: const InputDecoration(
-                        border: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                              color: Colors.deepPurpleAccent, width: 2.4),
-                        ),
-                        // color: Colors.black
-                      ),
-                      // underline: Container(
-                      //   // padding: EdgeInsets.only(left: 40),
-                      //   height: 2,
-                      //   color: Colors.deepPurpleAccent,
-                      // ),
-                      onChanged: (String? value) {
-                        // This is called when the user selects an item.
-                        setState(() {
-                          dropdownLaundry = value!;
-                        });
-                      },
-                      items: listLaundry
-                          .map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
-                    ),
-                  )),
+                          top: 0, right: 10, bottom: 0, left: 10),
+                      height: 65,
+                      width: 280,
+                      decoration:
+                          BoxDecoration(borderRadius: BorderRadius.circular(5)),
+                      child: DropdownButtonFormField<String>(
+                          value: dropdownLaundry,
+                          icon: const Icon(Icons.launch),
+                          elevation: 16,
+                          style: const TextStyle(
+                              color: Color.fromARGB(255, 29, 28, 31)),
+                          padding: const EdgeInsets.only(
+                              top: 0, right: 0, bottom: 0, left: 0),
+                          decoration: const InputDecoration(
+                            border: UnderlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: Colors.deepPurpleAccent, width: 2.4),
+                            ),
+                          ),
+                          onChanged: (String? value) {
+                            setState(() {
+                              dropdownLaundry = value!;
+                            });
+                          },
+                          items: dropdownMenuLaundryUpdatedOptions))),
               //calendar
               Padding(
                 padding: const EdgeInsets.only(

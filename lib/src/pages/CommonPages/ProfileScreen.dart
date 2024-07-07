@@ -46,13 +46,6 @@ class _ProfileState extends State<ProfileScreen> {
 
     onLoadUser(decodedUser);
 
-    //   // {id: 75b7fab7-4f2e-4ff3-ab67-1f48b9940f50, status: 1, createdAt: 2024-04-19T00:30:22.401Z,
-    //   // updatedAt: 2024-04-19T00:30:22.401Z, email: email, phoneNumber: (99) 99999-99999, name: user123, password: 12345,
-
-    //   // userPermission: {id: f1b7f939-7587-40eb-ba8c-a49db0d69963, status: 1, createdAt: 2024-04-19T00:30:22.449Z,
-    //   // updatedAt: 2024-04-19T00:30:22.449Z, userType: CLIENTE}}
-
-    // bool _passwordVisible = false;
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
