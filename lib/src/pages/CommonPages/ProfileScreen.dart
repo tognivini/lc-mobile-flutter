@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:lc_mobile_flutter/src/service/repositories/UserRepository.dart';
+import 'package:localstore/localstore.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key, String? name});
@@ -72,6 +73,9 @@ class _ProfileState extends State<ProfileScreen> {
                     ),
                   ),
                   onPressed: () {
+                    final db = Localstore.instance;
+                    db.collection('storageUser').delete();
+
                     Navigator.pushNamed(
                       context,
                       '/auth/login',

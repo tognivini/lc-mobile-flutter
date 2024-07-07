@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
 
+import 'package:localstore/localstore.dart';
+
 const List<String> listLaundry = <String>[
   'Lavanderia 1 - CEU 1',
   'Lavanderia 2 - CEU 1',
@@ -40,6 +42,15 @@ class ScheduleScreen extends StatefulWidget {
 
 class _ScheduleState extends State<ScheduleScreen> {
   var finaldate;
+
+  onLoadUserInfo() async {
+    final db = Localstore.instance;
+
+    final data = await db.collection('storageUser').doc('storageUser').get();
+
+    print('local storage says:');
+    print(data);
+  }
 
   onLoadLaundry(decodedUser) async {
     var payload = {};
@@ -97,6 +108,8 @@ class _ScheduleState extends State<ScheduleScreen> {
 
   @override
   Widget build(BuildContext context) {
+    onLoadUserInfo();
+
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(

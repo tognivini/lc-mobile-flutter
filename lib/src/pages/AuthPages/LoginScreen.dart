@@ -3,6 +3,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:localstore/localstore.dart';
 import 'package:lc_mobile_flutter/src/pages/CommonPages/ProfileScreen.dart';
 import 'package:lc_mobile_flutter/src/service/repositories/AuthRepository.dart';
 
@@ -18,8 +19,15 @@ class _LoginState extends State<LoginScreen> {
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
 
+  onLoadLoginPage() async {
+    final db = Localstore.instance;
+    db.collection('storageUser').delete();
+  }
+
   @override
   Widget build(BuildContext context) {
+    onLoadLoginPage();
+
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
@@ -89,11 +97,9 @@ class _LoginState extends State<LoginScreen> {
                         var payload = {};
                         // payload["email"] = email.text;
                         // payload["password"] = password.text;
-
                         payload["email"] = 'email';
                         payload["password"] = '12345';
 
-                        String obj = 'stringTest';
                         await AuthRepository().login(payload).then(
                               (value) => {
                                 if (value != false)
@@ -105,14 +111,6 @@ class _LoginState extends State<LoginScreen> {
                                         'userArgument': json.encode(value),
                                       },
                                     )
-                                    // Navigator.push(
-                                    //   context,
-                                    //   MaterialPageRoute(
-                                    //       builder: (context) =>
-                                    //           const ProfileScreen(),
-                                    //       settings: RouteSettings(
-                                    //           arguments: json.encode(value))),
-                                    // )
                                   }
                                 else
                                   {print('error')}
