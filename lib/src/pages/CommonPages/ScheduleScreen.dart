@@ -1,17 +1,13 @@
 // ignore_for_file: file_names, avoid_print, override_on_non_overriding_member, deprecated_member_use
-
 import 'package:flutter/material.dart';
 import 'package:lc_mobile_flutter/src/service/repositories/LaundryRepository.dart';
-import 'package:lc_mobile_flutter/src/service/repositories/WashMachineRepository.dart';
 import 'dart:async';
 
 import 'package:localstore/localstore.dart';
 
-// List<String> listLaundry = <String>['Selecione uma lavaderia'];
 List listLaundry = [
   {'label': 'Selecione uma lavaderia', 'value': '0'}
 ];
-// List<String> listMachines = <String>['Selecione uma Máquina de lavar'];
 List listMachines = [
   {'label': 'Selecione uma Máquina de lavar', 'value': '0'}
 ];
@@ -78,28 +74,25 @@ class _ScheduleState extends State<ScheduleScreen> {
 
   onLoadMachines(localStorageData) async {
     print('---LoadMachines---');
-    // var payload = {};
-    // payload["token"] = localStorageData['token'];
-
-    // final allLaundry = await LaundryRepository().getAllLaundry(payload);
-
-    // print(allLaundry);
-
-    // final allWashMashines =
-    //     await WashMachineRepository().getAllWashMashines(payload);
-    // print(allWashMashines);
-    // if (allWashMashines != null) {
-    //   listMachines.length = 0;
-
-    //   listMachines.add('Selecione uma Máquina de lavar');
-
-    //   // for (var i = 0; i < allWashMashines.length; i++) {
-    //   //   var machineName = allWashMashines[i]['name'];
-    //   //   // var laundryId = allLaundry[i]['id'];
-    //   //   print(machineName);
-    //   //   listMachines.add('$machineName');
-    //   // }
-    // }
+    var payload = {};
+    payload["token"] = localStorageData['token'];
+    final allLaundry = await LaundryRepository().getAllLaundry(payload);
+    listMachines.length = 0;
+    listMachines.add({'label': 'Selecione uma máquina de lavar', 'value': '0'});
+    for (var i = 0; i < allLaundry.length; i++) {
+      if (allLaundry[i]['id'] == dropdownLaundry) {
+        if (allLaundry[i]['washMachines'].length > 0) {
+          var arrMarchine = allLaundry[i]['washMachines'];
+          for (var j = 0; j < arrMarchine.length; j++) {
+            var arrMachineOptions = {};
+            var useNmb = arrMarchine[j]['number'];
+            arrMachineOptions["label"] = 'Máquina $useNmb';
+            arrMachineOptions["value"] = arrMarchine[j]['id'];
+            listMachines.add(arrMachineOptions);
+          }
+        }
+      }
+    }
   }
 
   onLoadHours(localStorageData) async {
@@ -148,8 +141,6 @@ class _ScheduleState extends State<ScheduleScreen> {
   TextEditingController phoneController = TextEditingController();
   TextEditingController passController = TextEditingController();
   TextEditingController dataController = TextEditingController();
-  // String dropdownLaundry = listLaundry.first;
-  // String dropdownMachineValue = listMachines.first;
   var dropdownLaundry = listLaundry[0]['value'];
   var dropdownMachineValue = listMachines[0]['value'];
   String dropdownHourValue = listHour.first;
@@ -171,11 +162,6 @@ class _ScheduleState extends State<ScheduleScreen> {
         .map((item) => DropdownMenuItem<String>(
             value: item['value'], child: Text(item['label'])))
         .toList();
-
-    // dropdownMenuMachineOptions = listMachines
-    //     .map((String item) =>
-    //         DropdownMenuItem<String>(value: item, child: Text(item)))
-    //     .toList();
 
     dropdownMenuMachineOptions = listMachines
         .map((item) => DropdownMenuItem<String>(
