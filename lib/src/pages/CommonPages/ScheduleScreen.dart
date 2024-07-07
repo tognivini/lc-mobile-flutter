@@ -49,7 +49,7 @@ class _ScheduleState extends State<ScheduleScreen> {
   loadLists(localStorageData) async {
     onLoadLaundry(localStorageData);
     onLoadMachines(localStorageData);
-    // onLoadHours(localStorageData);
+    onLoadHours(localStorageData);
   }
 
   onLoadLaundry(localStorageData) async {
@@ -73,22 +73,26 @@ class _ScheduleState extends State<ScheduleScreen> {
   }
 
   onLoadMachines(localStorageData) async {
-    print('---LoadMachines---');
-    var payload = {};
-    payload["token"] = localStorageData['token'];
-    final allLaundry = await LaundryRepository().getAllLaundry(payload);
-    listMachines.length = 0;
-    listMachines.add({'label': 'Selecione uma máquina de lavar', 'value': '0'});
-    for (var i = 0; i < allLaundry.length; i++) {
-      if (allLaundry[i]['id'] == dropdownLaundry) {
-        if (allLaundry[i]['washMachines'].length > 0) {
-          var arrMarchine = allLaundry[i]['washMachines'];
-          for (var j = 0; j < arrMarchine.length; j++) {
-            var arrMachineOptions = {};
-            var useNmb = arrMarchine[j]['number'];
-            arrMachineOptions["label"] = 'Máquina $useNmb';
-            arrMachineOptions["value"] = arrMarchine[j]['id'];
-            listMachines.add(arrMachineOptions);
+    if (dropdownLaundryValue != '0' && finaldate != null) {
+      print('---LoadMachines---');
+      var payload = {};
+      payload["token"] = localStorageData['token'];
+
+      final allLaundry = await LaundryRepository().getAllLaundry(payload);
+      listMachines.length = 0;
+      listMachines
+          .add({'label': 'Selecione uma máquina de lavar', 'value': '0'});
+      for (var i = 0; i < allLaundry.length; i++) {
+        if (allLaundry[i]['id'] == dropdownLaundryValue) {
+          if (allLaundry[i]['washMachines'].length > 0) {
+            var arrMarchine = allLaundry[i]['washMachines'];
+            for (var j = 0; j < arrMarchine.length; j++) {
+              var arrMachineOptions = {};
+              var useNmb = arrMarchine[j]['number'];
+              arrMachineOptions["label"] = 'Máquina $useNmb';
+              arrMachineOptions["value"] = arrMarchine[j]['id'];
+              listMachines.add(arrMachineOptions);
+            }
           }
         }
       }
@@ -96,23 +100,27 @@ class _ScheduleState extends State<ScheduleScreen> {
   }
 
   onLoadHours(localStorageData) async {
-    print('---LoadHours---');
-    //  var payload = {};
-    // payload["token"] = localStorageData['token'];
+    if (dropdownLaundryValue != '0' &&
+        dropdownMachineValue != '0' &&
+        finaldate != null) {
+      print('---LoadHours---');
+      //  var payload = {};
+      // payload["token"] = localStorageData['token'];
 
-    // final allLaundry = await LaundryRepository().getAllLaundry(payload);
-    // if (allLaundry != null) {
-    //   listLaundry.length = 0;
+      // final allLaundry = await LaundryRepository().getAllLaundry(payload);
+      // if (allLaundry != null) {
+      //   listLaundry.length = 0;
 
-    //   listLaundry.add('Selecione uma lavaderia');
+      //   listLaundry.add('Selecione uma lavaderia');
 
-    //   for (var i = 0; i < allLaundry.length; i++) {
-    //     var laundryName = allLaundry[i]['name'];
-    //     // var laundryId = allLaundry[i]['id'];
-    //     // print(laundryId);
-    //     listLaundry.add('$laundryName');
-    //   }
-    // }
+      //   for (var i = 0; i < allLaundry.length; i++) {
+      //     var laundryName = allLaundry[i]['name'];
+      //     // var laundryId = allLaundry[i]['id'];
+      //     // print(laundryId);
+      //     listLaundry.add('$laundryName');
+      //   }
+      // }
+    }
   }
 
   final ButtonStyle style =
@@ -141,7 +149,7 @@ class _ScheduleState extends State<ScheduleScreen> {
   TextEditingController phoneController = TextEditingController();
   TextEditingController passController = TextEditingController();
   TextEditingController dataController = TextEditingController();
-  var dropdownLaundry = listLaundry[0]['value'];
+  var dropdownLaundryValue = listLaundry[0]['value'];
   var dropdownMachineValue = listMachines[0]['value'];
   String dropdownHourValue = listHour.first;
 
@@ -193,7 +201,7 @@ class _ScheduleState extends State<ScheduleScreen> {
                       decoration:
                           BoxDecoration(borderRadius: BorderRadius.circular(5)),
                       child: DropdownButtonFormField<String>(
-                          value: dropdownLaundry,
+                          value: dropdownLaundryValue,
                           icon: const Icon(Icons.launch),
                           elevation: 16,
                           style: const TextStyle(
@@ -213,7 +221,7 @@ class _ScheduleState extends State<ScheduleScreen> {
                             }
                             print(value);
                             setState(() {
-                              dropdownLaundry = value;
+                              dropdownLaundryValue = value;
                             });
                           },
                           items: dropdownMenuLaundryOptions))),
