@@ -39,4 +39,45 @@ class ScheduleRepository extends AbstractService {
       return false;
     }
   }
+
+  Future onCreateSchedule(payload) async {
+    var token = payload["token"];
+    var date = payload["date"];
+    var laundry = payload["laundry"];
+    var washMachine = payload["washMachine"];
+    var startHour = payload["startHour"];
+    var endHour = payload["endHour"];
+    var responsible = payload["responsible"];
+    var client = payload["client"];
+
+    final response = await http.post(
+      Uri.parse(API_REST + Endpoints().CREATE_SCHEDULE),
+      headers: <String, String>{
+        'Content-Type': 'application/json',
+        'Authorization': token,
+      },
+      body: json.encode({
+        'date': date,
+        'laundry': laundry,
+        'washMachine': washMachine,
+        'startHour': startHour,
+        'endHour': endHour,
+        'responsible': responsible,
+        'client': client,
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      final body = json.decode(response.body);
+      final data = body['data'];
+
+      if (data != null) {
+        return data;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  }
 }

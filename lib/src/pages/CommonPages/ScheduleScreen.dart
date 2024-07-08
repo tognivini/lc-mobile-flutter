@@ -31,6 +31,8 @@ class _ScheduleState extends State<ScheduleScreen> {
   late List<DropdownMenuItem<String>> dropdownMenuMachineOptions;
   late List<DropdownMenuItem<String>> dropdownMenuHoursOptions;
 
+  var responsibleUser;
+
   onLoadUserInfo() async {
     final db = Localstore.instance;
     final localStorageData =
@@ -77,6 +79,9 @@ class _ScheduleState extends State<ScheduleScreen> {
 
       for (var i = 0; i < allLaundry.length; i++) {
         if (allLaundry[i]['id'] == dropdownLaundryValue) {
+          // print('laundry achado');
+          // print(allLaundry[i]);
+          responsibleUser = allLaundry[i]['responsible'];
           if (allLaundry[i]['washMachines'].length > 0) {
             var arrMarchine = allLaundry[i]['washMachines'];
             for (var j = 0; j < arrMarchine.length; j++) {
@@ -138,7 +143,8 @@ class _ScheduleState extends State<ScheduleScreen> {
       washMachine['id'] = dropdownMachineValue;
       payload['washMachine'] = washMachine;
 
-      payload["date"] = '${finaldate}T00:00:00.000-03:00';
+      // payload["date"] = '${finaldate}T00:00:00.000-03:00';
+      payload["date"] = finaldate;
 
       var endHour = dropdownHourValue;
       switch (dropdownHourValue) {
@@ -167,19 +173,18 @@ class _ScheduleState extends State<ScheduleScreen> {
           print('error');
       }
 
-      //   const payload = {
-      //   date: formattedTime,
-      //   laundry: {
-      //     id: selectedLaundry?.value,
-      //   },
-      //   washMachine: {
-      //     id: selectedWashMachine?.value,
-      //   },
-      //   startHour: selectedHour,
-      //   endHour: endHour,
-      //   responsible: { id: responsible.id },
-      //   client: { id: user?.userId },
-      // };
+      payload['startHour'] = dropdownHourValue;
+      payload['endHour'] = endHour;
+
+      var responsible = {};
+      responsible['id'] = responsibleUser['id'];
+      payload['responsible'] = responsible;
+
+      var client = {};
+      client['id'] = localStorageData?['userId'];
+      payload['client'] = client;
+
+      final returned = await ScheduleRepository().onCreateSchedule(payload);
     }
   }
 
