@@ -1,5 +1,6 @@
 // ignore_for_file: file_names, avoid_print, override_on_non_overriding_member, deprecated_member_use
 import 'package:flutter/material.dart';
+import 'package:lc_mobile_flutter/src/pages/CommonPages/NextSchedulesScreen.dart';
 import 'package:lc_mobile_flutter/src/service/repositories/LaundryRepository.dart';
 import 'package:lc_mobile_flutter/src/service/repositories/ScheduleRepository.dart';
 import 'dart:async';
@@ -79,8 +80,6 @@ class _ScheduleState extends State<ScheduleScreen> {
 
       for (var i = 0; i < allLaundry.length; i++) {
         if (allLaundry[i]['id'] == dropdownLaundryValue) {
-          // print('laundry achado');
-          // print(allLaundry[i]);
           responsibleUser = allLaundry[i]['responsible'];
           if (allLaundry[i]['washMachines'].length > 0) {
             var arrMarchine = allLaundry[i]['washMachines'];
@@ -143,7 +142,6 @@ class _ScheduleState extends State<ScheduleScreen> {
       washMachine['id'] = dropdownMachineValue;
       payload['washMachine'] = washMachine;
 
-      // payload["date"] = '${finaldate}T00:00:00.000-03:00';
       payload["date"] = finaldate;
 
       var endHour = dropdownHourValue;
@@ -170,7 +168,7 @@ class _ScheduleState extends State<ScheduleScreen> {
           endHour = "00:00";
           break;
         default:
-          print('error');
+          return callAlertDialog(false, "Horário inválido!", true, false);
       }
 
       payload['startHour'] = dropdownHourValue;
@@ -184,8 +182,64 @@ class _ScheduleState extends State<ScheduleScreen> {
       client['id'] = localStorageData?['userId'];
       payload['client'] = client;
 
-      final returned = await ScheduleRepository().onCreateSchedule(payload);
+      await ScheduleRepository().onCreateSchedule(payload).then((value) => {
+            if (value)
+              {callAlertDialog(true, "Agendamento marcado!", true, true)}
+            else
+              {
+                callAlertDialog(
+                    false, "Tente novamente mais tarde!", true, true)
+              }
+          });
     }
+  }
+
+  void callAlertDialog(isSuccess, message, mayClear, mayNavigate) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(isSuccess ? "Sucesso!" : "Erro!"),
+          content: Text('$message'),
+          actions: <Widget>[
+            TextButton(
+              child: const Text("Fechar"),
+              onPressed: () {
+                Navigator.of(context).pop();
+
+                if (mayClear) {
+                  clearInputs();
+                }
+
+                if (mayNavigate) {
+                  isSuccess
+                      ? Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const NextSchedulesScreen(),
+                          ),
+                        )
+                      : Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const ScheduleScreen(),
+                          ),
+                        );
+                }
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void clearInputs() {
+    listLaundry.length = 0;
+    listMachines.length = 0;
+    listHour.length = 0;
+    dropdownHourValue = null;
+    dropdownMachineValue = null;
   }
 
   final ButtonStyle style =

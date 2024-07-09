@@ -8,13 +8,6 @@ import 'dart:convert';
 
 import 'package:lc_mobile_flutter/src/service/types/endpoints.dart';
 
-// final response = await http.get(
-//   Uri.parse(API_REST + Endpoints().LIST_USERS),
-//   headers: <String, String>{
-//     'Content-Type': 'application/json',
-//     'Authorization': token,
-//   },
-// );
 class UserRepository extends AbstractService {
   Future getUserById(payload) async {
     var userId = payload["userId"];
