@@ -1,7 +1,10 @@
 // ignore_for_file: file_names, avoid_print, override_on_non_overriding_member
 
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:lc_mobile_flutter/src/service/repositories/ScheduleRepository.dart';
 import 'package:lc_mobile_flutter/src/service/repositories/repository.dart';
+import 'package:localstore/localstore.dart';
 
 // ignore: must_be_immutable
 class NextSchedulesScreen extends StatefulWidget {
@@ -23,7 +26,19 @@ class _NextSchedulesState extends State<NextSchedulesScreen> {
   //   () => 'Data',
   // );
 
-  final Future _calculation = (getFilmes()) as Future;
+  //   Future userNextSchedules() async {
+  //   final db = Localstore.instance;
+  //   final localStorageData =
+  //       await db.collection('storageUser').doc('storageUser').get();
+
+  //   var payload = {};
+  //   payload["token"] = localStorageData?['token'];
+  //   payload["clientId"] = localStorageData?['userId'];
+  //   return await (ScheduleRepository().getUserNextSchedules(payload)) as Future;
+  // }
+
+  // final Future _calculation = (getFilmes()) as Future;
+  final Future _calculation = ScheduleRepository().getUserNextSchedules();
 
   criaTabelaNextSchedules() {
     return Table(
@@ -132,12 +147,48 @@ class _NextSchedulesState extends State<NextSchedulesScreen> {
                 return ListView.builder(
                   itemCount: dados.data?.length ?? 0,
                   itemBuilder: (context, index) {
-                    // UsuarioModel
-                    var us = dados.data[index];
-                    print('data aqui:');
-                    print(us.nome);
-                    return Column(
-                      children: <Widget>[Text(us.nome)],
+                    var thisSchedule = dados.data[index];
+                    // var id = thisSchedule['id'];
+                    var date = DateTime.tryParse(thisSchedule['date']);
+                    final f = DateFormat('dd/MM/YYYY');
+                    var formatedDate = f.format(date!);
+
+                    var situation = thisSchedule['situation'];
+                    var thisLaundry = thisSchedule['laundry'];
+                    final address = thisLaundry['address'];
+                    return Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Text(
+                          formatedDate ?? '-',
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                            fontSize: 13.0,
+                            fontFamily: 'Roboto',
+                          ),
+                        ),
+                        Text(
+                          situation ?? '-',
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                            fontSize: 13.0,
+                            fontFamily: 'Roboto',
+                          ),
+                        ),
+                        Flexible(
+                          child: Container(
+                            padding: const EdgeInsets.only(right: 13.0),
+                            child: Text(
+                              address,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(
+                                fontSize: 13.0,
+                                fontFamily: 'Roboto',
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     );
                   },
                 );
