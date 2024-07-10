@@ -64,7 +64,7 @@ class ScheduleRepository extends AbstractService {
       final data = body['data'];
 
       if (data != null) {
-        print(data);
+        print(data[0]);
         // return data;
         return data;
       } else {
