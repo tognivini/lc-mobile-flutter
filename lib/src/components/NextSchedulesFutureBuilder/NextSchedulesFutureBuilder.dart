@@ -10,14 +10,14 @@ import 'package:lc_mobile_flutter/src/service/repositories/repository.dart';
 import 'package:localstore/localstore.dart';
 
 // ignore: must_be_immutable
-class NextSchedulesScreen extends StatefulWidget {
-  const NextSchedulesScreen({super.key, String? name});
+class NextSchedulesFutureBuilder extends StatefulWidget {
+  const NextSchedulesFutureBuilder({super.key, String? name});
 
   @override
-  State<NextSchedulesScreen> createState() => _NextSchedulesState();
+  State<NextSchedulesFutureBuilder> createState() => _NextSchedulesState();
 }
 
-class _NextSchedulesState extends State<NextSchedulesScreen> {
+class _NextSchedulesState extends State<NextSchedulesFutureBuilder> {
   TextEditingController nameController = TextEditingController();
 
   Future scheduleFuture = getSchedules();

@@ -29,6 +29,7 @@ class ScheduleRepository extends AbstractService {
     if (response.statusCode == 200) {
       final body = json.decode(response.body);
       final data = body['data'];
+      print(data);
 
       if (data != null) {
         return data;
@@ -64,7 +65,7 @@ class ScheduleRepository extends AbstractService {
       final data = body['data'];
 
       if (data != null) {
-        print(data[0]);
+        // print(data[0]);
         // return data;
         return data;
       } else {
