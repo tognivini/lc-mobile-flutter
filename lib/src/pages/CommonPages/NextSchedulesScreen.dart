@@ -110,93 +110,152 @@ class _NextSchedulesState extends State<NextSchedulesScreen> {
         appBar: AppBar(
           title: const Text('Próximos Agendamentos'),
         ),
-        // body: Center(
-        //     child: Column(
-        //   mainAxisAlignment: MainAxisAlignment.start,
-        //   children: [
-        //     const Padding(
-        //       padding: EdgeInsets.only(top: 40, bottom: 20),
-        //       child: Text('Próximo Agendamentos',
-        //           style: TextStyle(color: Colors.black, fontSize: 18)),
-        //     ),
-        //     Padding(
-        //       padding: const EdgeInsets.only(top: 10, left: 0, bottom: 10),
-        //       child: criaTabelaNextSchedules(),
-        //       // SingleChildScrollView(child: WidgetTable()),
-        //     ),
-        //     const Padding(
-        //       padding: EdgeInsets.only(top: 40, bottom: 20),
-        //       child: Text('Últimos Agendamentos',
-        //           style: TextStyle(color: Colors.black, fontSize: 18)),
-        //     ),
-        //     Padding(
-        //       padding: const EdgeInsets.only(top: 10, left: 0, bottom: 10),
-        //       child: criaTabelaLastSchedules(),
-        //       // SingleChildScrollView(child: WidgetTable()),
-        //     ),
-        //   ],
-        // ))
-        body: FutureBuilder(
-            builder: (context, AsyncSnapshot dados) {
-              if (dados.connectionState == ConnectionState.none &&
-                  dados.hasData == null) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              } else {
-                return ListView.builder(
-                  itemCount: dados.data?.length ?? 0,
-                  itemBuilder: (context, index) {
-                    var thisSchedule = dados.data[index];
-                    // var id = thisSchedule['id'];
-                    var date = DateTime.tryParse(thisSchedule['date']);
-                    final f = DateFormat('dd/MM/YYYY');
-                    var formatedDate = f.format(date!);
+        body: Center(
+            child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            const Padding(
+              padding: EdgeInsets.only(top: 40, bottom: 20),
+              child: Text('Próximo Agendamentos',
+                  style: TextStyle(color: Colors.black, fontSize: 18)),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 0, left: 0, bottom: 0),
+              child: FutureBuilder(
+                  builder: (context, AsyncSnapshot dados) {
+                    if (dados.connectionState == ConnectionState.none &&
+                        dados.hasData == null) {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    } else {
+                      return ListView.builder(
+                        itemCount: dados.data?.length ?? 0,
+                        itemBuilder: (context, index) {
+                          var thisSchedule = dados.data[index];
+                          // var id = thisSchedule['id'];
+                          var date = DateTime.tryParse(thisSchedule['date']);
+                          final f = DateFormat('dd/MM/YYYY');
+                          var formatedDate = f.format(date!);
 
-                    var situation = thisSchedule['situation'];
-                    var thisLaundry = thisSchedule['laundry'];
-                    final address = thisLaundry['address'];
-                    return Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Text(
-                          formatedDate ?? '-',
-                          overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(
-                            fontSize: 13.0,
-                            fontFamily: 'Roboto',
-                          ),
-                        ),
-                        Text(
-                          situation ?? '-',
-                          overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(
-                            fontSize: 13.0,
-                            fontFamily: 'Roboto',
-                          ),
-                        ),
-                        Flexible(
-                          child: Container(
-                            padding: const EdgeInsets.only(right: 13.0),
-                            child: Text(
-                              address,
-                              overflow: TextOverflow.ellipsis,
-                              style: const TextStyle(
-                                fontSize: 13.0,
-                                fontFamily: 'Roboto',
+                          var situation = thisSchedule['situation'];
+                          var thisLaundry = thisSchedule['laundry'];
+                          final address = thisLaundry['address'];
+                          return Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Text(
+                                formatedDate ?? '-',
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(
+                                  fontSize: 13.0,
+                                  fontFamily: 'Roboto',
+                                ),
                               ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    );
+                              Text(
+                                situation ?? '-',
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(
+                                  fontSize: 13.0,
+                                  fontFamily: 'Roboto',
+                                ),
+                              ),
+                              // Flexible(
+                              //   child: Container(
+                              //     padding: const EdgeInsets.only(right: 13.0),
+                              //     child: Text(
+                              //       address,
+                              //       overflow: TextOverflow.ellipsis,
+                              //       style: const TextStyle(
+                              //         fontSize: 13.0,
+                              //         fontFamily: 'Roboto',
+                              //       ),
+                              //     ),
+                              //   ),
+                              // ),
+                            ],
+                          );
+                        },
+                      );
+                    }
                   },
-                );
-              }
-            },
-            future: _calculation
-            // future: null,
-            // future: new UsuarioPersistence().listar(),
-            ));
+                  future: _calculation),
+              // SingleChildScrollView(child: WidgetTable()),
+            ),
+            // const Padding(
+            //   padding: EdgeInsets.only(top: 40, bottom: 20),
+            //   child: Text('Últimos Agendamentos',
+            //       style: TextStyle(color: Colors.black, fontSize: 18)),
+            // ),
+            // Padding(
+            //   padding: const EdgeInsets.only(top: 10, left: 0, bottom: 10),
+            //   child: criaTabelaLastSchedules(),
+            //   // SingleChildScrollView(child: WidgetTable()),
+            // ),
+          ],
+        ))
+        // body: FutureBuilder(
+        //     builder: (context, AsyncSnapshot dados) {
+        //       if (dados.connectionState == ConnectionState.none &&
+        //           dados.hasData == null) {
+        //         return const Center(
+        //           child: CircularProgressIndicator(),
+        //         );
+        //       } else {
+        //         return ListView.builder(
+        //           itemCount: dados.data?.length ?? 0,
+        //           itemBuilder: (context, index) {
+        //             var thisSchedule = dados.data[index];
+        //             // var id = thisSchedule['id'];
+        //             var date = DateTime.tryParse(thisSchedule['date']);
+        //             final f = DateFormat('dd/MM/YYYY');
+        //             var formatedDate = f.format(date!);
+
+        //             var situation = thisSchedule['situation'];
+        //             var thisLaundry = thisSchedule['laundry'];
+        //             final address = thisLaundry['address'];
+        //             return Row(
+        //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        //               children: <Widget>[
+        //                 Text(
+        //                   formatedDate ?? '-',
+        //                   overflow: TextOverflow.ellipsis,
+        //                   style: const TextStyle(
+        //                     fontSize: 13.0,
+        //                     fontFamily: 'Roboto',
+        //                   ),
+        //                 ),
+        //                 Text(
+        //                   situation ?? '-',
+        //                   overflow: TextOverflow.ellipsis,
+        //                   style: const TextStyle(
+        //                     fontSize: 13.0,
+        //                     fontFamily: 'Roboto',
+        //                   ),
+        //                 ),
+        //                 Flexible(
+        //                   child: Container(
+        //                     padding: const EdgeInsets.only(right: 13.0),
+        //                     child: Text(
+        //                       address,
+        //                       overflow: TextOverflow.ellipsis,
+        //                       style: const TextStyle(
+        //                         fontSize: 13.0,
+        //                         fontFamily: 'Roboto',
+        //                       ),
+        //                     ),
+        //                   ),
+        //                 ),
+        //               ],
+        //             );
+        //           },
+        //         );
+        //       }
+        //     },
+        //     future: _calculation
+        // future: null,
+        // future: new UsuarioPersistence().listar(),
+        // )
+        );
   }
 }
