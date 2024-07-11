@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:lc_mobile_flutter/src/components/NextSchedulesFutureBuilder/NextSchedulesFutureBuilder.dart';
 import 'package:lc_mobile_flutter/src/service/repositories/ScheduleRepository.dart';
 import 'package:lc_mobile_flutter/src/service/repositories/repository.dart';
 import 'package:localstore/localstore.dart';
@@ -20,66 +21,39 @@ class NextSchedulesScreen extends StatefulWidget {
 class _NextSchedulesState extends State<NextSchedulesScreen> {
   TextEditingController nameController = TextEditingController();
 
-  Future scheduleFuture = getSchedules();
-
-  static Future getSchedules() async {
-    return await ScheduleRepository().getUserNextSchedules();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        // FutureBuilder
-        child: FutureBuilder(
-          future: scheduleFuture,
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              // until data is fetched, show loader
-              return const CircularProgressIndicator();
-            } else if (snapshot.hasData) {
-              final obj = snapshot.data!;
-              return buildLayoutNextSchedules(obj);
-            } else {
-              // if no data, show simple Text
-              return const Text("No data available");
-            }
-          },
-        ),
+        child: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
+          const Padding(
+            padding: EdgeInsets.only(top: 40, bottom: 20),
+            child: Text('Próximo Agendamentos',
+                style: TextStyle(color: Colors.black, fontSize: 18)),
+          ),
+          Container(
+              color: Colors.grey.shade300,
+              margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+              padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+              height: 100,
+              width: 300,
+              child: const NextSchedulesFutureBuilder()),
+          const Padding(
+            padding: EdgeInsets.only(top: 20, bottom: 20),
+            child: Text('Próximo Agendamentos',
+                style: TextStyle(color: Colors.black, fontSize: 18)),
+          ),
+          Container(
+              // color: Colors.grey.shade300,
+              margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+              padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+              height: 200,
+              width: 300,
+              child: const NextSchedulesFutureBuilder()),
+        ]),
       ),
     );
   }
-
-// function to display fetched data on screen
-  Widget buildLayoutNextSchedules(obj) {
-    // ListView Builder to show data in a list
-    print(obj[0]);
-    // print(obj[0]['title']);
-    // var title = obj[index]['title'];
-
-    return ListView.builder(
-      itemCount: obj.length,
-      itemBuilder: (context, index) {
-        final post = obj[index];
-        final situation = obj[index]['situation'];
-        return Container(
-          color: Colors.grey.shade300,
-          margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-          padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-          height: 100,
-          width: double.maxFinite,
-          child: Row(
-            children: [
-              // Expanded(flex: 1, child: Image.network(post.url!)),
-              const SizedBox(width: 10),
-              Expanded(flex: 3, child: Text(situation)),
-            ],
-          ),
-        );
-      },
-    );
-  }
-// }
 }
 
 
@@ -100,14 +74,6 @@ class _NextSchedulesState extends State<NextSchedulesScreen> {
     //                       // var situation = thisSchedule['situation'];
     //                       // var thisLaundry = thisSchedule['laundry'];
     //                       // final address = thisLaundry['address'];
-    //                       return const Expanded(
-    //                         child: Text(
-    //                           'jobson',
-    //                           // overflow: TextOverflow.ellipsis,
-    //                           style: TextStyle(
-    //                             fontSize: 13.0,
-    //                             fontFamily: 'Roboto',
-    //                           ),
-    //                         ),
+    //                       return const ,
     //                       );
     //                     });

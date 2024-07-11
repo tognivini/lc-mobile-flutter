@@ -29,8 +29,6 @@ class ScheduleRepository extends AbstractService {
     if (response.statusCode == 200) {
       final body = json.decode(response.body);
       final data = body['data'];
-      print(data);
-
       if (data != null) {
         return data;
       } else {

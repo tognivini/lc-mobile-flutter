@@ -64,15 +64,25 @@ class _NextSchedulesState extends State<NextSchedulesFutureBuilder> {
         final situation = obj[index]['situation'];
         return Container(
           color: Colors.grey.shade300,
-          margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-          padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-          height: 100,
-          width: double.maxFinite,
+          // margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+          // padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+          height: 20,
+          // width: double.maxFinite,
+          width: 40,
           child: Row(
             children: [
               // Expanded(flex: 1, child: Image.network(post.url!)),
-              const SizedBox(width: 10),
-              Expanded(flex: 3, child: Text(situation)),
+              // const SizedBox(width: 10),
+              Expanded(
+                  child: Text(
+                situation,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(
+                  fontSize: 13.0,
+                  fontFamily: 'Roboto',
+                ),
+              ))
+              // Expanded(flex: 3, child: Text(situation)),
             ],
           ),
         );
