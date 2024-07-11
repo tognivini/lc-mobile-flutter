@@ -1,9 +1,5 @@
 // ignore_for_file: non_constant_identifier_names, prefer_function_declarations_over_variables
-
-import 'package:flutter/src/widgets/editable_text.dart';
 import 'package:http/http.dart' as http;
-import 'package:lc_mobile_flutter/src/model/Interface.dart';
-import 'package:lc_mobile_flutter/src/model/UserModel.dart';
 import 'package:lc_mobile_flutter/src/service/AbstractService.dart';
 import 'dart:convert';
 
@@ -56,8 +52,6 @@ class AuthRepository extends AbstractService {
         return false;
       }
     } else {
-      // print('problemas ' + resposta.statusCode.toString());
-      // print('erro: ' + resposta.body.toString());
       return false;
     }
   }

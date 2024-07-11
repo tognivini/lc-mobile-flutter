@@ -307,10 +307,10 @@ class _ScheduleState extends State<ScheduleScreen> {
 
     return Scaffold(
         backgroundColor: Colors.white,
-        appBar: AppBar(
-          title: const Text('Agendamento'),
-        ),
-        body: SingleChildScrollView(
+        // appBar: AppBar(
+        //   title: const Text('Agendamento'),
+        // ),
+        body: Center(
           child: Column(
             children: [
               const Padding(

@@ -34,4 +34,36 @@ class UserRepository extends AbstractService {
       return false;
     }
   }
+
+  Future createUser(payload) async {
+    var name = payload["name"];
+    var email = payload["email"];
+    var phoneNumber = payload["phoneNumber"];
+    var password = payload["password"];
+
+    final response = await http.post(
+      Uri.parse(API_REST + Endpoints().LIST_USERS),
+      headers: <String, String>{
+        'Content-Type': 'application/json',
+      },
+      body: json.encode({
+        'name': name,
+        'email': email,
+        'phoneNumber': phoneNumber,
+        'password': password,
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      final body = json.decode(response.body);
+      print(body);
+      if (body != null && body != null) {
+        return body;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  }
 }

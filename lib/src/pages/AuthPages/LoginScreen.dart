@@ -1,10 +1,7 @@
 // ignore_for_file: file_names, avoid_print, override_on_non_overriding_member
-
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:localstore/localstore.dart';
-import 'package:lc_mobile_flutter/src/pages/CommonPages/ProfileScreen.dart';
 import 'package:lc_mobile_flutter/src/service/repositories/AuthRepository.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -15,7 +12,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginState extends State<LoginScreen> {
-  TextEditingController matriculaController = TextEditingController();
+  // TextEditingController matriculaController = TextEditingController();
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
 
@@ -30,10 +27,10 @@ class _LoginState extends State<LoginScreen> {
 
     return Scaffold(
         backgroundColor: Colors.white,
-        appBar: AppBar(
-          title: const Text('Login'),
-        ),
-        body: SingleChildScrollView(
+        // appBar: AppBar(
+        //   title: const Text('Laundry CEU'),
+        // ),
+        body: Center(
           child: Column(
             children: [
               const Padding(
@@ -71,8 +68,8 @@ class _LoginState extends State<LoginScreen> {
                   style: const TextStyle(
                       fontWeight: FontWeight.normal, color: Colors.black),
                   decoration: InputDecoration(
-                    labelText: 'Password',
-                    hintText: 'Pass válido plz',
+                    labelText: 'Senha',
+                    hintText: 'Digite uma senha válida por favor',
                     contentPadding:
                         const EdgeInsets.only(top: 5, bottom: 5, left: 10),
                     border: OutlineInputBorder(

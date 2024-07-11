@@ -1,72 +1,96 @@
-// ignore_for_file: file_names, avoid_print, override_on_non_overriding_member
-
+// ignore_for_file: file_names, avoid_print, override_on_non_overriding_member, unrelated_type_equality_checks
 import 'package:flutter/material.dart';
-// import 'navigator_keys.dart';
+import 'package:lc_mobile_flutter/src/service/repositories/UserRepository.dart';
 
-// ignore: must_be_immutable
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key, String? name});
-  // String id;
 
   @override
   State<RegisterScreen> createState() => _RegisterState();
 }
 
 class _RegisterState extends State<RegisterScreen> {
-  // RegisterScreen({
-  //   super.key,
-  //   required this.id,
-  // });
+  // TextEditingController matriculaController = TextEditingController();
+  TextEditingController name = TextEditingController();
+  TextEditingController email = TextEditingController();
+  TextEditingController phoneNumber = TextEditingController();
+  TextEditingController password = TextEditingController();
+  TextEditingController repassword = TextEditingController();
 
-  TextEditingController nameController = TextEditingController();
-  TextEditingController matriculaController = TextEditingController();
-  TextEditingController emailController = TextEditingController();
-  TextEditingController phoneController = TextEditingController();
-  TextEditingController passController = TextEditingController();
-  TextEditingController rePassController = TextEditingController();
+  void callAlertDialog(isSuccess, message, mayClear) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(isSuccess ? "Sucesso!" : "Erro!"),
+          content: Text('$message'),
+          actions: <Widget>[
+            TextButton(
+              child: const Text("Fechar"),
+              onPressed: () {
+                Navigator.of(context).pop();
+
+                if (mayClear) {
+                  clearInputs();
+                }
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void clearInputs() {
+    name.text = '';
+    email.text = '';
+    phoneNumber.text = '';
+    password.text = '';
+    repassword.text = '';
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.white,
-        appBar: AppBar(
-          title: const Text('Registro'),
-        ),
-        body: SingleChildScrollView(
+        // appBar: AppBar(
+        //   title: const Text('Registro'),
+        // ),
+        body: Center(
           child: Column(
             children: [
               const Padding(
-                padding: EdgeInsets.only(top: 10),
+                padding: EdgeInsets.only(top: 10, bottom: 10),
                 child: Text('Crie sua conta',
                     style: TextStyle(color: Colors.black, fontSize: 18)),
               ),
+              // Padding(
+              //   padding: const EdgeInsets.only(
+              //       top: 5, right: 20, bottom: 5, left: 20),
+              //   child: TextFormField(
+              //     autofocus: true,
+              //     keyboardType: TextInputType.name,
+              //     controller: matriculaController,
+              //     // initialValue: 'sathyabaman@gmail.com',
+              //     style: const TextStyle(
+              //         fontWeight: FontWeight.normal, color: Colors.black),
+              //     decoration: InputDecoration(
+              //       labelText: 'Matrícula',
+              //       hintText: 'Matrícula',
+              //       contentPadding:
+              //           const EdgeInsets.only(top: 5, bottom: 5, left: 10),
+              //       border: OutlineInputBorder(
+              //           borderRadius: BorderRadius.circular(8.0)),
+              //     ),
+              //   ),
+              // ),
               Padding(
                 padding: const EdgeInsets.only(
                     top: 5, right: 20, bottom: 5, left: 20),
                 child: TextFormField(
                   autofocus: true,
                   keyboardType: TextInputType.name,
-                  controller: matriculaController,
-                  // initialValue: 'sathyabaman@gmail.com',
-                  style: const TextStyle(
-                      fontWeight: FontWeight.normal, color: Colors.black),
-                  decoration: InputDecoration(
-                    labelText: 'Matrícula',
-                    hintText: 'Matrícula',
-                    contentPadding:
-                        const EdgeInsets.only(top: 5, bottom: 5, left: 10),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8.0)),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(
-                    top: 5, right: 20, bottom: 5, left: 20),
-                child: TextFormField(
-                  autofocus: true,
-                  keyboardType: TextInputType.name,
-                  controller: nameController,
+                  controller: name,
                   // initialValue: 'sathyabaman@gmail.com',
                   style: const TextStyle(
                       fontWeight: FontWeight.normal, color: Colors.black),
@@ -86,7 +110,7 @@ class _RegisterState extends State<RegisterScreen> {
                     top: 5, right: 20, bottom: 5, left: 20),
                 child: TextFormField(
                   keyboardType: TextInputType.emailAddress,
-                  controller: emailController,
+                  controller: email,
                   // initialValue: 'sathyabaman@gmail.com',
                   style: const TextStyle(
                       fontWeight: FontWeight.normal, color: Colors.black),
@@ -105,7 +129,7 @@ class _RegisterState extends State<RegisterScreen> {
                     top: 5, right: 20, bottom: 5, left: 20),
                 child: TextFormField(
                   keyboardType: TextInputType.phone,
-                  controller: phoneController,
+                  controller: phoneNumber,
                   // initialValue: 'sathyabaman@gmail.com',
                   style: const TextStyle(
                       fontWeight: FontWeight.normal, color: Colors.black),
@@ -124,8 +148,7 @@ class _RegisterState extends State<RegisterScreen> {
                     top: 5, right: 20, bottom: 5, left: 20),
                 child: TextFormField(
                   keyboardType: TextInputType.visiblePassword,
-                  controller: passController,
-                  // initialValue: 'sathyabaman@gmail.com',
+                  controller: password,
                   style: const TextStyle(
                       fontWeight: FontWeight.normal, color: Colors.black),
                   decoration: InputDecoration(
@@ -143,8 +166,7 @@ class _RegisterState extends State<RegisterScreen> {
                     top: 5, right: 20, bottom: 5, left: 20),
                 child: TextFormField(
                   keyboardType: TextInputType.visiblePassword,
-                  controller: passController,
-                  // initialValue: 'sathyabaman@gmail.com',
+                  controller: repassword,
                   style: const TextStyle(
                       fontWeight: FontWeight.normal, color: Colors.black),
                   decoration: InputDecoration(
@@ -179,15 +201,39 @@ class _RegisterState extends State<RegisterScreen> {
                         foregroundColor:
                             MaterialStateProperty.all<Color>(Colors.white),
                       ),
-                      onPressed: () {
-                        Navigator.pushNamed(
-                          context,
-                          '/auth/login',
-                        );
-                        // print('katchouwn', text);
-                        // // setState(() {
-
-                        // });
+                      onPressed: () async {
+                        var payload = {};
+                        payload["name"] = name.text;
+                        payload["email"] = email.text;
+                        payload["phoneNumber"] = phoneNumber.text;
+                        payload["password"] = password.text;
+                        if (name.text != '' &&
+                            email.text != '' &&
+                            phoneNumber.text != '' &&
+                            password.text != '' &&
+                            repassword.text != '') {
+                          if (password.text != repassword.text) {
+                            return callAlertDialog(
+                                false, "Senhas não coincidem!", true);
+                          } else {
+                            // await UserRepository().createUser(payload).then(
+                            //       (value) => {
+                            //         if (value != false)
+                            //           {
+                            //             Navigator.pushNamed(
+                            //               context,
+                            //               '/auth/login',
+                            //             )
+                            //           }
+                            //         else
+                            //           {
+                            //             callAlertDialog(false,
+                            //                 "Tente novamente mais tarde!", true)
+                            //           }
+                            //       },
+                            //     );
+                          }
+                        }
                       },
                       child: const Text('Registre-se'),
                     ),
