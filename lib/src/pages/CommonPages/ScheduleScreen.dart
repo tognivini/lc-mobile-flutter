@@ -315,7 +315,7 @@ class _ScheduleState extends State<ScheduleScreen> {
             children: [
               const Padding(
                 padding:
-                    EdgeInsets.only(top: 5, right: 10, bottom: 5, left: 10),
+                    EdgeInsets.only(top: 60, right: 10, bottom: 5, left: 10),
                 child: Text('Agendamento',
                     style: TextStyle(color: Colors.black, fontSize: 18)),
               ),
@@ -344,11 +344,18 @@ class _ScheduleState extends State<ScheduleScreen> {
                             ),
                           ),
                           onChanged: (value) {
-                            if (value == '0') {
-                              print('limpa os outros');
-                              //https://medium.com/@bigface00/flutter-tips-dynamically-changing-dropdownbutton-contents-with-another-dropdown-button-475dfae1fd58
-                            }
-                            print(value);
+                            listMachines.length = 0;
+                            listHour.length = 0;
+                            listMachines.add({
+                              'label': 'Selecione uma máquina de lavar',
+                              'value': '0'
+                            });
+                            listHour.add({
+                              'label': 'Selecione um horário',
+                              'value': '0'
+                            });
+                            dropdownMachineValue = listMachines[0]['value'];
+                            dropdownHourValue = listHour[0]['value'];
                             setState(() {
                               dropdownLaundryValue = value;
                             });
@@ -420,9 +427,7 @@ class _ScheduleState extends State<ScheduleScreen> {
                           ),
                         ),
                         onChanged: (value) {
-                          if (value == '0') {
-                            print('limpa hour');
-                          }
+                          dropdownHourValue = listHour[0]['value'];
                           setState(() {
                             dropdownMachineValue = value;
                           });

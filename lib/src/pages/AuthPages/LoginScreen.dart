@@ -16,6 +16,8 @@ class _LoginState extends State<LoginScreen> {
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
 
+  var _passwordVisible = false;
+
   onLoadLoginPage() async {
     final db = Localstore.instance;
     db.collection('storageUser').delete();
@@ -33,6 +35,11 @@ class _LoginState extends State<LoginScreen> {
         body: Center(
           child: Column(
             children: [
+              const Padding(
+                padding: EdgeInsets.only(top: 40, bottom: 20),
+                child: Text('Lavanderia CEU - UFSM',
+                    style: TextStyle(color: Colors.black, fontSize: 22)),
+              ),
               const Padding(
                 padding: EdgeInsets.only(top: 20, bottom: 20),
                 child: Text('Login',
@@ -63,13 +70,28 @@ class _LoginState extends State<LoginScreen> {
                     top: 5, right: 20, bottom: 5, left: 20),
                 child: TextFormField(
                   keyboardType: TextInputType.visiblePassword,
+                  obscureText: !_passwordVisible,
                   controller: password,
-                  // initialValue: 'sathyabaman@gmail.com',
                   style: const TextStyle(
                       fontWeight: FontWeight.normal, color: Colors.black),
                   decoration: InputDecoration(
                     labelText: 'Senha',
                     hintText: 'Digite uma senha válida por favor',
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        // Based on passwordVisible state choose the icon
+                        _passwordVisible
+                            ? Icons.visibility
+                            : Icons.visibility_off,
+                        color: Colors.black,
+                      ),
+                      onPressed: () {
+                        // Update the state i.e. toogle the state of passwordVisible variable
+                        setState(() {
+                          _passwordVisible = !_passwordVisible;
+                        });
+                      },
+                    ),
                     contentPadding:
                         const EdgeInsets.only(top: 5, bottom: 5, left: 10),
                     border: OutlineInputBorder(

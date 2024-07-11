@@ -17,7 +17,10 @@ class _RegisterState extends State<RegisterScreen> {
   TextEditingController password = TextEditingController();
   TextEditingController repassword = TextEditingController();
 
-  void callAlertDialog(isSuccess, message, mayClear) {
+  var _passwordVisible = false;
+  var _repasswordVisible = false;
+
+  void callAlertDialog(isSuccess, message, mayClear, mayNavigate) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -32,6 +35,12 @@ class _RegisterState extends State<RegisterScreen> {
 
                 if (mayClear) {
                   clearInputs();
+                }
+                if (mayNavigate) {
+                  Navigator.pushNamed(
+                    context,
+                    '/auth/login',
+                  );
                 }
               },
             ),
@@ -49,8 +58,46 @@ class _RegisterState extends State<RegisterScreen> {
     repassword.text = '';
   }
 
+  handleSubmit() async {
+    var payload = {};
+    payload["name"] = name.text;
+    payload["email"] = email.text;
+    payload["phoneNumber"] = phoneNumber.text;
+    payload["password"] = password.text;
+    if (name.text != '' &&
+        email.text != '' &&
+        phoneNumber.text != '' &&
+        password.text != '' &&
+        repassword.text != '') {
+      if (password.text != repassword.text) {
+        return callAlertDialog(false, "Senhas não coincidem!", true, false);
+      } else {
+        await UserRepository().createUser(payload).then(
+              (value) => {
+                if (value != false)
+                  {
+                    callAlertDialog(
+                        true, "Usuário criado com sucesso!", true, true)
+                  }
+                else
+                  {
+                    callAlertDialog(
+                        false, "Tente novamente mais tarde!", true, false)
+                  }
+              },
+            );
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    var blockRegister = name.text != '' &&
+        email.text != '' &&
+        phoneNumber.text != '' &&
+        password.text != '' &&
+        repassword.text != '';
+
     return Scaffold(
         backgroundColor: Colors.white,
         // appBar: AppBar(
@@ -60,7 +107,7 @@ class _RegisterState extends State<RegisterScreen> {
           child: Column(
             children: [
               const Padding(
-                padding: EdgeInsets.only(top: 10, bottom: 10),
+                padding: EdgeInsets.only(top: 60, bottom: 10),
                 child: Text('Crie sua conta',
                     style: TextStyle(color: Colors.black, fontSize: 18)),
               ),
@@ -148,12 +195,26 @@ class _RegisterState extends State<RegisterScreen> {
                     top: 5, right: 20, bottom: 5, left: 20),
                 child: TextFormField(
                   keyboardType: TextInputType.visiblePassword,
+                  obscureText: !_passwordVisible, //This will obscu
                   controller: password,
                   style: const TextStyle(
                       fontWeight: FontWeight.normal, color: Colors.black),
                   decoration: InputDecoration(
                     labelText: 'Senha',
                     hintText: 'Digite uma senha válida por favor',
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        _passwordVisible
+                            ? Icons.visibility
+                            : Icons.visibility_off,
+                        color: Colors.black,
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          _passwordVisible = !_passwordVisible;
+                        });
+                      },
+                    ),
                     contentPadding:
                         const EdgeInsets.only(top: 5, bottom: 5, left: 10),
                     border: OutlineInputBorder(
@@ -166,12 +227,26 @@ class _RegisterState extends State<RegisterScreen> {
                     top: 5, right: 20, bottom: 5, left: 20),
                 child: TextFormField(
                   keyboardType: TextInputType.visiblePassword,
+                  obscureText: !_repasswordVisible, //This will obscu
                   controller: repassword,
                   style: const TextStyle(
                       fontWeight: FontWeight.normal, color: Colors.black),
                   decoration: InputDecoration(
-                    labelText: 'Confirmar senha',
-                    hintText: 'Repita a senha por favor',
+                    labelText: 'Senha',
+                    hintText: 'Digite uma senha válida por favor',
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        _repasswordVisible
+                            ? Icons.visibility
+                            : Icons.visibility_off,
+                        color: Colors.black,
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          _repasswordVisible = !_repasswordVisible;
+                        });
+                      },
+                    ),
                     contentPadding:
                         const EdgeInsets.only(top: 5, bottom: 5, left: 10),
                     border: OutlineInputBorder(
@@ -201,47 +276,12 @@ class _RegisterState extends State<RegisterScreen> {
                         foregroundColor:
                             MaterialStateProperty.all<Color>(Colors.white),
                       ),
-                      onPressed: () async {
-                        var payload = {};
-                        payload["name"] = name.text;
-                        payload["email"] = email.text;
-                        payload["phoneNumber"] = phoneNumber.text;
-                        payload["password"] = password.text;
-                        if (name.text != '' &&
-                            email.text != '' &&
-                            phoneNumber.text != '' &&
-                            password.text != '' &&
-                            repassword.text != '') {
-                          if (password.text != repassword.text) {
-                            return callAlertDialog(
-                                false, "Senhas não coincidem!", true);
-                          } else {
-                            // await UserRepository().createUser(payload).then(
-                            //       (value) => {
-                            //         if (value != false)
-                            //           {
-                            //             Navigator.pushNamed(
-                            //               context,
-                            //               '/auth/login',
-                            //             )
-                            //           }
-                            //         else
-                            //           {
-                            //             callAlertDialog(false,
-                            //                 "Tente novamente mais tarde!", true)
-                            //           }
-                            //       },
-                            //     );
-                          }
-                        }
+                      onPressed: () {
+                        handleSubmit();
                       },
                       child: const Text('Registre-se'),
                     ),
                   )),
-              // const size box here
-              const SizedBox(
-                height: 100,
-              ),
             ],
           ),
         ));

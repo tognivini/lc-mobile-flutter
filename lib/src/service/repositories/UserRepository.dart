@@ -1,8 +1,4 @@
-import 'dart:io';
-
 import 'package:http/http.dart' as http;
-import 'package:lc_mobile_flutter/src/model/Interface.dart';
-import 'package:lc_mobile_flutter/src/model/UserModel.dart';
 import 'package:lc_mobile_flutter/src/service/AbstractService.dart';
 import 'dart:convert';
 
@@ -42,7 +38,7 @@ class UserRepository extends AbstractService {
     var password = payload["password"];
 
     final response = await http.post(
-      Uri.parse(API_REST + Endpoints().LIST_USERS),
+      Uri.parse(API_REST + Endpoints().CREATE_USER),
       headers: <String, String>{
         'Content-Type': 'application/json',
       },
@@ -56,9 +52,8 @@ class UserRepository extends AbstractService {
 
     if (response.statusCode == 200) {
       final body = json.decode(response.body);
-      print(body);
       if (body != null && body != null) {
-        return body;
+        return true;
       } else {
         return false;
       }
