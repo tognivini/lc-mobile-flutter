@@ -39,14 +39,9 @@ class ScheduleRepository extends AbstractService {
     }
   }
 
-  Future getUserNextSchedules() async {
-    // var token = payload["token"];
-    // var clientId = payload["clientId"];
-
-    var token =
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI3NWI3ZmFiNy00ZjJlLTRmZjMtYWI2Ny0xZjQ4Yjk5NDBmNTAiLCJwZXJtaXNzaW9uVHlwZSI6IkNMSUVOVEUiLCJpYXQiOjE3MjA0OTE0NzksImV4cCI6MTcyMDc1MDY3OX0.T9G03WvVxw07yGTGuPkIIwHUx9-iWMgheph7MT5TjNI';
-    var clientId = '75b7fab7-4f2e-4ff3-ab67-1f48b9940f50';
-
+  Future getUserNextSchedules(payload) async {
+    var token = payload["token"];
+    var clientId = payload["clientId"];
     final response = await http.get(
       Uri.parse(API_REST + Endpoints().LIST_SCHEDULES)
           .replace(queryParameters: {

@@ -32,22 +32,9 @@ class _NextSchedulesState extends State<NextSchedulesScreen> {
                 style: TextStyle(color: Colors.black, fontSize: 18)),
           ),
           Container(
-              color: Colors.grey.shade300,
               margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
               padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-              height: 100,
-              width: 300,
-              child: const NextSchedulesFutureBuilder()),
-          const Padding(
-            padding: EdgeInsets.only(top: 20, bottom: 20),
-            child: Text('Próximo Agendamentos',
-                style: TextStyle(color: Colors.black, fontSize: 18)),
-          ),
-          Container(
-              // color: Colors.grey.shade300,
-              margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-              padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-              height: 200,
+              height: 400,
               width: 300,
               child: const NextSchedulesFutureBuilder()),
         ]),
@@ -55,25 +42,3 @@ class _NextSchedulesState extends State<NextSchedulesScreen> {
     );
   }
 }
-
-
-
-
-
-
-
-    // return ListView.builder(
-    //                     itemCount: dados.data?.length ?? 0,
-    //                     itemBuilder: (context, index) {
-    //                       var thisSchedule = dados.data[index];
-    //                       // var id = thisSchedule['id'];
-    //                       var date = DateTime.tryParse(thisSchedule['date']);
-    //                       final f = DateFormat('dd/MM/YYYY');
-    //                       var formatedDate = f.format(date!);
-
-    //                       // var situation = thisSchedule['situation'];
-    //                       // var thisLaundry = thisSchedule['laundry'];
-    //                       // final address = thisLaundry['address'];
-    //                       return const ,
-    //                       );
-    //                     });
