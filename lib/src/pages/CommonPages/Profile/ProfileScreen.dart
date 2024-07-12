@@ -48,7 +48,6 @@ class _ProfileState extends State<ProfileScreen> {
 
     // var userLogged = arguments['userArgument'];
     // var decodedUser = json.decode(userLogged.toString());
-
     onLoadUser();
 
     return Scaffold(

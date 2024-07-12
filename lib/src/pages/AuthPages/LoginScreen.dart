@@ -18,6 +18,58 @@ class _LoginState extends State<LoginScreen> {
 
   var _passwordVisible = false;
 
+  void callAlertDialog(isSuccess, message, mayClear, mayNavigate) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(isSuccess ? "Sucesso!" : "Erro!"),
+          content: Text('$message'),
+          actions: <Widget>[
+            TextButton(
+              child: const Text("Fechar"),
+              onPressed: () {
+                Navigator.of(context).pop();
+                if (mayClear) {
+                  clearInputs();
+                }
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void clearInputs() {
+    email.text = '';
+    password.text = '';
+  }
+
+  handleSubmit() async {
+    var payload = {};
+    payload["email"] = email.text;
+    payload["password"] = password.text;
+    if (email.text != '' && password.text != '') {
+      await AuthRepository().login(payload).then(
+            (value) => {
+              if (value != false)
+                {
+                  Navigator.pushNamed(
+                    context,
+                    '/',
+                    arguments: {
+                      'userArgument': json.encode(value),
+                    },
+                  )
+                }
+              else
+                {callAlertDialog(false, "Credenciais inválidas!", true, false)}
+            },
+          );
+    }
+  }
+
   onLoadLoginPage() async {
     final db = Localstore.instance;
     db.collection('storageUser').delete();
@@ -112,28 +164,7 @@ class _LoginState extends State<LoginScreen> {
                             MaterialStateProperty.all<Color>(Colors.white),
                       ),
                       onPressed: () async {
-                        var payload = {};
-                        // payload["email"] = email.text;
-                        // payload["password"] = password.text;
-                        payload["email"] = 'email';
-                        payload["password"] = '12345';
-
-                        await AuthRepository().login(payload).then(
-                              (value) => {
-                                if (value != false)
-                                  {
-                                    Navigator.pushNamed(
-                                      context,
-                                      '/',
-                                      arguments: {
-                                        'userArgument': json.encode(value),
-                                      },
-                                    )
-                                  }
-                                else
-                                  {print('error')}
-                              },
-                            );
+                        handleSubmit();
                       },
                       child: const Text('Login'),
                     ),

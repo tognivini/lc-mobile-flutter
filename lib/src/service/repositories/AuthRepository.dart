@@ -24,30 +24,20 @@ class AuthRepository extends AbstractService {
 
     if (response.statusCode == 200) {
       final body = json.decode(response.body);
-      final data = body['data'];
-      final userId = data['userId'];
-      final token = data['token'];
-      if (data != null) {
-        // gets new id
-        final db = Localstore.instance;
-
-        // final id = db.collection('storageUser').doc().id;
-        final id = db.collection('storageUser').doc().id;
-        // // save the item
-        db
-            .collection('storageUser')
-            // .doc(id)
-            .doc('storageUser')
-            .set({'userId': userId, 'token': token});
-        // Gets item by id
-        // final data = await db.collection('todos').doc(id).get();
-        // Delete item by id
-        // db.collection('todos').doc(id).delete();
-        // Fetch the documents for the collection
-        // final items = await db.collection('todos').get();
-        // final token = data['token'];
-        // final userId = data['userId'];
-        return data;
+      if (body['success'] == true) {
+        final data = body['data'];
+        if (data != null) {
+          final userId = data['userId'];
+          final token = data['token'];
+          final db = Localstore.instance;
+          db
+              .collection('storageUser')
+              .doc('storageUser')
+              .set({'userId': userId, 'token': token});
+          return data;
+        } else {
+          return false;
+        }
       } else {
         return false;
       }

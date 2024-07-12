@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:lc_mobile_flutter/src/pages/CommonPages/NextSchedulesScreen.dart';
+import 'package:lc_mobile_flutter/src/pages/CommonPages/Profile/ProfileScreen.dart';
 import 'package:lc_mobile_flutter/src/service/repositories/LaundryRepository.dart';
 import 'package:lc_mobile_flutter/src/service/repositories/ScheduleRepository.dart';
 import 'dart:async';
@@ -211,21 +212,11 @@ class _ScheduleState extends State<ScheduleScreen> {
                 if (mayClear) {
                   clearInputs();
                 }
-
                 if (mayNavigate) {
-                  isSuccess
-                      ? Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const NextSchedulesScreen(),
-                          ),
-                        )
-                      : Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const ScheduleScreen(),
-                          ),
-                        );
+                  Navigator.pushNamed(
+                    context,
+                    '/',
+                  );
                 }
               },
             ),
@@ -239,8 +230,12 @@ class _ScheduleState extends State<ScheduleScreen> {
     listLaundry.length = 0;
     listMachines.length = 0;
     listHour.length = 0;
-    dropdownHourValue = null;
-    dropdownMachineValue = null;
+    listLaundry.add({'label': 'Selecione uma lavaderia', 'value': '0'});
+    listMachines.add({'label': 'Selecione uma máquina de lavar', 'value': '0'});
+    listHour.add({'label': 'Selecione um horário', 'value': '0'});
+    dropdownLaundryValue = listLaundry[0]['value'];
+    dropdownMachineValue = listMachines[0]['value'];
+    dropdownHourValue = listHour[0]['value'];
   }
 
   final ButtonStyle style =
@@ -340,8 +335,8 @@ class _ScheduleState extends State<ScheduleScreen> {
                               top: 0, right: 0, bottom: 0, left: 0),
                           decoration: const InputDecoration(
                             border: UnderlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Colors.deepPurpleAccent, width: 2.4),
+                              borderSide:
+                                  BorderSide(color: Colors.black, width: 2.4),
                             ),
                           ),
                           onChanged: (value) {
@@ -369,8 +364,7 @@ class _ScheduleState extends State<ScheduleScreen> {
                 child: Container(
                   decoration: const BoxDecoration(
                     border: Border(
-                      bottom: BorderSide(
-                          color: Colors.deepPurpleAccent, width: 2.4),
+                      bottom: BorderSide(color: Colors.black, width: 2.4),
                     ),
                   ),
                   child: Row(
@@ -402,7 +396,7 @@ class _ScheduleState extends State<ScheduleScreen> {
 
               Padding(
                   padding: const EdgeInsets.only(
-                      top: 5, right: 10, bottom: 0, left: 10),
+                      top: 15, right: 10, bottom: 0, left: 10),
                   child: Container(
                     padding: const EdgeInsets.only(
                         top: 0, right: 10, bottom: 0, left: 10),
@@ -420,8 +414,8 @@ class _ScheduleState extends State<ScheduleScreen> {
                             top: 0, right: 0, bottom: 0, left: 0),
                         decoration: const InputDecoration(
                           border: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                                color: Colors.deepPurpleAccent, width: 2.4),
+                            borderSide:
+                                BorderSide(color: Colors.black, width: 2.4),
                           ),
                         ),
                         onChanged: (value) {
@@ -436,7 +430,7 @@ class _ScheduleState extends State<ScheduleScreen> {
               //hour
               Padding(
                   padding: const EdgeInsets.only(
-                      top: 5, right: 10, bottom: 0, left: 10),
+                      top: 0, right: 10, bottom: 0, left: 10),
                   child: Container(
                     padding: const EdgeInsets.only(
                         top: 0, right: 10, bottom: 0, left: 10),
@@ -454,8 +448,8 @@ class _ScheduleState extends State<ScheduleScreen> {
                             top: 0, right: 0, bottom: 0, left: 0),
                         decoration: const InputDecoration(
                           border: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                                color: Colors.deepPurpleAccent, width: 2.4),
+                            borderSide:
+                                BorderSide(color: Colors.black, width: 2.4),
                           ),
                         ),
                         onChanged: (String? value) {

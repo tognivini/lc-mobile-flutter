@@ -1,12 +1,7 @@
 // ignore_for_file: file_names, avoid_print, override_on_non_overriding_member
-import 'dart:convert';
-
-import 'package:http/http.dart' as http;
-
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:lc_mobile_flutter/src/service/repositories/ScheduleRepository.dart';
-import 'package:lc_mobile_flutter/src/service/repositories/repository.dart';
 import 'package:localstore/localstore.dart';
 
 // ignore: must_be_immutable
@@ -93,19 +88,19 @@ class _NextSchedulesState extends State<NextSchedulesFutureBuilder> {
         var formatedDate = f.format(date!);
 
         var situation = thisSchedule['situation'];
+        final startHour = thisSchedule['startHour'];
+        final endHour = thisSchedule['endHour'];
+
         var thisLaundry = thisSchedule['laundry'];
         final address = thisLaundry['address'];
+        final laundryName = thisLaundry['name'];
 
         var st = getSituationTransform(situation);
         var situationLabel = st['label'];
         var situationColor = st['color'];
 
         return Container(
-            // color: Colors.grey.shade300,
-            // margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-            // padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-            height: 60,
-            // width: double.maxFinite,
+            height: 80,
             width: 50,
             child: Column(
               children: [
@@ -133,7 +128,7 @@ class _NextSchedulesState extends State<NextSchedulesFutureBuilder> {
                       height: 30,
                       width: double.maxFinite,
                       child: Center(
-                        child: Text(address,
+                        child: Text(laundryName,
                             overflow: TextOverflow.ellipsis,
                             textAlign: TextAlign.center,
                             style: const TextStyle(
@@ -163,7 +158,58 @@ class _NextSchedulesState extends State<NextSchedulesFutureBuilder> {
                     // Expanded(flex: 3, child: Text(situation)),
                   ],
                 ),
-                const SizedBox(height: 2),
+                Row(
+                  children: [
+                    Expanded(
+                        child: Container(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 5, horizontal: 5),
+                      height: 30,
+                      width: double.maxFinite,
+                      child: Center(
+                        child: Text(address,
+                            overflow: TextOverflow.ellipsis,
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                              fontSize: 12.0,
+                            )),
+                      ),
+                    )),
+
+                    Expanded(
+                        child: Container(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 5, horizontal: 5),
+                      height: 30,
+                      width: double.maxFinite,
+                      child: Center(
+                        child: Text('Início: $startHour',
+                            overflow: TextOverflow.ellipsis,
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                              fontSize: 12.0,
+                            )),
+                      ),
+                    )),
+                    Expanded(
+                        child: Container(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 5, horizontal: 5),
+                      height: 30,
+                      width: double.maxFinite,
+                      child: Center(
+                        child: Text('Até: $endHour',
+                            overflow: TextOverflow.ellipsis,
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                              fontSize: 12.0,
+                            )),
+                      ),
+                    )),
+                    // Expanded(flex: 3, child: Text(situation)),
+                  ],
+                ),
+                const SizedBox(height: 6),
               ],
             ));
       },
