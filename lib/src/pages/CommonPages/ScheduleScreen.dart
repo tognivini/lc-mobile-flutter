@@ -1,5 +1,6 @@
 // ignore_for_file: file_names, avoid_print, override_on_non_overriding_member, deprecated_member_use
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:lc_mobile_flutter/src/pages/CommonPages/NextSchedulesScreen.dart';
 import 'package:lc_mobile_flutter/src/service/repositories/LaundryRepository.dart';
 import 'package:lc_mobile_flutter/src/service/repositories/ScheduleRepository.dart';
@@ -374,7 +375,7 @@ class _ScheduleState extends State<ScheduleScreen> {
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
+                    children: [
                       Expanded(
                           child: Container(
                         child: finaldate == null
@@ -386,16 +387,13 @@ class _ScheduleState extends State<ScheduleScreen> {
                                 "$finaldate",
                                 textScaleFactor: 1.0,
                               ),
-                      )
-                          // ),
-                          ),
-                      Expanded(
-                        child: IconButton(
-                          icon: const Icon(Icons.calendar_month, size: 26),
-                          onPressed: () {
-                            callDatePicker();
-                          },
-                        ),
+                      )),
+                      IconButton(
+                        icon: const Icon(Icons.calendar_month),
+                        iconSize: 26, // Increase this value to reduce padding
+                        onPressed: () {
+                          callDatePicker();
+                        },
                       ),
                     ],
                   ),

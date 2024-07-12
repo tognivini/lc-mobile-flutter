@@ -2,7 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:lc_mobile_flutter/src/pages/CommonPages/NextSchedulesScreen.dart';
-import 'package:lc_mobile_flutter/src/pages/CommonPages/ProfileScreen.dart';
+import 'package:lc_mobile_flutter/src/pages/CommonPages/Profile/EditProfile.dart';
+import 'package:lc_mobile_flutter/src/pages/CommonPages/Profile/ProfileScreen.dart';
 import 'package:lc_mobile_flutter/src/pages/CommonPages/ScheduleScreen.dart';
 
 class NaviBottom extends StatefulWidget {

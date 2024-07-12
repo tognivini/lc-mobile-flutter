@@ -2,6 +2,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:lc_mobile_flutter/src/pages/CommonPages/Profile/EditProfile.dart';
 import 'package:lc_mobile_flutter/src/service/repositories/UserRepository.dart';
 import 'package:localstore/localstore.dart';
 
@@ -21,10 +22,14 @@ class _ProfileState extends State<ProfileScreen> {
 
   var _passwordVisible = false;
 
-  onLoadUser(decodedUser) async {
+  onLoadUser() async {
+    final db = Localstore.instance;
+    final localStorageData =
+        await db.collection('storageUser').doc('storageUser').get();
+
     var payload = {};
-    payload["userId"] = decodedUser['userId'];
-    payload["token"] = decodedUser['token'];
+    payload["userId"] = localStorageData!['userId'];
+    payload["token"] = localStorageData['token'];
 
     final userInfo = await UserRepository().getUserById(payload);
     if (userInfo != null) {
@@ -38,19 +43,16 @@ class _ProfileState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final arguments = (ModalRoute.of(context)?.settings.arguments ??
-        <String, dynamic>{}) as Map;
+    // final arguments = (ModalRoute.of(context)?.settings.arguments ??
+    //     <String, dynamic>{}) as Map;
 
-    var userLogged = arguments['userArgument'];
-    var decodedUser = json.decode(userLogged.toString());
+    // var userLogged = arguments['userArgument'];
+    // var decodedUser = json.decode(userLogged.toString());
 
-    onLoadUser(decodedUser);
+    onLoadUser();
 
     return Scaffold(
         backgroundColor: Colors.white,
-        // appBar: AppBar(
-        //   title: const Text('Perfil'),
-        // ),
         body: Center(
           child: Column(
             children: [
@@ -80,7 +82,7 @@ class _ProfileState extends State<ProfileScreen> {
               const Padding(
                 padding: EdgeInsets.only(top: 5, bottom: 10),
                 child: Text('Perfil',
-                    style: TextStyle(color: Colors.grey, fontSize: 18)),
+                    style: TextStyle(color: Colors.black, fontSize: 18)),
               ),
               // Padding(
               //   padding: const EdgeInsets.only(
@@ -211,7 +213,17 @@ class _ProfileState extends State<ProfileScreen> {
                             MaterialStateProperty.all<Color>(Colors.white),
                       ),
                       onPressed: () async {
-                        // Navigator.of(context).pop();
+                        Navigator.pushNamed(
+                          context,
+                          '/edit',
+                        );
+                        // Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(
+                        //       builder: (context) => const EditProfileScreen(),
+                        //       settings: RouteSettings(
+                        //           arguments: json.encode(context))),
+                        // );
                       },
                       child: const Text('Editar'),
                     ),

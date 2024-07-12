@@ -52,12 +52,11 @@ class _LoginState extends State<LoginScreen> {
                   autofocus: true,
                   keyboardType: TextInputType.emailAddress,
                   controller: email,
-                  // initialValue: 'sathyabaman@gmail.com',
                   style: const TextStyle(
                       fontWeight: FontWeight.normal, color: Colors.black),
                   decoration: InputDecoration(
                     labelText: 'Email',
-                    hintText: 'Email válido plz',
+                    hintText: 'Preencha com seu email',
                     contentPadding:
                         const EdgeInsets.only(top: 5, bottom: 5, left: 10),
                     border: OutlineInputBorder(

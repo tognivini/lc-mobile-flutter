@@ -1,15 +1,18 @@
-// ignore_for_file: file_names, avoid_print, override_on_non_overriding_member, unrelated_type_equality_checks
+// ignore: file_names
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:lc_mobile_flutter/src/service/repositories/UserRepository.dart';
+import 'package:localstore/localstore.dart';
 
-class RegisterScreen extends StatefulWidget {
-  const RegisterScreen({super.key, String? name});
+class EditProfileScreen extends StatefulWidget {
+  const EditProfileScreen({super.key, String? name});
 
   @override
-  State<RegisterScreen> createState() => _RegisterState();
+  State<EditProfileScreen> createState() => _EditProfileState();
 }
 
-class _RegisterState extends State<RegisterScreen> {
+class _EditProfileState extends State<EditProfileScreen> {
   TextEditingController name = TextEditingController();
   TextEditingController email = TextEditingController();
   TextEditingController phoneNumber = TextEditingController();
@@ -19,7 +22,26 @@ class _RegisterState extends State<RegisterScreen> {
   var _passwordVisible = false;
   var _repasswordVisible = false;
 
-  void callAlertDialog(isSuccess, message, mayClear, mayNavigate) {
+  onLoadUser() async {
+    final db = Localstore.instance;
+    final localStorageData =
+        await db.collection('storageUser').doc('storageUser').get();
+
+    var payload = {};
+    payload["userId"] = localStorageData!['userId'];
+    payload["token"] = localStorageData['token'];
+
+    final userInfo = await UserRepository().getUserById(payload);
+    if (userInfo != null) {
+      name.text = userInfo['name'];
+      email.text = userInfo['email'];
+      phoneNumber.text = userInfo['phoneNumber'];
+      password.text = userInfo['password'];
+      repassword.text = userInfo['password'];
+    }
+  }
+
+  void callAlertDialog(isSuccess, message, mayNavigate) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -32,13 +54,10 @@ class _RegisterState extends State<RegisterScreen> {
               onPressed: () {
                 Navigator.of(context).pop();
 
-                if (mayClear) {
-                  clearInputs();
-                }
                 if (mayNavigate) {
                   Navigator.pushNamed(
                     context,
-                    '/auth/login',
+                    '/',
                   );
                 }
               },
@@ -49,16 +68,13 @@ class _RegisterState extends State<RegisterScreen> {
     );
   }
 
-  void clearInputs() {
-    name.text = '';
-    email.text = '';
-    phoneNumber.text = '';
-    password.text = '';
-    repassword.text = '';
-  }
-
   handleSubmit() async {
+    final db = Localstore.instance;
+    final localStorageData =
+        await db.collection('storageUser').doc('storageUser').get();
     var payload = {};
+    payload["token"] = localStorageData!['token'];
+    payload["userId"] = localStorageData['userId'];
     payload["name"] = name.text;
     payload["email"] = email.text;
     payload["phoneNumber"] = phoneNumber.text;
@@ -69,20 +85,14 @@ class _RegisterState extends State<RegisterScreen> {
         password.text != '' &&
         repassword.text != '') {
       if (password.text != repassword.text) {
-        return callAlertDialog(false, "Senhas não coincidem!", true, false);
+        return callAlertDialog(false, "Senhas não coincidem!", false);
       } else {
-        await UserRepository().createUser(payload).then(
+        await UserRepository().onUpdateUser(payload).then(
               (value) => {
                 if (value != false)
-                  {
-                    callAlertDialog(
-                        true, "Usuário criado com sucesso!", true, true)
-                  }
+                  {callAlertDialog(true, "Usuário editado com sucesso!", true)}
                 else
-                  {
-                    callAlertDialog(
-                        false, "Tente novamente mais tarde!", true, false)
-                  }
+                  {callAlertDialog(false, "Tente novamente mais tarde!", false)}
               },
             );
       }
@@ -91,52 +101,28 @@ class _RegisterState extends State<RegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
+    onLoadUser();
+
     return Scaffold(
         backgroundColor: Colors.white,
-        // appBar: AppBar(
-        //   title: const Text('Registro'),
-        // ),
         body: Center(
           child: Column(
             children: [
               const Padding(
                 padding: EdgeInsets.only(top: 60, bottom: 10),
-                child: Text('Crie sua conta',
+                child: Text('Edição de perfil',
                     style: TextStyle(color: Colors.black, fontSize: 18)),
               ),
-              // Padding(
-              //   padding: const EdgeInsets.only(
-              //       top: 5, right: 20, bottom: 5, left: 20),
-              //   child: TextFormField(
-              //     autofocus: true,
-              //     keyboardType: TextInputType.name,
-              //     controller: matriculaController,
-              //     // initialValue: 'sathyabaman@gmail.com',
-              //     style: const TextStyle(
-              //         fontWeight: FontWeight.normal, color: Colors.black),
-              //     decoration: InputDecoration(
-              //       labelText: 'Matrícula',
-              //       hintText: 'Matrícula',
-              //       contentPadding:
-              //           const EdgeInsets.only(top: 5, bottom: 5, left: 10),
-              //       border: OutlineInputBorder(
-              //           borderRadius: BorderRadius.circular(8.0)),
-              //     ),
-              //   ),
-              // ),
               Padding(
                 padding: const EdgeInsets.only(
                     top: 5, right: 20, bottom: 5, left: 20),
                 child: TextFormField(
-                  autofocus: true,
                   keyboardType: TextInputType.name,
                   controller: name,
-                  // initialValue: 'sathyabaman@gmail.com',
                   style: const TextStyle(
                       fontWeight: FontWeight.normal, color: Colors.black),
                   decoration: InputDecoration(
                     labelText: 'Nome',
-                    // hintText: 'Nome Completo',
                     hintText: 'Nome Completo',
                     contentPadding:
                         const EdgeInsets.only(top: 5, bottom: 5, left: 10),
@@ -151,9 +137,9 @@ class _RegisterState extends State<RegisterScreen> {
                 child: TextFormField(
                   keyboardType: TextInputType.emailAddress,
                   controller: email,
-                  // initialValue: 'sathyabaman@gmail.com',
+                  readOnly: true,
                   style: const TextStyle(
-                      fontWeight: FontWeight.normal, color: Colors.black),
+                      fontWeight: FontWeight.normal, color: Colors.grey),
                   decoration: InputDecoration(
                     labelText: 'Email',
                     hintText: 'Digite um e-mail válido por favor',
@@ -170,7 +156,6 @@ class _RegisterState extends State<RegisterScreen> {
                 child: TextFormField(
                   keyboardType: TextInputType.phone,
                   controller: phoneNumber,
-                  // initialValue: 'sathyabaman@gmail.com',
                   style: const TextStyle(
                       fontWeight: FontWeight.normal, color: Colors.black),
                   decoration: InputDecoration(
@@ -188,7 +173,7 @@ class _RegisterState extends State<RegisterScreen> {
                     top: 5, right: 20, bottom: 5, left: 20),
                 child: TextFormField(
                   keyboardType: TextInputType.visiblePassword,
-                  obscureText: !_passwordVisible, //This will obscu
+                  obscureText: !_passwordVisible,
                   controller: password,
                   style: const TextStyle(
                       fontWeight: FontWeight.normal, color: Colors.black),
@@ -220,7 +205,7 @@ class _RegisterState extends State<RegisterScreen> {
                     top: 5, right: 20, bottom: 5, left: 20),
                 child: TextFormField(
                   keyboardType: TextInputType.visiblePassword,
-                  obscureText: !_repasswordVisible, //This will obscu
+                  obscureText: !_repasswordVisible,
                   controller: repassword,
                   style: const TextStyle(
                       fontWeight: FontWeight.normal, color: Colors.black),
@@ -235,6 +220,7 @@ class _RegisterState extends State<RegisterScreen> {
                         color: Colors.black,
                       ),
                       onPressed: () {
+                        // Update the state i.e. toogle the state of passwordVisible variable
                         setState(() {
                           _repasswordVisible = !_repasswordVisible;
                         });
@@ -247,33 +233,49 @@ class _RegisterState extends State<RegisterScreen> {
                   ),
                 ),
               ),
-              TextButton(
-                  onPressed: () {
-                    Navigator.pushNamed(
-                      context,
-                      '/auth/login',
-                    );
-                  },
-                  child: const Text('Já possui uma conta?',
-                      style: TextStyle(color: Colors.blue))),
               Padding(
-                  padding: const EdgeInsets.only(top: 5),
-                  child: Container(
-                    height: 35,
-                    width: 150,
-                    decoration: BoxDecoration(
-                        color: Colors.blue,
-                        borderRadius: BorderRadius.circular(20)),
-                    child: TextButton(
-                      style: ButtonStyle(
-                        foregroundColor:
-                            MaterialStateProperty.all<Color>(Colors.white),
+                  padding: const EdgeInsets.only(top: 10, right: 20, left: 20),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        height: 35,
+                        width: 100,
+                        decoration: BoxDecoration(
+                            color: Colors.grey,
+                            borderRadius: BorderRadius.circular(20)),
+                        child: TextButton(
+                          style: ButtonStyle(
+                            foregroundColor:
+                                MaterialStateProperty.all<Color>(Colors.white),
+                          ),
+                          onPressed: () async {
+                            Navigator.pushNamed(
+                              context,
+                              '/',
+                            );
+                          },
+                          child: const Text('Cancelar'),
+                        ),
                       ),
-                      onPressed: () {
-                        handleSubmit();
-                      },
-                      child: const Text('Registre-se'),
-                    ),
+                      Container(
+                        height: 35,
+                        width: 100,
+                        decoration: BoxDecoration(
+                            color: Colors.blue,
+                            borderRadius: BorderRadius.circular(20)),
+                        child: TextButton(
+                          style: ButtonStyle(
+                            foregroundColor:
+                                MaterialStateProperty.all<Color>(Colors.white),
+                          ),
+                          onPressed: () async {
+                            handleSubmit();
+                          },
+                          child: const Text('Editar'),
+                        ),
+                      )
+                    ],
                   )),
             ],
           ),

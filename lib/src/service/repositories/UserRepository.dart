@@ -52,7 +52,42 @@ class UserRepository extends AbstractService {
 
     if (response.statusCode == 200) {
       final body = json.decode(response.body);
-      if (body != null && body != null) {
+      if (body != null) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  }
+
+  Future onUpdateUser(payload) async {
+    var token = payload["token"];
+    var userId = payload["userId"];
+    var name = payload["name"];
+    var email = payload["email"];
+    var phoneNumber = payload["phoneNumber"];
+    var password = payload["password"];
+
+    final response = await http.put(
+      Uri.parse(API_REST + Endpoints().EDIT_USER + userId),
+      headers: <String, String>{
+        'Content-Type': 'application/json',
+        'Authorization': token,
+      },
+      body: json.encode({
+        'name': name,
+        'email': email,
+        'phoneNumber': phoneNumber,
+        'password': password,
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      final body = json.decode(response.body);
+      final data = body['data'];
+      if (body != null && data != null) {
         return true;
       } else {
         return false;
